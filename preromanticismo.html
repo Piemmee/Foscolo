@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Preromanticismo di Ugo Foscolo</title>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/modern-style.css">
+    <!-- Stili specifici della pagina, se necessari -->
+    <style>
+        :root {
+            --primary-color: #5D4037; /* Marrone scuro */
+            --secondary-color: #8D6E63; /* Marrone medio */
+            --accent-color: #D7CCC8; /* Beige chiaro */
+            --text-color: #3E2723; /* Marrone molto scuro */
+            --light-color: #EFEBE9; /* Beige molto chiaro */
+            --highlight-color: #A1887F; /* Marrone chiaro */
+            --white-color: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            color: var(--text-color);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            background-image: url('images/preromantic-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            position: relative;
+            animation: slideInFromTop 1.5s ease-out;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            margin-top: 0.5rem;
+            position: relative;
+            animation: slideInFromBottom 1.5s ease-out;
+        }
+        
+        nav {
+            background-color: var(--secondary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 0 1rem;
+        }
+        
+        .dropbtn {
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--accent-color);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: var(--highlight-color);
+            color: var(--white-color);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .dropdown:hover .dropbtn {
+            background-color: var(--primary-color);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+        
+        .content {
+            background-color: var(--white-color);
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar {
+            background-color: var(--white-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .preromantic-image {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+            border: 3px solid var(--accent-color);
+        }
+        
+        .preromantic-image:hover {
+            transform: scale(1.03);
+            border-color: var(--highlight-color);
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            background-color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideInFromTop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromBottom {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .animated-text {
+            animation: fadeIn 2s ease;
+        }
+        
+        h2, h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            margin-top: 1rem;
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .back-to-home:hover {
+            background-color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--accent-color);
+        }
+        
+        .theme-box {
+            background-color: var(--accent-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin: 1.5rem 0;
+            position: relative;
+            animation: fadeIn 1.5s ease;
+        }
+        
+        .theme-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 0.8rem;
+            border: 1px solid var(--accent-color);
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: var(--light-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <h1>Il Preromanticismo di Ugo Foscolo</h1>
+        <p class="subtitle">Tra passione e disillusione</p>
+    </header>
+    
+    <nav>
+        <div class="menu-container">
+            <div class="dropdown">
+                <button class="dropbtn">Biografia</button>
+                <div class="dropdown-content">
+                    <a href="giovinezza.html">Giovinezza</a>
+                    <a href="periodo-napoleonico.html">Periodo napoleonico</a>
+                    <a href="esilio.html">L'esilio</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Opere</button>
+                <div class="dropdown-content">
+                    <a href="ultime-lettere.html">Ultime lettere di Jacopo Ortis</a>
+                    <a href="sonetti.html">Sonetti</a>
+                    <a href="sepolcri.html">Dei Sepolcri</a>
+                    <a href="grazie.html">Le Grazie</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Pensiero</button>
+                <div class="dropdown-content">
+                    <a href="neoclassicismo.html">Neoclassicismo</a>
+                    <a href="preromanticismo.html">Preromanticismo</a>
+                    <a href="ideali-politici.html">Ideali politici</a>
+                    <a href="stile-foscoliano.html">Lo stile di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Galleria</button>
+                <div class="dropdown-content">
+                    <a href="foto.html">Fotografie</a>
+                    <a href="luoghi.html">Luoghi foscoliani</a>
+                    <a href="manoscritti.html">Manoscritti</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Giochi</button>
+                <div class="dropdown-content">
+                    <a href="gioco.html">Il Labirinto di Foscolo</a>
+                    <a href="gioco-oca-foscolo.html">Il Viaggio di Foscolo</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Home</button>
+                <div class="dropdown-content">
+                    <a href="index.html">Pagina principale</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="content">
+            <h2 class="animated-text">Il Preromanticismo nell'opera di Foscolo</h2>
+            
+            <p class="animated-text">
+                Se il Neoclassicismo rappresenta un aspetto fondamentale dell'opera di Ugo Foscolo, altrettanto importante è la componente preromantica, che anticipa molti temi e motivi del Romanticismo. Il Preromanticismo è una corrente culturale che si sviluppò in Europa nella seconda metà del Settecento, caratterizzata da una nuova sensibilità che valorizzava il sentimento, la passione, la malinconia e il rapporto con la natura.
+            </p>
+            
+            <div class="quote">
+                "Il sacrificio della patria nostra è consumato: tutto è perduto; e la vita, seppure ne verrà concessa, non ci resterà che per piangere le nostre sciagure, e la nostra infamia."<br>
+                <small>— Ugo Foscolo, Ultime lettere di Jacopo Ortis</small>
+            </div>
+            
+            <div class="section">
+                <h3>Il contesto storico-culturale</h3>
+                
+                <p class="animated-text">
+                    Il Preromanticismo si sviluppò in un periodo di grandi trasformazioni storiche e culturali, segnato dalla crisi dell'Illuminismo e dall'emergere di una nuova sensibilità che valorizzava l'emotività e l'individualità. In Europa, questa corrente fu rappresentata da autori come Goethe (con "I dolori del giovane Werther"), Rousseau, Young e Ossian.
+                </p>
+                
+                <p class="animated-text">
+                    In Italia, il Preromanticismo si diffuse attraverso la traduzione di opere straniere e l'influenza di autori come Alfieri e Parini. Foscolo assorbì queste influenze durante la sua formazione, integrando elementi preromantici con la sua formazione neoclassica.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>Temi preromantici nell'opera di Foscolo</h3>
+                
+                <div class="theme-box">
+                    <p class="theme-title">Il pessimismo e la visione materialistica</p>
+                    <p>
+                        Foscolo condivide con il Preromanticismo una visione pessimistica della vita, basata su una concezione materialistica dell'esistenza. Per lui, la morte è "nulla eterno" (come afferma in "Alla sera"), e non c'è consolazione in un aldilà. Questa visione si traduce in un senso di malinconia e di disillusione che pervade molte sue opere, in particolare le "Ultime lettere di Jacopo Ortis" e alcuni sonetti.
+                    </p>
+                </div>
+                
+                <div class="theme-box">
+                    <p class="theme-title">L'esilio e lo sradicamento</p>
+                    <p>
+                        Il tema dell'esilio, centrale nella vita di Foscolo, diventa un motivo ricorrente nella sua opera, anticipando un tema tipicamente romantico. In "A Zacinto", il poeta esprime la nostalgia per la sua isola natale e la consapevolezza di non potervi fare ritorno. L'esilio diventa metafora di una condizione esistenziale di sradicamento e di estraneità al mondo.
+                    </p>
+                </div>
+                
+                <div class="theme-box">
+                    <p class="theme-title">La passione amorosa e politica</p>
+                    <p>
+                        L'intensità delle passioni, sia amorose che politiche, è un elemento tipicamente preromantico che caratterizza l'opera di Foscolo. Nelle "Ultime lettere di Jacopo Ortis", l'amore impossibile per Teresa e la delusione politica per il tradimento degli ideali rivoluzionari si fondono in un'unica esperienza di disillusione che porta il protagonista al suicidio.
+                    </p>
+                </div>
+                
+                <div class="theme-box">
+                    <p class="theme-title">Il culto delle tombe e la memoria</p>
+                    <p>
+                        Il tema sepolcrale, tipico della sensibilità preromantica, trova la sua massima espressione nei "Sepolcri". Foscolo celebra le tombe non solo come luoghi di memoria individuale, ma anche come strumenti di memoria collettiva e di educazione civile. La tomba diventa simbolo di continuità tra passato e presente, tra i vivi e i morti.
+                    </p>
+                </div>
+                
+                <div class="theme-box">
+                    <p class="theme-title">La natura come specchio dell'anima</p>
+                    <p>
+                        In alcune opere di Foscolo, la natura non è più solo sfondo decorativo, ma diventa specchio dei sentimenti del poeta, anticipando la concezione romantica del paesaggio. In "Alla sera", ad esempio, la sera è amata dal poeta perché riflette il suo desiderio di pace e di oblio.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Le Ultime lettere di Jacopo Ortis: il romanzo preromantico</h3>
+                
+                <p class="animated-text">
+                    Le "Ultime lettere di Jacopo Ortis" rappresentano l'opera più tipicamente preromantica di Foscolo. Pubblicato in forma definitiva nel 1802, il romanzo si ispira ai "Dolori del giovane Werther" di Goethe, ma con una forte componente politica assente nell'opera tedesca.
+                </p>
+                
+                <p class="animated-text">
+                    Il protagonista, Jacopo Ortis, incarna l'eroe preromantico: sensibile, appassionato, in conflitto con la società, diviso tra ideali impossibili da realizzare. La sua scelta finale del suicidio rappresenta l'estrema affermazione della libertà individuale di fronte a un mondo ostile.
+                </p>
+                
+                <p class="animated-text">
+                    Il romanzo è caratterizzato da un linguaggio intenso e appassionato, da una struttura frammentaria tipica della sensibilità preromantica, e da una forte componente autobiografica. Foscolo proietta in Jacopo molte delle sue esperienze e dei suoi sentimenti, creando un personaggio che diventerà emblematico della letteratura italiana tra Settecento e Ottocento.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>Neoclassicismo e Preromanticismo: un confronto</h3>
+                
+                <p class="animated-text">
+                    Nell'opera di Foscolo, elementi neoclassici e preromantici coesistono e si integrano, creando una sintesi originale. Ecco un confronto tra questi due aspetti della sua poetica:
+                </p>
+                
+                <table class="comparison-table">
+                    <tr>
+                        <th>Aspetto</th>
+                        <th>Neoclassicismo</th>
+                        <th>Preromanticismo</th>
+                    </tr>
+                    <tr>
+                        <td>Forma</td>
+                        <td>Ricerca di equilibrio e armonia formale</td>
+                        <td>Espressione più libera e appassionata</td>
+                    </tr>
+                    <tr>
+                        <td>Temi</td>
+                        <td>Bellezza, armonia, ideali civili</td>
+                        <td>Passione, morte, esilio, disillusione</td>
+                    </tr>
+                    <tr>
+                        <td>Stile</td>
+                        <td>Linguaggio elevato e controllato</td>
+                        <td>Linguaggio più emotivo e soggettivo</td>
+                    </tr>
+                    <tr>
+                        <td>Riferimenti culturali</td>
+                        <td>Mitologia classica, arte greca e romana</td>
+                        <td>Letteratura moderna (Goethe, Rousseau)</td>
+                    </tr>
+                    <tr>
+                        <td>Opere rappresentative</td>
+                        <td>Le Grazie, Dei Sepolcri (in parte)</td>
+                        <td>Ultime lettere di Jacopo Ortis, Sonetti</td>
+                    </tr>
+                </table>
+                
+                <p class="animated-text">
+                    Questa duplicità fa di Foscolo una figura di transizione tra due epoche e due sensibilità, capace di assorbire il meglio di entrambe e di creare un'opera che, pur radicata nella tradizione classica, anticipa molti temi e motivi del Romanticismo.
+                </p>
+            </div>
+            
+            <a href="index.html" class="back-to-home">Torna alla pagina principale</a>
+        </div>
+        
+        <div class="sidebar">
+            <img src="images/ortis-illustration.jpg" alt="Illustrazione delle Ultime lettere di Jacopo Ortis" class="preromantic-image">
+            <h3>Il Preromanticismo in breve</h3>
+            <p><strong>Periodo:</strong> Seconda metà del XVIII secolo</p>
+            <p><strong>Caratteristiche principali:</strong></p>
+            <ul>
+                <li>Valorizzazione del sentimento</li>
+                <li>Temi sepolcrali e notturni</li>
+                <li>Malinconia e pessimismo</li>
+                <li>Culto della natura</li>
+                <li>Individualismo</li>
+            </ul>
+            
+            <div class="quote">
+                "Vagar mi fai co' miei pensier su l'orme<br>
+                che vanno al nulla eterno..."<br>
+                <small>— Alla sera</small>
+            </div>
+            
+            <h3>Opere preromantiche di Foscolo</h3>
+            <ul>
+                <li>Ultime lettere di Jacopo Ortis (1802)</li>
+                <li>Sonetti (1802-1803)</li>
+                <li>Dei Sepolcri (1807, in parte)</li>
+            </ul>
+            
+            <h3>Collegamenti</h3>
+            <ul>
+                <li><a href="ultime-lettere.html">Ultime lettere di Jacopo Ortis</a></li>
+                <li><a href="sonetti.html">I sonetti di Foscolo</a></li>
+                <li><a href="neoclassicismo.html">Il neoclassicismo di Foscolo</a></li>
+            </ul>
+            
+            <h3>Influenze</h3>
+            <p>Il Preromanticismo di Foscolo fu influenzato da autori come Goethe ("I dolori del giovane Werther"), Rousseau, Young e dalla poesia di Ossian, oltre che da Alfieri e Parini in ambito italiano.</p>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 Ugo Foscolo, tra esilio e disillusione | Sito creato a scopo educativo</p>
+    </footer>
+
+    <script src="js/image-fallback.js"></script>
+    <script>
+        // Animazione per gli elementi quando entrano nel viewport
+        document.addEventListener('DOMContentLoaded', function() {
+            // Funzione per controllare se un elemento è nel viewport
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            }
+            
+            // Funzione per animare gli elementi quando entrano nel viewport
+            function animateOnScroll() {
+                const elements = document.querySelectorAll('.theme-box, .comparison-table');
+                elements.forEach(element => {
+                    if (isInViewport(element) && !element.classList.contains('animated')) {
+                        element.style.animation = 'fadeIn 1.5s ease forwards';
+                        element.classList.add('animated');
+                    }
+                });
+            }
+            
+            // Esegui l'animazione al caricamento e allo scroll
+            animateOnScroll();
+            window.addEventListener('scroll', animateOnScroll);
+        });
+    </script>
+    <script src="js/header-overlay.js"></script>
+</body>
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'esilio di Ugo Foscolo</title>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/modern-style.css">
+    <!-- Stili specifici della pagina, se necessari -->
+    <style>
+        :root {
+            --primary-color: #5D4037; /* Marrone scuro */
+            --secondary-color: #8D6E63; /* Marrone medio */
+            --accent-color: #D7CCC8; /* Beige chiaro */
+            --text-color: #3E2723; /* Marrone molto scuro */
+            --light-color: #EFEBE9; /* Beige molto chiaro */
+            --highlight-color: #A1887F; /* Marrone chiaro */
+            --white-color: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            color: var(--text-color);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            background-image: url('images/london-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            position: relative;
+            animation: slideInFromTop 1.5s ease-out;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            margin-top: 0.5rem;
+            position: relative;
+            animation: slideInFromBottom 1.5s ease-out;
+        }
+        
+        nav {
+            background-color: var(--secondary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 0 1rem;
+        }
+        
+        .dropbtn {
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--accent-color);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: var(--highlight-color);
+            color: var(--white-color);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .dropdown:hover .dropbtn {
+            background-color: var(--primary-color);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+        
+        .content {
+            background-color: var(--white-color);
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar {
+            background-color: var(--white-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .london-image {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+            border: 3px solid var(--accent-color);
+        }
+        
+        .london-image:hover {
+            transform: scale(1.03);
+            border-color: var(--highlight-color);
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            background-color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideInFromTop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromBottom {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .animated-text {
+            animation: fadeIn 2s ease;
+        }
+        
+        h2, h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .timeline-item {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--primary-color);
+            position: relative;
+            animation: fadeIn 2s ease;
+            background-color: var(--white-color);
+            padding: 1rem;
+            border-radius: 0 5px 5px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            margin-top: 1rem;
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .back-to-home:hover {
+            background-color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--accent-color);
+        }
+        
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .gallery-image {
+            width: 100%;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+            border: 2px solid var(--accent-color);
+        }
+        
+        .gallery-image:hover {
+            transform: scale(1.05);
+            border-color: var(--highlight-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <h1>L'esilio di Ugo Foscolo</h1>
+        <p class="subtitle">Gli ultimi anni di vita in Inghilterra</p>
+    </header>
+    
+    <nav>
+        <div class="menu-container">
+            <div class="dropdown">
+                <button class="dropbtn">Biografia</button>
+                <div class="dropdown-content">
+                    <a href="giovinezza.html">Giovinezza</a>
+                    <a href="periodo-napoleonico.html">Periodo napoleonico</a>
+                    <a href="esilio.html">L'esilio</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Opere</button>
+                <div class="dropdown-content">
+                    <a href="ultime-lettere.html">Ultime lettere di Jacopo Ortis</a>
+                    <a href="sonetti.html">Sonetti</a>
+                    <a href="sepolcri.html">Dei Sepolcri</a>
+                    <a href="grazie.html">Le Grazie</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Pensiero</button>
+                <div class="dropdown-content">
+                    <a href="neoclassicismo.html">Neoclassicismo</a>
+                    <a href="preromanticismo.html">Preromanticismo</a>
+                    <a href="ideali-politici.html">Ideali politici</a>
+                    <a href="stile-foscoliano.html">Lo stile di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Galleria</button>
+                <div class="dropdown-content">
+                    <a href="foto.html">Fotografie</a>
+                    <a href="luoghi.html">Luoghi foscoliani</a>
+                    <a href="manoscritti.html">Manoscritti</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Giochi</button>
+                <div class="dropdown-content">
+                    <a href="gioco.html">Il Labirinto di Foscolo</a>
+                    <a href="gioco-oca-foscolo.html">Il Viaggio di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Home</button>
+                <div class="dropdown-content">
+                    <a href="index.html">Pagina principale</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="content">
+            <h2 class="animated-text">L'esilio londinese: gli ultimi anni di Foscolo</h2>
+            
+            <p class="animated-text">
+                L'esilio rappresenta l'ultima e dolorosa fase della vita di Ugo Foscolo, un periodo segnato da difficoltà economiche, solitudine e nostalgia per la patria perduta. Dopo la caduta di Napoleone e il ritorno degli austriaci in Lombardia, Foscolo fu costretto a lasciare l'Italia per non prestare giuramento di fedeltà al nuovo regime.
+            </p>
+            
+            <div class="quote">
+                "Il mio nome è nella lista di proscrizione, lo so: ma vuoi tu ch'io per salvarmi da chi m'opprime mi commetta a chi mi ha tradito?"<br>
+                <small>— Ugo Foscolo, Ultime lettere di Jacopo Ortis</small>
+            </div>
+            
+            <div class="section">
+                <h3>La fuga dall'Italia</h3>
+                
+                <p class="animated-text">
+                    Nel marzo del 1815, con il ritorno degli austriaci a Milano, Foscolo si trovò di fronte a una scelta difficile: giurare fedeltà al nuovo regime o abbandonare la patria. Scelse l'esilio, fuggendo prima in Svizzera, dove rimase per alcuni mesi, e poi, nel settembre 1816, trasferendosi definitivamente in Inghilterra.
+                </p>
+                
+                <p class="animated-text">
+                    La decisione di non piegarsi al dominio austriaco fu coerente con gli ideali patriottici che avevano sempre guidato la sua vita e la sua opera. Come scrisse in una lettera: "Ho servito con lealtà Napoleone, ma non ho tradito mai né la patria né l'onore".
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>La vita a Londra</h3>
+                
+                <p class="animated-text">
+                    A Londra, Foscolo fu inizialmente accolto con entusiasmo negli ambienti intellettuali e aristocratici. La sua fama di poeta e patriota lo precedeva, e molti inglesi nutrivano simpatia per la causa italiana. In questo primo periodo, riuscì a vivere dignitosamente grazie a collaborazioni con riviste letterarie e lezioni private di italiano.
+                </p>
+                
+                <div class="image-gallery">
+                    <img src="images/london-1820.jpg" alt="Londra nel 1820" class="gallery-image">
+                    <img src="images/foscolo-london.jpg" alt="Ritratto di Foscolo a Londra" class="gallery-image">
+                </div>
+                
+                <p class="animated-text">
+                    Tra il 1817 e il 1822, Foscolo pubblicò diversi saggi critici su riviste inglesi, tra cui la "Edinburgh Review" e la "Quarterly Review". Scrisse anche articoli sulla letteratura italiana per l'Enciclopedia Britannica e tenne conferenze sulla letteratura italiana presso la Royal Institution.
+                </p>
+                
+                <p class="animated-text">
+                    Nel 1822 pubblicò i "Saggi sul Petrarca", che ottennero un discreto successo. In questi anni lavorò anche alla stesura delle "Grazie", poema rimasto incompiuto, e alla revisione delle "Ultime lettere di Jacopo Ortis" per un'edizione inglese.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>Il declino e gli ultimi anni</h3>
+                
+                <p class="animated-text">
+                    Nonostante i successi iniziali, la situazione di Foscolo peggiorò progressivamente. Problemi economici, dovuti a uno stile di vita dispendioso e a investimenti sbagliati, lo costrinsero a indebitarsi pesantemente. A questo si aggiunsero problemi di salute e un crescente isolamento sociale.
+                </p>
+                
+                <p class="animated-text">
+                    Nel 1824, per sfuggire ai creditori, fu costretto a cambiare identità, assumendo il nome di John Emerson, e a trasferirsi nel sobborgo londinese di Turnham Green. Qui visse gli ultimi anni in condizioni di estrema povertà, assistito solo dalla figlia naturale Floriana e da pochi amici fedeli.
+                </p>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1815</p>
+                    <p>Fuga da Milano e inizio dell'esilio in Svizzera.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1816</p>
+                    <p>Arrivo a Londra e accoglienza negli ambienti intellettuali inglesi.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1817-1822</p>
+                    <p>Periodo di intensa attività letteraria e critica. Pubblicazione di saggi su riviste inglesi.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1822</p>
+                    <p>Pubblicazione dei "Saggi sul Petrarca".</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1824</p>
+                    <p>Crisi economica e cambio di identità. Si trasferisce a Turnham Green con il nome di John Emerson.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">10 settembre 1827</p>
+                    <p>Morte a Turnham Green, all'età di 49 anni, per idropisia.</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>La morte e la sepoltura</h3>
+                
+                <p class="animated-text">
+                    Ugo Foscolo morì il 10 settembre 1827 a Turnham Green, all'età di 49 anni, a causa di un'idropisia. Fu sepolto nel cimitero di Chiswick, vicino Londra. Solo nel 1871, dopo l'unificazione d'Italia, le sue spoglie furono trasferite nella basilica di Santa Croce a Firenze, il "tempio delle itale glorie" che egli stesso aveva celebrato nei "Sepolcri".
+                </p>
+                
+                <p class="animated-text">
+                    La tomba di Foscolo a Santa Croce, accanto a quelle di Machiavelli, Michelangelo e Galileo, rappresenta il riconoscimento postumo del suo contributo alla cultura e all'identità nazionale italiana.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>L'eredità dell'esilio nella sua opera</h3>
+                
+                <p class="animated-text">
+                    L'esperienza dell'esilio influenzò profondamente gli ultimi scritti di Foscolo, accentuando i temi della nostalgia, dello sradicamento e della ricerca di un'identità nazionale. La condizione di esule divenne per lui non solo una realtà biografica, ma anche una metafora esistenziale.
+                </p>
+                
+                <p class="animated-text">
+                    Nelle lettere scritte durante l'esilio emerge con forza il tema della patria perduta e il dolore per la lontananza dall'Italia. Come scrisse in una lettera del 1823: "L'esilio è pena capitale per me, perché mi divide per sempre dalla mia patria".
+                </p>
+                
+                <p class="animated-text">
+                    L'esilio di Foscolo anticipò la condizione di molti intellettuali italiani del Risorgimento, costretti a lasciare l'Italia per le loro idee politiche. La sua figura divenne un simbolo della resistenza al dominio straniero e della fedeltà agli ideali di libertà e indipendenza nazionale.
+                </p>
+            </div>
+            
+            <a href="index.html" class="back-to-home">Torna alla pagina principale</a>
+        </div>
+        
+        <div class="sidebar">
+            <img src="images/foscolo-exile.jpg" alt="Foscolo in esilio" class="london-image">
+            <h3>L'esilio in breve</h3>
+            <p><strong>Periodo:</strong> 1815-1827</p>
+            <p><strong>Luoghi:</strong> Svizzera (1815-1816), Londra (1816-1827)</p>
+            <p><strong>Cause:</strong> Rifiuto di giurare fedeltà al regime austriaco</p>
+            
+            <div class="quote">
+                "Né più mai toccherò le sacre sponde<br>
+                ove il mio corpo fanciulletto giacque..."<br>
+                <small>— A Zacinto</small>
+            </div>
+            
+            <h3>Opere dell'esilio</h3>
+            <ul>
+                <li>Saggi sul Petrarca (1822)</li>
+                <li>Articoli per l'Enciclopedia Britannica</li>
+                <li>Saggi di critica letteraria</li>
+                <li>Continuazione de "Le Grazie" (incompiuto)</li>
+            </ul>
+            
+            <h3>Collegamenti</h3>
+            <ul>
+                <li><a href="ideali-politici.html">Gli ideali politici di Foscolo</a></li>
+                <li><a href="sepolcri.html">Dei Sepolcri</a></li>
+                <li><a href="grazie.html">Le Grazie</a></li>
+            </ul>
+            
+            <h3>La tomba a Santa Croce</h3>
+            <p>Nel 1871, le spoglie di Foscolo furono trasferite dalla tomba inglese alla basilica di Santa Croce a Firenze, il "tempio delle itale glorie" celebrato nei "Sepolcri".</p>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Ugo Foscolo, tra esilio e disillusione | Sito creato a scopo educativo</p>
+    </footer>
+    
+    <script>
+        // Animazione per gli elementi quando entrano nel viewport
+        document.addEventListener('DOMContentLoaded', function() {
+            // Funzione per controllare se un elemento è nel viewport
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            }
+            
+            // Funzione per animare gli elementi quando entrano nel viewport
+            function animateOnScroll() {
+                const elements = document.querySelectorAll('.timeline-item, .gallery-image');
+                elements.forEach(element => {
+                    if (isInViewport(element) && !element.classList.contains('animated')) {
+                        if (element.classList.contains('timeline-item')) {
+                            element.style.animation = 'slideInFromLeft 1s ease forwards';
+                        } else {
+                            element.style.animation = 'fadeIn 1.5s ease forwards';
+                        }
+                        element.classList.add('animated');
+                    }
+                });
+            }
+            
+            // Esegui l'animazione al caricamento e allo scroll
+            animateOnScroll();
+            window.addEventListener('scroll', animateOnScroll);
+        });
+    </script>
+    <script src="js/header-overlay.js"></script>

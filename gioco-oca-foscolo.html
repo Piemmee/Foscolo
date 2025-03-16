@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Viaggio di Foscolo - Gioco dell'Oca Letterario</title>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/modern-style.css">
+    <style>
+        /* Stili specifici per il gioco dell'oca */
+        .game-container {
+            background-color: #EFEBE9; /* Colore fisso beige chiaro */
+            border-radius: var(--border-radius-md);
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+            min-height: 600px;
+            border: 3px solid #5D4037; /* Bordo fisso marrone scuro */
+        }
+        
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 0.5rem;
+            margin: 2rem 0;
+            background-color: #F5F5F5; /* Sfondo grigio chiaro invece dell'immagine */
+            padding: 1.5rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 2px solid #8D6E63; /* Bordo fisso marrone medio */
+            min-height: 500px;
+            overflow: visible;
+        }
+        
+        .game-cell {
+            background-color: #FFFFFF; /* Colore bianco solido */
+            color: #3E2723; /* Colore del testo scuro fisso */
+            border-radius: var(--border-radius-sm);
+            padding: 0.3rem;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+            min-height: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #D7CCC8; /* Bordo fisso beige */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            font-size: 0.8rem;
+            overflow: hidden;
+        }
+        
+        .game-cell:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .game-cell.special {
+            background-color: #D7CCC8; /* Colore fisso beige */
+            border: 2px solid #8D6E63; /* Bordo fisso marrone medio */
+        }
+        
+        .game-cell.bonus {
+            background-color: #A5D6A7; /* Verde chiaro */
+            border: 2px solid #4CAF50; /* Bordo verde */
+        }
+        
+        .game-cell.penalty {
+            background-color: #EF9A9A; /* Rosso chiaro */
+            border: 2px solid #F44336; /* Bordo rosso */
+        }
+        
+        .game-cell.start {
+            background-color: #BBDEFB; /* Azzurro chiaro */
+            border: 2px solid #2196F3; /* Bordo azzurro */
+        }
+        
+        .game-cell.end {
+            background-color: #FFD54F; /* Giallo chiaro */
+            border: 2px solid #FFC107; /* Bordo giallo */
+        }
+        
+        .player-token {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            position: absolute;
+            transition: all 0.5s ease;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .player-1 {
+            background-color: #F44336; /* Rosso */
+            top: 3px;
+            left: 3px;
+        }
+
+        .player-2 {
+            background-color: #2196F3; /* Blu */
+            top: 3px;
+            right: 3px;
+        }
+
+        .player-3 {
+            background-color: #4CAF50; /* Verde */
+            bottom: 3px;
+            left: 3px;
+        }
+
+        .player-4 {
+            background-color: #FFC107; /* Giallo */
+            bottom: 3px;
+            right: 3px;
+        }
+        
+        .dice-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1.5rem 0;
+            gap: 2rem;
+        }
+        
+        .dice {
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            border: 2px solid #5D4037; /* Bordo fisso marrone scuro */
+            transition: transform 0.3s ease;
+        }
+        
+        .dice.rolling {
+            animation: diceRoll 0.5s ease infinite;
+        }
+        
+        @keyframes diceRoll {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
+        }
+        
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .game-button {
+            background-color: #5D4037; /* Colore fisso marrone scuro */
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .game-button:hover {
+            background-color: #8D6E63; /* Colore fisso marrone medio */
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .game-button:disabled {
+            background-color: #D7CCC8; /* Colore fisso beige */
+            cursor: not-allowed;
+            opacity: 0.7;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .player-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+            gap: 1rem;
+        }
+        
+        .player-card {
+            background-color: #FFFFFF; /* Colore bianco solido */
+            padding: 1rem;
+            border-radius: var(--border-radius-sm);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            min-width: 200px;
+            border-left: 5px solid #5D4037; /* Bordo fisso marrone scuro */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .player-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .player-card.active {
+            border-left: 5px solid #4CAF50; /* Bordo verde */
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+        
+        .player-name {
+            font-weight: bold;
+            color: #3E2723; /* Colore del testo scuro fisso */
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .player-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.5rem;
+            border: 1px solid #D7CCC8; /* Bordo fisso beige */
+        }
+        
+        .player-position {
+            font-size: 0.9rem;
+            color: #5D4037; /* Colore fisso marrone scuro */
+        }
+        
+        .player-status {
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #8D6E63; /* Colore fisso marrone medio */
+            margin-top: 0.5rem;
+        }
+        
+        .game-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #FFFFFF; /* Colore bianco solido */
+            padding: 2rem;
+            border-radius: var(--border-radius-md);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            color: #3E2723; /* Colore del testo scuro fisso */
+            border: 3px solid #5D4037; /* Bordo più spesso e con colore fisso */
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #3E2723; /* Colore del testo scuro fisso */
+        }
+        
+        .modal-title {
+            color: #5D4037; /* Colore fisso */
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .modal-text {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            color: #3E2723; /* Colore del testo scuro fisso */
+        }
+        
+        .modal-button {
+            background-color: #5D4037; /* Colore fisso marrone scuro */
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .modal-button:hover {
+            background-color: #8D6E63; /* Colore fisso più scuro */
+            color: white;
+        }
+        
+        .event-card {
+            background-color: #FFFFFF; /* Colore bianco solido */
+            padding: 1.5rem;
+            border-radius: var(--border-radius-md);
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            text-align: center;
+            border: 2px solid #5D4037; /* Bordo fisso marrone scuro */
+            display: none;
+        }
+        
+        .event-title {
+            color: #5D4037; /* Colore fisso marrone scuro */
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .event-description {
+            color: #3E2723; /* Colore del testo scuro fisso */
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .event-effect {
+            font-weight: bold;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border-radius: var(--border-radius-sm);
+            display: inline-block;
+        }
+        
+        .event-effect.bonus {
+            background-color: #E8F5E9; /* Verde chiaro */
+            color: #2E7D32; /* Verde scuro */
+            border: 1px solid #4CAF50; /* Bordo verde */
+        }
+        
+        .event-effect.penalty {
+            background-color: #FFEBEE; /* Rosso chiaro */
+            color: #C62828; /* Rosso scuro */
+            border: 1px solid #F44336; /* Bordo rosso */
+        }
+        
+        .event-effect.neutral {
+            background-color: #E0E0E0; /* Grigio chiaro */
+            color: #424242; /* Grigio scuro */
+            border: 1px solid #9E9E9E; /* Bordo grigio */
+        }
+        
+        .player-setup {
+            background-color: #FFFFFF; /* Colore bianco solido */
+            padding: 1.5rem;
+            border-radius: var(--border-radius-md);
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            border: 2px solid #5D4037; /* Bordo fisso marrone scuro */
+        }
+        
+        .player-setup h3 {
+            color: #5D4037; /* Colore fisso marrone scuro */
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .player-input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .player-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .player-input label {
+            min-width: 100px;
+            color: #3E2723; /* Colore del testo scuro fisso */
+            font-weight: bold;
+        }
+        
+        .player-input input {
+            flex: 1;
+            padding: 0.5rem;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid #D7CCC8; /* Bordo fisso beige */
+        }
+        
+        .player-input input:focus {
+            outline: none;
+            border-color: #8D6E63; /* Bordo fisso marrone medio */
+            box-shadow: 0 0 5px rgba(141, 110, 99, 0.5);
+        }
+        
+        .game-info {
+            background-color: #FFFFFF; /* Colore bianco solido */
+            padding: 1.5rem;
+            border-radius: var(--border-radius-sm);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            border: 2px solid #5D4037; /* Bordo fisso marrone scuro */
+            color: #3E2723; /* Colore del testo scuro fisso */
+        }
+        
+        .game-info h3 {
+            color: #5D4037; /* Colore fisso marrone scuro */
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .cell-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .cell-type {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cell-color {
+            width: 20px;
+            height: 20px;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid #D7CCC8; /* Bordo fisso beige */
+        }
+        
+        .cell-color.start {
+            background-color: #BBDEFB; /* Azzurro chiaro */
+            border: 1px solid #2196F3; /* Bordo azzurro */
+        }
+        
+        .cell-color.end {
+            background-color: #FFD54F; /* Giallo chiaro */
+            border: 1px solid #FFC107; /* Bordo giallo */
+        }
+        
+        .cell-color.bonus {
+            background-color: #A5D6A7; /* Verde chiaro */
+            border: 1px solid #4CAF50; /* Bordo verde */
+        }
+        
+        .cell-color.penalty {
+            background-color: #EF9A9A; /* Rosso chiaro */
+            border: 1px solid #F44336; /* Bordo rosso */
+        }
+        
+        .cell-color.special {
+            background-color: #D7CCC8; /* Colore fisso beige */
+            border: 1px solid #8D6E63; /* Bordo fisso marrone medio */
+        }
+        
+        @media (max-width: 768px) {
+            .game-board {
+                grid-template-columns: repeat(6, 1fr);
+                grid-template-rows: repeat(10, 1fr);
+            }
+            
+            .game-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .player-info {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .player-card {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header style="background-color: rgba(93, 64, 55, 0.8);">
+        <div class="header-bg" style="background-image: url('images/game-journey-bg.jpg'); opacity: 0.5;"></div>
+        <h1>Il Viaggio di Foscolo</h1>
+        <p class="subtitle">Un gioco dell'oca letterario attraverso la vita e le opere del poeta</p>
+    </header>
+    
+    <nav>
+        <div class="menu-container">
+            <div class="dropdown">
+                <button class="dropbtn">Biografia</button>
+                <div class="dropdown-content">
+                    <a href="giovinezza.html">Giovinezza</a>
+                    <a href="periodo-napoleonico.html">Periodo napoleonico</a>
+                    <a href="esilio.html">L'esilio</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Opere</button>
+                <div class="dropdown-content">
+                    <a href="ultime-lettere.html">Ultime lettere di Jacopo Ortis</a>
+                    <a href="sonetti.html">Sonetti</a>
+                    <a href="sepolcri.html">Dei Sepolcri</a>
+                    <a href="grazie.html">Le Grazie</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Pensiero</button>
+                <div class="dropdown-content">
+                    <a href="neoclassicismo.html">Neoclassicismo</a>
+                    <a href="preromanticismo.html">Preromanticismo</a>
+                    <a href="ideali-politici.html">Ideali politici</a>
+                    <a href="stile-foscoliano.html">Lo stile di Foscolo</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Galleria</button>
+                <div class="dropdown-content">
+                    <a href="foto.html">Fotografie</a>
+                    <a href="luoghi.html">Luoghi foscoliani</a>
+                    <a href="manoscritti.html">Manoscritti</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Giochi</button>
+                <div class="dropdown-content">
+                    <a href="gioco.html">Il Labirinto di Foscolo</a>
+                    <a href="gioco-oca-foscolo.html">Il Viaggio di Foscolo</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Home</button>
+                <div class="dropdown-content">
+                    <a href="index.html">Pagina principale</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="content">
+            <h2 class="animated-text">Il Viaggio di Foscolo: un gioco dell'oca letterario</h2>
+            
+            <p class="animated-text">
+                Benvenuti a "Il Viaggio di Foscolo", un gioco dell'oca letterario che vi permetterà di esplorare la vita, le opere e il pensiero di Ugo Foscolo in modo divertente e collaborativo. Sfida i tuoi amici in questo percorso attraverso le tappe fondamentali dell'esistenza del grande poeta italiano!
+            </p>
+            
+            <div class="quote">
+                "Il lauro eterno fiorirà sul verso<br>
+                che dirà come vincesti il tempo e l'oblio."<br>
+                <small>— Ispirato a Ugo Foscolo</small>
+            </div>
+            
+            <div class="game-info">
+                <h3>Come si gioca</h3>
+                <p>Il gioco è strutturato come un percorso a tappe attraverso la vita di Foscolo, dalle sue origini a Zante fino all'esilio londinese. Ogni casella rappresenta un momento o un'opera significativa, con eventi speciali che possono aiutarti o ostacolarti nel tuo cammino.</p>
+                
+                <ul>
+                    <li>Inserisci i nomi dei giocatori (da 2 a 4)</li>
+                    <li>Lancia il dado a turno per avanzare nel percorso</li>
+                    <li>Segui le istruzioni delle caselle speciali</li>
+                    <li>Il primo giocatore che raggiunge la casella finale vince</li>
+                </ul>
+                
+                <div class="cell-info">
+                    <div class="cell-type">
+                        <div class="cell-color start"></div>
+                        <span>Inizio (Zante, 1778)</span>
+                    </div>
+                    <div class="cell-type">
+                        <div class="cell-color end"></div>
+                        <span>Fine (Londra, 1827)</span>
+                    </div>
+                    <div class="cell-type">
+                        <div class="cell-color bonus"></div>
+                        <span>Bonus (avanza)</span>
+                    </div>
+                    <div class="cell-type">
+                        <div class="cell-color penalty"></div>
+                        <span>Penalità (indietreggia)</span>
+                    </div>
+                    <div class="cell-type">
+                        <div class="cell-color special"></div>
+                        <span>Evento speciale</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="player-setup" class="player-setup">
+                <h3>Configura i giocatori</h3>
+                <div class="player-input-container">
+                    <div class="player-input">
+                        <label for="player1">Giocatore 1:</label>
+                        <input type="text" id="player1" placeholder="Nome giocatore 1">
+                        <div class="player-color" style="background-color: #F44336;"></div>
+                    </div>
+                    <div class="player-input">
+                        <label for="player2">Giocatore 2:</label>
+                        <input type="text" id="player2" placeholder="Nome giocatore 2">
+                        <div class="player-color" style="background-color: #2196F3;"></div>
+                    </div>
+                    <div class="player-input">
+                        <label for="player3">Giocatore 3:</label>
+                        <input type="text" id="player3" placeholder="Nome giocatore 3 (opzionale)">
+                        <div class="player-color" style="background-color: #4CAF50;"></div>
+                    </div>
+                    <div class="player-input">
+                        <label for="player4">Giocatore 4:</label>
+                        <input type="text" id="player4" placeholder="Nome giocatore 4 (opzionale)">
+                        <div class="player-color" style="background-color: #FFC107;"></div>
+                    </div>
+                </div>
+                <div class="game-controls">
+                    <button id="start-game" class="game-button">Inizia il gioco</button>
+                </div>
+            </div>
+            
+            <div id="game-container" class="game-container" style="display: none;">
+                <div class="player-info" id="player-info">
+                    <!-- Le informazioni dei giocatori verranno generate dinamicamente -->
+                </div>
+                
+                <div class="dice-container">
+                    <div class="dice" id="dice">1</div>
+                </div>
+                
+                <div class="game-controls">
+                    <button id="roll-dice" class="game-button">Lancia il dado</button>
+                    <button id="end-turn" class="game-button" disabled>Fine turno</button>
+                    <button id="reset-game" class="game-button">Ricomincia</button>
+                </div>
+                
+                <div class="event-card" id="event-card">
+                    <div class="event-title" id="event-title">Titolo evento</div>
+                    <div class="event-description" id="event-description">Descrizione dell'evento</div>
+                    <div class="event-effect" id="event-effect">Effetto</div>
+                </div>
+                
+                <div class="game-board" id="game-board">
+                    <!-- Le caselle del gioco verranno generate dinamicamente -->
+                </div>
+            </div>
+            
+            <a href="index.html" class="back-to-home">Torna alla pagina principale</a>
+        </div>
+        
+        <div class="sidebar">
+            <img src="images/foscolo-portrait.jpg" alt="Ritratto di Ugo Foscolo" class="portrait">
+            <h3>Il Viaggio di Foscolo</h3>
+            <p>Un gioco dell'oca letterario per esplorare la vita e le opere di Ugo Foscolo in modo collaborativo e divertente.</p>
+            
+            <h4>Caratteristiche del gioco</h4>
+            <ul>
+                <li>Multiplayer (2-4 giocatori)</li>
+                <li>Percorso ispirato alla vita di Foscolo</li>
+                <li>Eventi storici e letterari</li>
+                <li>Caselle bonus e penalità</li>
+                <li>Sfide di conoscenza</li>
+            </ul>
+            
+            <div class="quote">
+                "Né più mai toccherò le sacre sponde<br>
+                ove il mio corpo fanciulletto giacque..."<br>
+                <small>— A Zacinto</small>
+            </div>
+            
+            <h4>Benefici didattici</h4>
+            <ul>
+                <li>Apprendimento collaborativo</li>
+                <li>Memorizzazione della cronologia</li>
+                <li>Comprensione del contesto storico</li>
+                <li>Conoscenza delle opere principali</li>
+                <li>Socializzazione e confronto</li>
+            </ul>
+            
+            <h4>Suggerimenti</h4>
+            <p>Giocate in gruppo e discutete degli eventi che incontrate lungo il percorso. Il gioco è pensato non solo per divertire, ma anche per stimolare la conversazione e l'approfondimento.</p>
+        </div>
+    </main>
+    
+    <!-- Modal per gli eventi e i messaggi di gioco -->
+    <div class="game-modal" id="game-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modal-close">&times;</span>
+            <h3 class="modal-title" id="modal-title">Titolo del modal</h3>
+            <p class="modal-text" id="modal-text">
+                Testo del modal
+            </p>
+            <button class="modal-button" id="modal-button">OK</button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Ugo Foscolo, tra esilio e disillusione | Sito creato a scopo educativo</p>
+    </footer>
+    
+    <script>
+        // Definizione delle caselle del gioco
+        const boardCells = [
+            { id: 0, type: 'start', name: 'Zante 1778', description: 'Nascita di Foscolo il 6 febbraio 1778 nell\'isola di Zante (Zacinto)', effect: null, date: '1778' },
+            { id: 1, type: 'normal', name: 'Infanzia 1778-1785', description: 'Primi anni a Zante con la famiglia', effect: null, date: '1778-1785' },
+            { id: 2, type: 'bonus', name: 'Studi 1785-1788', description: 'Primi studi a Spalato sotto la guida di precettori privati', effect: { type: 'move', value: 2 }, date: '1785-1788' },
+            { id: 3, type: 'normal', name: 'Venezia 1792', description: 'Trasferimento a Venezia con la famiglia', effect: null, date: '1792' },
+            { id: 4, type: 'special', name: 'Tieste 1795', description: 'Prima tragedia rappresentata al Teatro Sant\'Angelo di Venezia', effect: { type: 'extra_turn', value: true }, date: '1795' },
+            { id: 5, type: 'penalty', name: 'Delusione 1796', description: 'Insuccesso letterario e difficoltà economiche', effect: { type: 'move', value: -1 }, date: '1796' },
+            { id: 6, type: 'normal', name: 'Odi 1796-1797', description: 'Composizione delle prime odi patriottiche', effect: null, date: '1796-1797' },
+            { id: 7, type: 'bonus', name: 'Bonaparte 1797', description: 'Ode a Bonaparte liberatore, celebrazione dell\'arrivo dei francesi', effect: { type: 'move', value: 1 }, date: '1797' },
+            { id: 8, type: 'normal', name: 'Sonetti 1798-1799', description: 'Composizione dei primi sonetti importanti', effect: null, date: '1798-1799' },
+            { id: 9, type: 'special', name: 'A Zacinto 1803', description: 'Composizione del celebre sonetto dedicato alla sua isola natale', effect: { type: 'roll_again', value: true }, date: '1803' },
+            { id: 10, type: 'normal', name: 'Alla sera 1803', description: 'Composizione del sonetto che apre la raccolta poetica', effect: null, date: '1803' },
+            { id: 11, type: 'penalty', name: 'Campoformio 1797', description: 'Trattato con cui Napoleone cede Venezia all\'Austria', effect: { type: 'skip_turn', value: true }, date: '1797' },
+            { id: 12, type: 'normal', name: 'Milano 1798', description: 'Trasferimento a Milano, capitale della Repubblica Cisalpina', effect: null, date: '1798' },
+            { id: 13, type: 'bonus', name: 'Ortis 1802', description: 'Pubblicazione definitiva delle "Ultime lettere di Jacopo Ortis"', effect: { type: 'move', value: 3 }, date: '1802' },
+            { id: 14, type: 'normal', name: 'Militare 1804', description: 'Foscolo nell\'esercito napoleonico con il grado di capitano', effect: null, date: '1804' },
+            { id: 15, type: 'special', name: 'Pavia 1808', description: 'Ottiene la cattedra di eloquenza all\'Università di Pavia', effect: { type: 'extra_turn', value: true }, date: '1808' },
+            { id: 16, type: 'normal', name: 'Lezioni 1809', description: 'Prolusione "Dell\'origine e dell\'ufficio della letteratura"', effect: null, date: '1809' },
+            { id: 17, type: 'penalty', name: 'Chiusura 1809', description: 'Chiusura dell\'Università per decreto napoleonico', effect: { type: 'move', value: -2 }, date: '1809' },
+            { id: 18, type: 'normal', name: 'Firenze 1812', description: 'Soggiorno a Firenze, periodo di intensa attività letteraria', effect: null, date: '1812' },
+            { id: 19, type: 'bonus', name: 'Sepolcri 1807', description: 'Pubblicazione del carme "Dei Sepolcri", capolavoro foscoliano', effect: { type: 'move', value: 2 }, date: '1807' },
+            { id: 20, type: 'normal', name: 'Aiace 1811', description: 'Rappresentazione della tragedia Aiace a Milano', effect: null, date: '1811' },
+            { id: 21, type: 'penalty', name: 'Censura 1812', description: 'Censura napoleonica dell\'Aiace per allusioni politiche', effect: { type: 'skip_turn', value: true }, date: '1812' },
+            { id: 22, type: 'normal', name: 'Ricciarda 1813', description: 'Composizione della tragedia Ricciarda', effect: null, date: '1813' },
+            { id: 23, type: 'special', name: 'Le Grazie 1812-1815', description: 'Inizio della composizione del poema incompiuto', effect: { type: 'roll_again', value: true }, date: '1812-1815' },
+            { id: 24, type: 'normal', name: 'Milano 1814', description: 'Ritorno a Milano dopo vari spostamenti', effect: null, date: '1814' },
+            { id: 25, type: 'penalty', name: 'Restaurazione 1815', description: 'Caduta di Napoleone e restaurazione austriaca', effect: { type: 'move', value: -3 }, date: '1815' },
+            { id: 26, type: 'normal', name: 'Fuga 1815', description: 'Fuga in Svizzera per evitare il giuramento all\'Austria', effect: null, date: '1815' },
+            { id: 27, type: 'bonus', name: 'Inghilterra 1816', description: 'Arrivo a Londra, inizio dell\'esilio definitivo', effect: { type: 'move', value: 1 }, date: '1816' },
+            { id: 28, type: 'normal', name: 'Saggi 1818-1825', description: 'Saggi sulla letteratura italiana per il pubblico inglese', effect: null, date: '1818-1825' },
+            { id: 29, type: 'special', name: 'Dante 1825', description: 'Pubblicazione del "Discorso sul testo di Dante"', effect: { type: 'extra_turn', value: true }, date: '1825' },
+            { id: 30, type: 'normal', name: 'Traduzioni 1820-1826', description: 'Traduzioni di opere inglesi per sostentarsi', effect: null, date: '1820-1826' },
+            { id: 31, type: 'penalty', name: 'Debiti 1824', description: 'Gravi problemi economici e debiti crescenti', effect: { type: 'move', value: -2 }, date: '1824' },
+            { id: 32, type: 'normal', name: 'Malattia 1826', description: 'Ultimi anni di vita segnati dalla malattia', effect: null, date: '1826' },
+            { id: 33, type: 'normal', name: 'Turnham Green 1827', description: 'Residenza finale nei pressi di Londra', effect: null, date: '1827' },
+            { id: 34, type: 'end', name: 'Londra 1827', description: 'Morte di Foscolo il 10 settembre 1827', effect: null, date: '1827' }
+        ];
+        
+        // Variabili di gioco
+        let players = [];
+        let currentPlayerIndex = 0;
+        let gameStarted = false;
+        let diceRolled = false;
+        
+        // Elementi DOM
+        const gameContainer = document.getElementById('game-container');
+        const playerSetup = document.getElementById('player-setup');
+        const gameBoard = document.getElementById('game-board');
+        const playerInfo = document.getElementById('player-info');
+        const dice = document.getElementById('dice');
+        const rollDiceButton = document.getElementById('roll-dice');
+        const endTurnButton = document.getElementById('end-turn');
+        const resetGameButton = document.getElementById('reset-game');
+        const startGameButton = document.getElementById('start-game');
+        const eventCard = document.getElementById('event-card');
+        const eventTitle = document.getElementById('event-title');
+        const eventDescription = document.getElementById('event-description');
+        const eventEffect = document.getElementById('event-effect');
+        const modal = document.getElementById('game-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+        const modalButton = document.getElementById('modal-button');
+        const modalClose = document.getElementById('modal-close');
+        
+        // Funzione per inizializzare il gioco
+        function initGame() {
+            // Genera il tabellone di gioco
+            generateGameBoard();
+            
+            // Resetta le variabili di gioco
+            currentPlayerIndex = 0;
+            diceRolled = false;
+            
+            // Aggiorna le informazioni dei giocatori
+            updatePlayerInfo();
+            
+            // Abilita/disabilita i pulsanti appropriati
+            rollDiceButton.disabled = false;
+            endTurnButton.disabled = true;
+            
+            // Nascondi la carta evento
+            eventCard.style.display = 'none';
+            
+            // Mostra il modal di benvenuto
+            showModal('Benvenuti al Viaggio di Foscolo!', 
+                `Inizia il tuo viaggio attraverso la vita e le opere di Ugo Foscolo.<br><br>
+                Il primo giocatore è ${players[currentPlayerIndex].name}.<br>
+                Lancia il dado per iniziare!`, 'Iniziamo!');
+        }
+        
+        // Funzione per generare il tabellone di gioco
+        function generateGameBoard() {
+            gameBoard.innerHTML = '';
+
+            // Definisci il layout del percorso a serpentina
+            // Ogni numero rappresenta l'indice della casella nel percorso
+            const boardLayout = [
+                [0, 1, 2, 3, 4, 5, 6],
+                [13, 12, 11, 10, 9, 8, 7],
+                [14, 15, 16, 17, 18, 19, 20],
+                [27, 26, 25, 24, 23, 22, 21],
+                [28, 29, 30, 31, 32, 33, 34]
+            ];
+
+            // Crea il tabellone seguendo il layout
+            boardLayout.forEach(row => {
+                row.forEach(cellIndex => {
+                    if (cellIndex < boardCells.length) {
+                        const cell = boardCells[cellIndex];
+
+                        const cellElement = document.createElement('div');
+                        cellElement.className = `game-cell ${cell.type}`;
+                        cellElement.dataset.id = cell.id;
+
+                        // Aggiungi il numero della casella
+                        const cellNumber = document.createElement('div');
+                        cellNumber.className = 'cell-number';
+                        cellNumber.textContent = cell.id;
+                        cellNumber.style.fontSize = '0.7rem';
+                        cellNumber.style.opacity = '0.7';
+                        cellElement.appendChild(cellNumber);
+
+                        // Aggiungi il nome della casella (che ora include già la data)
+                        const cellName = document.createElement('div');
+                        cellName.className = 'cell-name';
+                        cellName.textContent = cell.name;
+                        cellName.style.fontWeight = 'bold';
+                        cellElement.appendChild(cellName);
+
+                        // Aggiungi i token dei giocatori se presenti
+                        players.forEach(player => {
+                            if (player.position === cell.id) {
+                                const playerToken = document.createElement('div');
+                                playerToken.className = `player-token player-${player.id}`;
+                                playerToken.title = player.name;
+                                cellElement.appendChild(playerToken);
+                            }
+                        });
+
+                        // Aggiungi un event listener per mostrare informazioni sulla casella
+                        cellElement.addEventListener('click', () => {
+                            showCellInfo(cell);
+                        });
+
+                        gameBoard.appendChild(cellElement);
+                    } else {
+                        // Crea una cella vuota per mantenere la griglia
+                        const emptyCell = document.createElement('div');
+                        emptyCell.className = 'game-cell';
+                        emptyCell.style.visibility = 'hidden';
+                        gameBoard.appendChild(emptyCell);
+                    }
+                });
+            });
+        }
+        
+        // Funzione per mostrare informazioni su una casella
+        function showCellInfo(cell) {
+            let effectText = '';
+            let effectClass = '';
+            let effectIcon = '';
+
+            if (cell.effect) {
+                switch (cell.effect.type) {
+                    case 'move':
+                        if (cell.effect.value > 0) {
+                            effectText = `Avanza di ${cell.effect.value} caselle`;
+                            effectClass = 'bonus';
+                            effectIcon = '🚀';
+                        } else {
+                            effectText = `Torna indietro di ${Math.abs(cell.effect.value)} caselle`;
+                            effectClass = 'penalty';
+                            effectIcon = '⬅️';
+                        }
+                        break;
+                    case 'extra_turn':
+                        effectText = 'Ottieni un turno extra';
+                        effectClass = 'bonus';
+                        effectIcon = '🎁';
+                        break;
+                    case 'skip_turn':
+                        effectText = 'Salta un turno';
+                        effectClass = 'penalty';
+                        effectIcon = '⏸️';
+                        break;
+                    case 'roll_again':
+                        effectText = 'Lancia di nuovo il dado';
+                        effectClass = 'bonus';
+                        effectIcon = '🎲';
+                        break;
+                }
+            }
+
+            // Estrai il nome senza la data per il titolo
+            const nameWithoutDate = cell.name.split(' ')[0];
+
+            // Crea un contenuto HTML ben formattato per il modal
+            const modalContent = `
+                <div style="text-align: left; margin-bottom: 15px;">
+                    <p>${cell.description}</p>
+                </div>
+                ${effectText ?
+                    `<div style="background-color: ${effectClass === 'bonus' ? '#E8F5E9' : '#FFEBEE'};
+                          padding: 15px;
+                          border-radius: 8px;
+                          margin-top: 15px;
+                          display: flex;
+                          align-items: center;
+                          border: 1px solid ${effectClass === 'bonus' ? '#4CAF50' : '#F44336'}">
+                        <span style="font-size: 24px; margin-right: 10px;">${effectIcon}</span>
+                        <div>
+                            <strong>Effetto:</strong> ${effectText}
+                        </div>
+                    </div>`
+                : ''}
+
+                ${cell.type === 'start' ?
+                    `<div style="margin-top: 15px; font-style: italic; color: #5D4037;">
+                        "Né più mai toccherò le sacre sponde ove il mio corpo fanciulletto giacque..."<br>
+                        <small>— Da "A Zacinto"</small>
+                    </div>`
+                : ''}
+
+                ${cell.type === 'end' ?
+                    `<div style="margin-top: 15px; font-style: italic; color: #5D4037;">
+                        "Il tempo, gran ministro della natura, cangia, e i regni disfà, le terre, e il tutto."<br>
+                        <small>— Ugo Foscolo</small>
+                    </div>`
+                : ''}
+
+                ${cell.id === 13 ? // Ortis
+                    `<div style="margin-top: 15px; font-style: italic; color: #5D4037;">
+                        "Il sacrificio della patria nostra è consumato: tutto è perduto..."<br>
+                        <small>— Incipit delle "Ultime lettere di Jacopo Ortis"</small>
+                    </div>`
+                : ''}
+
+                ${cell.id === 19 ? // Sepolcri
+                    `<div style="margin-top: 15px; font-style: italic; color: #5D4037;">
+                        "A egregie cose il forte animo accendono l'urne de' forti..."<br>
+                        <small>— Dai "Sepolcri"</small>
+                    </div>`
+                : ''}
+            `;
+
+            showModal(`${nameWithoutDate} <span style="color: #8D6E63; font-size: 0.9em;">(${cell.date})</span>`, modalContent, 'OK');
+        }
+        
+        // Funzione per aggiornare le informazioni dei giocatori
+        function updatePlayerInfo() {
+            playerInfo.innerHTML = '';
+            
+            players.forEach((player, index) => {
+                const playerCard = document.createElement('div');
+                playerCard.className = `player-card ${index === currentPlayerIndex ? 'active' : ''}`;
+                
+                const playerName = document.createElement('div');
+                playerName.className = 'player-name';
+                
+                const playerColor = document.createElement('span');
+                playerColor.className = 'player-color';
+                playerColor.style.backgroundColor = player.color;
+                
+                playerName.appendChild(playerColor);
+                playerName.appendChild(document.createTextNode(player.name));
+                
+                const playerPosition = document.createElement('div');
+                playerPosition.className = 'player-position';
+                playerPosition.textContent = `Posizione: ${player.position} (${boardCells[player.position].name})`;
+                
+                const playerStatus = document.createElement('div');
+                playerStatus.className = 'player-status';
+                
+                if (player.skipTurn) {
+                    playerStatus.textContent = 'Salta il prossimo turno';
+                } else if (index === currentPlayerIndex && !diceRolled) {
+                    playerStatus.textContent = 'È il tuo turno - Lancia il dado';
+                } else if (index === currentPlayerIndex && diceRolled) {
+                    playerStatus.textContent = 'Termina il tuo turno';
+                } else {
+                    playerStatus.textContent = 'In attesa';
+                }
+                
+                playerCard.appendChild(playerName);
+                playerCard.appendChild(playerPosition);
+                playerCard.appendChild(playerStatus);
+                
+                playerInfo.appendChild(playerCard);
+            });
+        }
+        
+        // Funzione per lanciare il dado
+        function rollDice() {
+            // Disabilita il pulsante del dado
+            rollDiceButton.disabled = true;
+
+            // Animazione del dado
+            dice.classList.add('rolling');
+
+            // Aggiungi un po' di stile al dado durante il lancio
+            dice.style.backgroundColor = '#E0E0E0';
+            dice.style.transform = 'scale(1.1)';
+
+            // Simula il lancio del dado con emoji di dadi
+            const diceEmojis = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+            let rollCount = 0;
+            const maxRolls = 15; // Aumentato per un'animazione più lunga
+            const rollInterval = setInterval(() => {
+                const randomIndex = Math.floor(Math.random() * 6);
+                dice.innerHTML = `<span style="font-size: 1.5em;">${diceEmojis[randomIndex]}</span>`;
+                rollCount++;
+
+                // Cambia colore durante il lancio
+                const hue = (rollCount * 24) % 360;
+                dice.style.backgroundColor = `hsl(${hue}, 70%, 90%)`;
+
+                if (rollCount >= maxRolls) {
+                    clearInterval(rollInterval);
+                    dice.classList.remove('rolling');
+
+                    // Risultato finale del dado
+                    const result = Math.floor(Math.random() * 6) + 1;
+
+                    // Mostra il risultato con un'animazione
+                    dice.style.transform = 'scale(1.3)';
+                    dice.style.backgroundColor = '#FFFFFF';
+                    dice.style.boxShadow = '0 0 15px rgba(76, 175, 80, 0.7)';
+                    dice.innerHTML = `<span style="font-size: 1.5em;">${diceEmojis[result-1]}</span>`;
+
+                    // Aggiungi un effetto sonoro (simulato visivamente)
+                    const player = players[currentPlayerIndex];
+                    showModal('🎲 Risultato del dado',
+                        `<div style="text-align: center; padding: 20px;">
+                            <span style="font-size: 3em;">${diceEmojis[result-1]}</span>
+                            <p style="margin-top: 15px; font-size: 1.2em;">
+                                <strong>${player.name}</strong> ha ottenuto un <strong>${result}</strong>!
+                            </p>
+                        </div>`, 'Avanza');
+
+                    // Quando si chiude il modal, muovi il giocatore
+                    modalButton.onclick = function() {
+                        modal.style.display = 'none';
+
+                        // Ripristina lo stile del dado
+                        setTimeout(() => {
+                            dice.style.transform = 'scale(1)';
+                            dice.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
+                        }, 500);
+
+                        // Muovi il giocatore
+                        movePlayer(result);
+
+                        // Imposta diceRolled a true
+                        diceRolled = true;
+
+                        // Abilita il pulsante di fine turno
+                        endTurnButton.disabled = false;
+
+                        // Ripristina l'handler del pulsante
+                        modalButton.onclick = function() {
+                            modal.style.display = 'none';
+                        };
+                    };
+                }
+            }, 100);
+        }
+        
+        // Funzione per muovere il giocatore
+        function movePlayer(steps) {
+            const player = players[currentPlayerIndex];
+            const oldPosition = player.position;
+            
+            // Calcola la nuova posizione
+            let newPosition = oldPosition + steps;
+            
+            // Assicurati che la nuova posizione sia valida
+            if (newPosition >= boardCells.length) {
+                newPosition = boardCells.length - 1;
+            }
+            
+            // Aggiorna la posizione del giocatore
+            player.position = newPosition;
+            
+            // Aggiorna il tabellone
+            generateGameBoard();
+            
+            // Aggiorna le informazioni dei giocatori
+            updatePlayerInfo();
+            
+            // Mostra il movimento
+            showModal('Movimento', 
+                `${player.name} ha lanciato un ${steps} e si è spostato da ${boardCells[oldPosition].name} a ${boardCells[newPosition].name}.`, 'OK');
+            
+            // Controlla se il giocatore ha raggiunto la fine
+            if (newPosition === boardCells.length - 1) {
+                endGame(player);
+                return;
+            }
+            
+            // Controlla se la casella ha un effetto
+            const cell = boardCells[newPosition];
+            if (cell.effect) {
+                setTimeout(() => {
+                    applyEffect(cell);
+                }, 1000);
+            }
+        }
+        
+        // Funzione per applicare l'effetto di una casella
+        function applyEffect(cell) {
+            const player = players[currentPlayerIndex];
+
+            // Mostra la carta evento
+            eventCard.style.display = 'block';
+            eventTitle.innerHTML = `<span style="font-size: 1.2em;">${cell.name.split(' ')[0]}</span> <span style="color: #8D6E63; font-size: 0.9em;">(${cell.date})</span>`;
+            eventDescription.textContent = cell.description;
+
+            let effectClass = 'neutral';
+            let effectText = '';
+            let effectIcon = '';
+            let specialMessage = '';
+
+            if (cell.effect) {
+                switch (cell.effect.type) {
+                    case 'move':
+                        if (cell.effect.value > 0) {
+                            effectClass = 'bonus';
+                            effectText = `Avanza di ${cell.effect.value} caselle`;
+                            effectIcon = '🚀';
+
+                            // Messaggio speciale basato sulla casella
+                            if (cell.id === 13) { // Ortis
+                                specialMessage = 'Il successo dell\'Ortis ti dà nuova energia!';
+                            } else if (cell.id === 19) { // Sepolcri
+                                specialMessage = 'I Sepolcri ti rendono celebre in tutta Italia!';
+                            } else if (cell.id === 2) { // Studi
+                                specialMessage = 'Gli studi ti aprono nuove prospettive!';
+                            } else if (cell.id === 7) { // Bonaparte
+                                specialMessage = 'L\'ode a Bonaparte ti porta fortuna!';
+                            } else if (cell.id === 27) { // Inghilterra
+                                specialMessage = 'L\'Inghilterra ti offre nuove opportunità!';
+                            }
+
+                            // Applica l'effetto dopo la chiusura del modal
+                            setTimeout(() => {
+                                movePlayer(cell.effect.value);
+                            }, 2000);
+                        } else {
+                            effectClass = 'penalty';
+                            effectText = `Torna indietro di ${Math.abs(cell.effect.value)} caselle`;
+                            effectIcon = '⬅️';
+
+                            // Messaggio speciale basato sulla casella
+                            if (cell.id === 5) { // Delusione
+                                specialMessage = 'La delusione letteraria ti fa perdere fiducia...';
+                            } else if (cell.id === 11) { // Campoformio
+                                specialMessage = 'Il tradimento di Napoleone ti spezza il cuore!';
+                            } else if (cell.id === 17) { // Chiusura
+                                specialMessage = 'La chiusura dell\'università ti lascia senza lavoro!';
+                            } else if (cell.id === 21) { // Censura
+                                specialMessage = 'La censura napoleonica blocca la tua carriera!';
+                            } else if (cell.id === 25) { // Restaurazione
+                                specialMessage = 'La restaurazione austriaca ti costringe all\'esilio!';
+                            } else if (cell.id === 31) { // Debiti
+                                specialMessage = 'I debiti ti perseguitano fino in Inghilterra!';
+                            }
+
+                            // Applica l'effetto dopo la chiusura del modal
+                            setTimeout(() => {
+                                const oldPosition = player.position;
+                                player.position = Math.max(0, player.position + cell.effect.value);
+                                generateGameBoard();
+                                updatePlayerInfo();
+
+                                showModal(`${effectIcon} Movimento indietro`,
+                                    `<div style="background-color: #FFEBEE; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #F44336">
+                                        ${player.name} è tornato indietro da ${boardCells[oldPosition].name.split(' ')[0]} a ${boardCells[player.position].name.split(' ')[0]}.
+                                        ${specialMessage ? `<br><br><em>${specialMessage}</em>` : ''}
+                                    </div>`, 'OK');
+                            }, 2000);
+                        }
+                        break;
+                    case 'extra_turn':
+                        effectClass = 'bonus';
+                        effectText = 'Ottieni un turno extra';
+                        effectIcon = '🎁';
+
+                        // Messaggio speciale basato sulla casella
+                        if (cell.id === 4) { // Tieste
+                            specialMessage = 'Il successo della tragedia Tieste ti dà nuova energia!';
+                        } else if (cell.id === 15) { // Pavia
+                            specialMessage = 'La cattedra a Pavia ti dà prestigio accademico!';
+                        } else if (cell.id === 29) { // Dante
+                            specialMessage = 'Il tuo saggio su Dante è molto apprezzato in Inghilterra!';
+                        }
+
+                        // Applica l'effetto alla fine del turno
+                        player.extraTurn = true;
+                        break;
+                    case 'skip_turn':
+                        effectClass = 'penalty';
+                        effectText = 'Salta un turno';
+                        effectIcon = '⏸️';
+
+                        // Messaggio speciale basato sulla casella
+                        if (cell.id === 11) { // Campoformio
+                            specialMessage = 'La delusione per il trattato di Campoformio ti paralizza!';
+                        } else if (cell.id === 21) { // Censura
+                            specialMessage = 'La censura dell\'Aiace ti mette in cattiva luce con Napoleone!';
+                        }
+
+                        // Applica l'effetto alla fine del turno
+                        player.skipTurn = true;
+                        break;
+                    case 'roll_again':
+                        effectClass = 'bonus';
+                        effectText = 'Lancia di nuovo il dado';
+                        effectIcon = '🎲';
+
+                        // Messaggio speciale basato sulla casella
+                        if (cell.id === 9) { // A Zacinto
+                            specialMessage = 'La nostalgia per Zacinto ti dà nuova ispirazione!';
+                        } else if (cell.id === 23) { // Le Grazie
+                            specialMessage = 'La bellezza delle Grazie ti riempie di entusiasmo!';
+                        }
+
+                        // Applica l'effetto dopo la chiusura del modal
+                        setTimeout(() => {
+                            diceRolled = false;
+                            rollDiceButton.disabled = false;
+                            endTurnButton.disabled = true;
+
+                            showModal(`${effectIcon} Lancio extra`,
+                                `<div style="background-color: #E8F5E9; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #4CAF50">
+                                    ${player.name} può lanciare di nuovo il dado!
+                                    ${specialMessage ? `<br><br><em>${specialMessage}</em>` : ''}
+                                </div>`, 'OK');
+                        }, 2000);
+                        break;
+                }
+            }
+
+            // Aggiorna la carta evento con icona e messaggio speciale
+            eventEffect.innerHTML = `${effectIcon} ${effectText}${specialMessage ? `<br><em>${specialMessage}</em>` : ''}`;
+            eventEffect.className = `event-effect ${effectClass}`;
+
+            // Nascondi la carta evento dopo un po'
+            setTimeout(() => {
+                eventCard.style.display = 'none';
+            }, 4000);
+        }
+        
+        // Funzione per terminare il turno
+        function endTurn() {
+            const currentPlayer = players[currentPlayerIndex];
+            
+            // Resetta diceRolled
+            diceRolled = false;
+            
+            // Controlla se il giocatore corrente ha un turno extra
+            if (currentPlayer.extraTurn) {
+                currentPlayer.extraTurn = false;
+                
+                showModal('Turno extra', 
+                    `${currentPlayer.name} ha un turno extra!`, 'OK');
+                
+                // Abilita il pulsante del dado
+                rollDiceButton.disabled = false;
+                
+                // Disabilita il pulsante di fine turno
+                endTurnButton.disabled = true;
+                
+                // Aggiorna le informazioni dei giocatori
+                updatePlayerInfo();
+                
+                return;
+            }
+            
+            // Passa al giocatore successivo
+            do {
+                currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+            } while (players[currentPlayerIndex].skipTurn);
+            
+            // Resetta skipTurn per i giocatori che hanno saltato un turno
+            players.forEach(player => {
+                if (player.skipTurn && player !== players[currentPlayerIndex]) {
+                    player.skipTurn = false;
+                }
+            });
+            
+            // Abilita il pulsante del dado
+            rollDiceButton.disabled = false;
+            
+            // Disabilita il pulsante di fine turno
+            endTurnButton.disabled = true;
+            
+            // Aggiorna le informazioni dei giocatori
+            updatePlayerInfo();
+            
+            // Mostra il cambio di turno
+            showModal('Cambio turno', 
+                `È il turno di ${players[currentPlayerIndex].name}!`, 'OK');
+        }
+        
+        // Funzione per terminare il gioco
+        function endGame(winner) {
+            showModal('Fine del gioco', 
+                `Congratulazioni, ${winner.name}!<br><br>
+                Hai completato il viaggio attraverso la vita di Ugo Foscolo e hai vinto la partita!`, 'Nuova partita');
+            
+            // Disabilita i pulsanti di gioco
+            rollDiceButton.disabled = true;
+            endTurnButton.disabled = true;
+            
+            // Resetta il gioco quando si chiude il modal
+            modalButton.onclick = resetGame;
+        }
+        
+        // Funzione per mostrare un modal
+        function showModal(title, text, buttonText) {
+            // Usa innerHTML per il titolo per supportare l'HTML
+            modalTitle.innerHTML = title;
+            modalText.innerHTML = text;
+            modalButton.textContent = buttonText;
+            modal.style.display = 'flex';
+        }
+        
+        // Funzione per resettare il gioco
+        function resetGame() {
+            // Nascondi il contenitore del gioco
+            gameContainer.style.display = 'none';
+            
+            // Mostra la configurazione dei giocatori
+            playerSetup.style.display = 'block';
+            
+            // Resetta i campi di input
+            document.getElementById('player1').value = '';
+            document.getElementById('player2').value = '';
+            document.getElementById('player3').value = '';
+            document.getElementById('player4').value = '';
+            
+            // Resetta le variabili di gioco
+            players = [];
+            currentPlayerIndex = 0;
+            gameStarted = false;
+            diceRolled = false;
+        }
+        
+        // Event listeners
+        startGameButton.addEventListener('click', function() {
+            // Ottieni i nomi dei giocatori
+            const player1Name = document.getElementById('player1').value.trim();
+            const player2Name = document.getElementById('player2').value.trim();
+            const player3Name = document.getElementById('player3').value.trim();
+            const player4Name = document.getElementById('player4').value.trim();
+            
+            // Verifica che ci siano almeno due giocatori
+            if (!player1Name || !player2Name) {
+                alert('Inserisci almeno due nomi di giocatori per iniziare.');
+                return;
+            }
+            
+            // Crea i giocatori
+            players = [
+                { id: 1, name: player1Name, position: 0, color: '#F44336', skipTurn: false, extraTurn: false },
+                { id: 2, name: player2Name, position: 0, color: '#2196F3', skipTurn: false, extraTurn: false }
+            ];
+            
+            // Aggiungi giocatori opzionali
+            if (player3Name) {
+                players.push({ id: 3, name: player3Name, position: 0, color: '#4CAF50', skipTurn: false, extraTurn: false });
+            }
+            
+            if (player4Name) {
+                players.push({ id: 4, name: player4Name, position: 0, color: '#FFC107', skipTurn: false, extraTurn: false });
+            }
+            
+            // Nascondi la configurazione dei giocatori
+            playerSetup.style.display = 'none';
+            
+            // Mostra il contenitore del gioco
+            gameContainer.style.display = 'block';
+            
+            // Inizializza il gioco
+            gameStarted = true;
+            initGame();
+        });
+        
+        rollDiceButton.addEventListener('click', rollDice);
+        endTurnButton.addEventListener('click', endTurn);
+        resetGameButton.addEventListener('click', resetGame);
+        
+        modalButton.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        modalClose.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        // Chiudi il modal se si clicca fuori
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+    <script src="js/header-overlay.js"></script>
+</body>
+</html>

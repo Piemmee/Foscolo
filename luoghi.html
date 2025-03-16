@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luoghi foscoliani</title>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/modern-style.css">
+    <!-- Stili specifici della pagina, se necessari -->
+    <style>
+        :root {
+            --primary-color: #5D4037; /* Marrone scuro */
+            --secondary-color: #8D6E63; /* Marrone medio */
+            --accent-color: #D7CCC8; /* Beige chiaro */
+            --text-color: #3E2723; /* Marrone molto scuro */
+            --light-color: #EFEBE9; /* Beige molto chiaro */
+            --highlight-color: #A1887F; /* Marrone chiaro */
+            --white-color: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            color: var(--text-color);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            background-image: url('images/luoghi-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            position: relative;
+            animation: slideInFromTop 1.5s ease-out;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            margin-top: 0.5rem;
+            position: relative;
+            animation: slideInFromBottom 1.5s ease-out;
+        }
+        
+        nav {
+            background-color: var(--secondary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 0 1rem;
+        }
+        
+        .dropbtn {
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--accent-color);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: var(--highlight-color);
+            color: var(--white-color);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .dropdown:hover .dropbtn {
+            background-color: var(--primary-color);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+        
+        .content {
+            background-color: var(--white-color);
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar {
+            background-color: var(--white-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .place-image {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+            border: 3px solid var(--accent-color);
+        }
+        
+        .place-image:hover {
+            transform: scale(1.03);
+            border-color: var(--highlight-color);
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            background-color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideInFromTop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromBottom {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .animated-text {
+            animation: fadeIn 2s ease;
+        }
+        
+        h2, h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            margin-top: 1rem;
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .back-to-home:hover {
+            background-color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--accent-color);
+        }
+        
+        .place-card {
+            background-color: var(--white-color);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+            opacity: 0; /* Inizialmente nascoste */
+        }
+        
+        .place-card-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .place-card:hover .place-card-image {
+            transform: scale(1.05);
+        }
+        
+        .place-card-content {
+            padding: 1.5rem;
+        }
+        
+        .place-card-title {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .place-card-subtitle {
+            color: var(--secondary-color);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .place-card-text {
+            margin-bottom: 1rem;
+        }
+        
+        .place-card-quote {
+            font-style: italic;
+            color: var(--secondary-color);
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <h1>Luoghi foscoliani</h1>
+        <p class="subtitle">Sulle tracce di Ugo Foscolo</p>
+    </header>
+    
+    <nav>
+        <div class="menu-container">
+            <div class="dropdown">
+                <button class="dropbtn">Biografia</button>
+                <div class="dropdown-content">
+                    <a href="giovinezza.html">Giovinezza</a>
+                    <a href="periodo-napoleonico.html">Periodo napoleonico</a>
+                    <a href="esilio.html">L'esilio</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Opere</button>
+                <div class="dropdown-content">
+                    <a href="ultime-lettere.html">Ultime lettere di Jacopo Ortis</a>
+                    <a href="sonetti.html">Sonetti</a>
+                    <a href="sepolcri.html">Dei Sepolcri</a>
+                    <a href="grazie.html">Le Grazie</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Pensiero</button>
+                <div class="dropdown-content">
+                    <a href="neoclassicismo.html">Neoclassicismo</a>
+                    <a href="preromanticismo.html">Preromanticismo</a>
+                    <a href="ideali-politici.html">Ideali politici</a>
+                    <a href="stile-foscoliano.html">Lo stile di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Galleria</button>
+                <div class="dropdown-content">
+                    <a href="foto.html">Fotografie</a>
+                    <a href="luoghi.html">Luoghi foscoliani</a>
+                    <a href="manoscritti.html">Manoscritti</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Giochi</button>
+                <div class="dropdown-content">
+                    <a href="gioco.html">Il Labirinto di Foscolo</a>
+                    <a href="gioco-oca-foscolo.html">Il Viaggio di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Home</button>
+                <div class="dropdown-content">
+                    <a href="index.html">Pagina principale</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="content">
+            <h2 class="animated-text">I luoghi di Ugo Foscolo: un viaggio tra Italia e Inghilterra</h2>
+            
+            <p class="animated-text">
+                La vita di Ugo Foscolo fu caratterizzata da continui spostamenti e viaggi, che lo portarono da Zante a Venezia, da Milano a Firenze, da Pavia a Londra. Questi luoghi non furono solo tappe della sua biografia, ma anche fonti di ispirazione per la sua opera e testimonianze del suo percorso umano e intellettuale.
+            </p>
+            
+            <div class="quote">
+                "Né più mai toccherò le sacre sponde<br>
+                ove il mio corpo fanciulletto giacque..."<br>
+                <small>— Ugo Foscolo, A Zacinto</small>
+            </div>
+            
+            <div class="section">
+                <h3>Zante: l'isola natale</h3>
+                
+                <div class="place-card">
+                    <img src="images/zante-view.jpg" alt="Veduta di Zante" class="place-card-image">
+                    <div class="place-card-content">
+                        <h4 class="place-card-title">Zante (Zacinto)</h4>
+                        <p class="place-card-subtitle">L'isola natale (1778-1792)</p>
+                        <p class="place-card-text">
+                            Ugo Foscolo nacque a Zante (l'antica Zacinto), una delle isole Ionie, il 6 febbraio 1778. L'isola, allora sotto il dominio della Repubblica di Venezia, fu il luogo della sua infanzia fino al 1792, quando la famiglia si trasferì a Venezia dopo la morte del padre.
+                        </p>
+                        <p class="place-card-text">
+                            Zante rimase sempre nel cuore di Foscolo, che la celebrò nel sonetto "A Zacinto", uno dei suoi componimenti più celebri. Nell'isola è ancora possibile visitare la casa natale del poeta, oggi trasformata in un piccolo museo.
+                        </p>
+                        <p class="place-card-quote">
+                            "Zacinto mia, che te specchi nell'onde / del greco mar da cui vergine nacque / Venere..."
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Venezia: la formazione</h3>
+                
+                <div class="place-card">
+                    <img src="images/venice-view.jpg" alt="Veduta di Venezia" class="place-card-image">
+                    <div class="place-card-content">
+                        <h4 class="place-card-title">Venezia</h4>
+                        <p class="place-card-subtitle">La città della formazione (1792-1797)</p>
+                        <p class="place-card-text">
+                            A Venezia, Foscolo trascorse gli anni della sua formazione culturale e politica. Frequentò il seminario di Castello, dove ricevette una solida educazione classica, e entrò in contatto con gli ambienti giacobini della città.
+                        </p>
+                        <p class="place-card-text">
+                            Nel 1797, al Teatro Sant'Angelo, fu rappresentata la sua prima tragedia, "Tieste". Nello stesso anno, con il Trattato di Campoformio, Venezia fu ceduta all'Austria, evento che segnò profondamente Foscolo e lo spinse a lasciare la città.
+                        </p>
+                        <p class="place-card-text">
+                            A Venezia è possibile visitare il seminario di Castello, il Teatro Sant'Angelo e i luoghi frequentati dal giovane Foscolo, come il Caffè Florian in Piazza San Marco.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Milano: l'attività letteraria e politica</h3>
+                
+                <div class="place-card">
+                    <img src="images/milan-view.jpg" alt="Veduta di Milano" class="place-card-image">
+                    <div class="place-card-content">
+                        <h4 class="place-card-title">Milano</h4>
+                        <p class="place-card-subtitle">La città dell'attività letteraria e politica (1797-1815)</p>
+                        <p class="place-card-text">
+                            Milano fu la città dove Foscolo trascorse gran parte della sua vita adulta. Capitale della Repubblica Cisalpina e poi del Regno d'Italia, Milano era il centro della vita culturale e politica dell'epoca napoleonica.
+                        </p>
+                        <p class="place-card-text">
+                            Qui Foscolo pubblicò le "Ultime lettere di Jacopo Ortis" (1802) e i suoi sonetti più celebri. Frequentò i salotti letterari della città, come quello di Vincenzo Monti, e partecipò attivamente alla vita politica.
+                        </p>
+                        <p class="place-card-text">
+                            A Milano è possibile visitare Palazzo Brera, sede dell'Accademia di Belle Arti frequentata da Foscolo, e la Biblioteca Ambrosiana, dove sono conservati alcuni suoi manoscritti.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>I colli Euganei: il rifugio di Jacopo Ortis</h3>
+                
+                <div class="place-card">
+                    <img src="images/euganean-hills.jpg" alt="Colli Euganei" class="place-card-image">
+                    <div class="place-card-content">
+                        <h4 class="place-card-title">Colli Euganei</h4>
+                        <p class="place-card-subtitle">Il rifugio di Jacopo Ortis</p>
+                        <p class="place-card-text">
+                            I colli Euganei, in Veneto, sono il luogo in cui Foscolo ambientò gran parte delle "Ultime lettere di Jacopo Ortis". Il protagonista del romanzo, dopo il tradimento di Campoformio, si rifugia sui colli Euganei, dove conosce Teresa e vive la sua tragica storia d'amore.
+                        </p>
+                        <p class="place-card-text">
+                            Foscolo stesso soggiornò più volte in questa zona, ospite di amici. I colli Euganei, con il loro paesaggio dolce e malinconico, rappresentano un luogo simbolico nella geografia foscoliana, associato ai temi dell'esilio, dell'amore impossibile e della disillusione politica.
+                        </p>
+                        <p class="place-card-text">
+                            Oggi è possibile visitare i luoghi dell'Ortis, come la villa di Arquà Petrarca, dove è ambientato l'incontro tra Jacopo e Teresa.
+                        </p>
+                        <p class="place-card-quote">
+                            "Il sacrificio della patria nostra è consumato: tutto è perduto; e la vita, seppure ne verrà concessa, non ci resterà che per piangere le nostre sciagure, e la nostra infamia."
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Firenze: Le Grazie</h3>
+                
+                <div class="place-card">
+                    <img src="images/florence-view.jpg" alt="Veduta di Firenze" class="place-card-image">
+                    <div class="place-card-content">
+                        <h4 class="place-card-title">Firenze</h4>
+                        <p class="place-card-subtitle">La città de "Le Grazie"</p>
+                        <p class="place-card-text">
+                            Firenze fu un luogo importante nella vita di Foscolo. Vi soggiornò più volte, e qui iniziò a comporre "Le Grazie", il suo poema neoclassico dedicato a Antonio Canova.
+                        </p>
+                        <p class="place-card-text">
+                            Nel poema, Foscolo colloca le Grazie in scenari fiorentini, in particolare sull'isola di Bellosguardo, una collina che domina Firenze. Questo luogo diventa simbolo della bellezza e della civiltà, temi centrali del poema.
+                        </p>
+                        <p class="place-card-text">
+                            A Firenze è possibile visitare la basilica di Santa Croce, celebrata nei "Sepolcri" come il "tempio delle itale glorie" e dove, nel 1871, furono trasferite le spoglie di Foscolo dall'Inghilterra.
+                        </p>
+                        <p class="place-card-quote">
+                            "A egregie cose il forte animo accendono / l'urne de' forti, o Pindemonte; e bella / e santa fanno al peregrin la terra / che le ricetta."
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Londra: l'esilio</h3>
+                
+                <div class="place-card">
+                    <img src="images/london-view.jpg" alt="Veduta di Londra" class="place-card-image">
+                    <div class="place-card-content">
+                        <h4 class="place-card-title">Londra</h4>
+                        <p class="place-card-subtitle">La città dell'esilio (1816-1827)</p>
+                        <p class="place-card-text">
+                            Londra fu l'ultima tappa della vita di Foscolo. Dopo aver rifiutato di prestare giuramento di fedeltà agli austriaci, nel 1816 si trasferì in Inghilterra, dove visse in esilio fino alla morte, avvenuta nel 1827.
+                        </p>
+                        <p class="place-card-text">
+                            A Londra, Foscolo visse inizialmente in condizioni agiate, frequentando gli ambienti intellettuali e aristocratici della città. Pubblicò saggi critici su riviste inglesi e tenne conferenze sulla letteratura italiana.
+                        </p>
+                        <p class="place-card-text">
+                            Negli ultimi anni, a causa di problemi economici, fu costretto a vivere in condizioni di povertà nel sobborgo di Turnham Green, dove morì il 10 settembre 1827. Fu sepolto nel cimitero di Chiswick, prima che le sue spoglie fossero trasferite a Firenze nel 1871.
+                        </p>
+                        <p class="place-card-text">
+                            A Londra è possibile visitare la casa di Turnham Green, dove Foscolo trascorse gli ultimi anni, e il cimitero di Chiswick, dove fu inizialmente sepolto.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Altri luoghi foscoliani</h3>
+                
+                <p class="animated-text">
+                    Oltre ai luoghi principali, ci sono molti altri luoghi legati alla vita e all'opera di Foscolo:
+                </p>
+                
+                <ul>
+                    <li><strong>Genova:</strong> Foscolo partecipò alla difesa della città durante l'assedio del 1800, un'esperienza che lo segnò profondamente.</li>
+                    <li><strong>Pavia:</strong> Nel 1808-1809, Foscolo insegnò eloquenza all'Università di Pavia, dove pronunciò la celebre "Orazione inaugurale".</li>
+                    <li><strong>Bologna:</strong> Foscolo soggiornò più volte a Bologna, dove ebbe una relazione con la contessa Cornelia Martinetti, a cui dedicò alcuni versi.</li>
+                    <li><strong>Brescia:</strong> Nel 1807, Foscolo soggiornò a Brescia, ospite della contessa Marzia Martinengo, a cui dedicò i "Sepolcri".</li>
+                    <li><strong>Zurigo:</strong> Dopo aver lasciato l'Italia nel 1815, Foscolo soggiornò per alcuni mesi a Zurigo, prima di trasferirsi definitivamente in Inghilterra.</li>
+                </ul>
+            </div>
+            
+            <a href="index.html" class="back-to-home">Torna alla pagina principale</a>
+        </div>
+        
+        <div class="sidebar">
+            <img src="images/foscolo-map.jpg" alt="Mappa dei luoghi foscoliani" class="place-image">
+            <h3>Luoghi principali</h3>
+            <ul>
+                <li><strong>Zante (1778-1792):</strong> Luogo di nascita e infanzia</li>
+                <li><strong>Venezia (1792-1797):</strong> Formazione culturale e politica</li>
+                <li><strong>Milano (1797-1815):</strong> Attività letteraria e politica</li>
+                <li><strong>Firenze:</strong> Composizione de "Le Grazie"</li>
+                <li><strong>Londra (1816-1827):</strong> Esilio e morte</li>
+            </ul>
+            
+            <div class="quote">
+                "Né più mai toccherò le sacre sponde<br>
+                ove il mio corpo fanciulletto giacque..."<br>
+                <small>— A Zacinto</small>
+            </div>
+            
+            <h3>Luoghi letterari</h3>
+            <ul>
+                <li><strong>Colli Euganei:</strong> Ambientazione delle "Ultime lettere di Jacopo Ortis"</li>
+                <li><strong>Santa Croce (Firenze):</strong> Celebrata nei "Sepolcri" e luogo di sepoltura definitiva</li>
+                <li><strong>Bellosguardo (Firenze):</strong> Ambientazione de "Le Grazie"</li>
+            </ul>
+            
+            <h3>Collegamenti</h3>
+            <ul>
+                <li><a href="giovinezza.html">La giovinezza di Foscolo</a></li>
+                <li><a href="esilio.html">L'esilio di Foscolo</a></li>
+                <li><a href="foto.html">Fotografie</a></li>
+            </ul>
+            
+            <h3>Musei e case-museo</h3>
+            <p>Oggi è possibile visitare diversi luoghi legati a Foscolo, tra cui la casa natale a Zante, la tomba a Santa Croce a Firenze, e i luoghi dell'Ortis sui colli Euganei.</p>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 Ugo Foscolo, tra esilio e disillusione | Sito creato a scopo educativo</p>
+    </footer>
+    
+    <script src="js/add-games-menu.js"></script>
+    <script>
+        // Animazione per gli elementi quando entrano nel viewport
+        document.addEventListener('DOMContentLoaded', function() {
+            // Funzione per controllare se un elemento è nel viewport
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            }
+            
+            // Funzione per animare gli elementi quando entrano nel viewport
+            function animateOnScroll() {
+                const elements = document.querySelectorAll('.place-card');
+                elements.forEach(element => {
+                    if (isInViewport(element) && !element.classList.contains('animated')) {
+                        element.style.animation = 'fadeIn 1.5s ease forwards';
+                        element.classList.add('animated');
+                    }
+                });
+            }
+            
+            // Esegui l'animazione al caricamento e allo scroll
+            animateOnScroll();
+            window.addEventListener('scroll', animateOnScroll);
+        });
+    </script>
+    <script src="js/header-overlay.js"></script>
+</body>
+</html>

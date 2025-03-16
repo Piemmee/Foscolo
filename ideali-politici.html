@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gli ideali politici di Ugo Foscolo</title>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/modern-style.css">
+    <!-- Stili specifici della pagina, se necessari -->
+    <style>
+        :root {
+            --primary-color: #5D4037; /* Marrone scuro */
+            --secondary-color: #8D6E63; /* Marrone medio */
+            --accent-color: #D7CCC8; /* Beige chiaro */
+            --text-color: #3E2723; /* Marrone molto scuro */
+            --light-color: #EFEBE9; /* Beige molto chiaro */
+            --highlight-color: #A1887F; /* Marrone chiaro */
+            --white-color: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            color: var(--text-color);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            background-image: url('images/political-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            position: relative;
+            animation: slideInFromTop 1.5s ease-out;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            margin-top: 0.5rem;
+            position: relative;
+            animation: slideInFromBottom 1.5s ease-out;
+        }
+        
+        nav {
+            background-color: var(--secondary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 0 1rem;
+        }
+        
+        .dropbtn {
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--accent-color);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: var(--highlight-color);
+            color: var(--white-color);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .dropdown:hover .dropbtn {
+            background-color: var(--primary-color);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+        
+        .content {
+            background-color: var(--white-color);
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar {
+            background-color: var(--white-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .political-image {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+            border: 3px solid var(--accent-color);
+        }
+        
+        .political-image:hover {
+            transform: scale(1.03);
+            border-color: var(--highlight-color);
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            background-color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideInFromTop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromBottom {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .animated-text {
+            animation: fadeIn 2s ease;
+        }
+        
+        h2, h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            margin-top: 1rem;
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .back-to-home:hover {
+            background-color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--accent-color);
+        }
+        
+        .timeline-item {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--primary-color);
+            position: relative;
+            animation: fadeIn 2s ease;
+            background-color: var(--white-color);
+            padding: 1rem;
+            border-radius: 0 5px 5px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .concept-box {
+            background-color: var(--accent-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin: 1.5rem 0;
+            position: relative;
+            animation: fadeIn 1.5s ease;
+        }
+        
+        .concept-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <h1>Gli ideali politici di Ugo Foscolo</h1>
+        <p class="subtitle">Libertà, patria e disillusione</p>
+    </header>
+    
+    <nav>
+        <div class="menu-container">
+            <div class="dropdown">
+                <button class="dropbtn">Biografia</button>
+                <div class="dropdown-content">
+                    <a href="giovinezza.html">Giovinezza</a>
+                    <a href="periodo-napoleonico.html">Periodo napoleonico</a>
+                    <a href="esilio.html">L'esilio</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Opere</button>
+                <div class="dropdown-content">
+                    <a href="ultime-lettere.html">Ultime lettere di Jacopo Ortis</a>
+                    <a href="sonetti.html">Sonetti</a>
+                    <a href="sepolcri.html">Dei Sepolcri</a>
+                    <a href="grazie.html">Le Grazie</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Pensiero</button>
+                <div class="dropdown-content">
+                    <a href="neoclassicismo.html">Neoclassicismo</a>
+                    <a href="preromanticismo.html">Preromanticismo</a>
+                    <a href="ideali-politici.html">Ideali politici</a>
+                    <a href="stile-foscoliano.html">Lo stile di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Galleria</button>
+                <div class="dropdown-content">
+                    <a href="foto.html">Fotografie</a>
+                    <a href="luoghi.html">Luoghi foscoliani</a>
+                    <a href="manoscritti.html">Manoscritti</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Giochi</button>
+                <div class="dropdown-content">
+                    <a href="gioco.html">Il Labirinto di Foscolo</a>
+                    <a href="gioco-oca-foscolo.html">Il Viaggio di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Home</button>
+                <div class="dropdown-content">
+                    <a href="index.html">Pagina principale</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="content">
+            <h2 class="animated-text">Gli ideali politici: tra rivoluzione e disillusione</h2>
+            
+            <p class="animated-text">
+                Gli ideali politici rappresentano un aspetto fondamentale della vita e dell'opera di Ugo Foscolo. La sua esperienza politica, segnata da entusiasmi rivoluzionari e amare disillusioni, si riflette profondamente nella sua produzione letteraria, diventando uno dei temi centrali della sua poetica.
+            </p>
+            
+            <div class="quote">
+                "Il sacrificio della patria nostra è consumato: tutto è perduto; e la vita, seppure ne verrà concessa, non ci resterà che per piangere le nostre sciagure, e la nostra infamia."<br>
+                <small>— Ugo Foscolo, Ultime lettere di Jacopo Ortis</small>
+            </div>
+            
+            <div class="section">
+                <h3>La formazione politica</h3>
+                
+                <p class="animated-text">
+                    La formazione politica di Foscolo avvenne in un periodo di grandi sconvolgimenti storici: la Rivoluzione Francese, l'ascesa di Napoleone, le campagne d'Italia, la caduta della Repubblica di Venezia. Questi eventi influenzarono profondamente il giovane Foscolo, che aderì con entusiasmo agli ideali rivoluzionari di libertà, uguaglianza e fraternità.
+                </p>
+                
+                <p class="animated-text">
+                    A Venezia, Foscolo frequentò ambienti giacobini e partecipò attivamente alla vita politica della città. La sua prima tragedia, "Tieste" (1797), rappresentata al Teatro Sant'Angelo di Venezia, conteneva già chiari riferimenti politici e una critica alla tirannide.
+                </p>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1797</p>
+                    <p>Caduta della Repubblica di Venezia e cessione all'Austria con il Trattato di Campoformio. Foscolo, deluso dal tradimento di Napoleone, si trasferisce a Milano, capitale della Repubblica Cisalpina.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1798-1799</p>
+                    <p>Foscolo si arruola nella Guardia Nazionale della Repubblica Cisalpina. Partecipa alla difesa di Genova contro gli austro-russi, esperienza che rafforza il suo patriottismo.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1802-1803</p>
+                    <p>Pubblica le "Ultime lettere di Jacopo Ortis", romanzo in cui esprime la sua disillusione politica dopo il tradimento di Campoformio.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1807</p>
+                    <p>Pubblica "Dei Sepolcri", in cui afferma la funzione civile della memoria e delle tombe come strumenti di educazione patriottica.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1815</p>
+                    <p>Dopo la caduta di Napoleone e il ritorno degli austriaci in Lombardia, Foscolo rifiuta di prestare giuramento di fedeltà al nuovo regime e sceglie l'esilio volontario.</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>I concetti fondamentali del pensiero politico foscoliano</h3>
+                
+                <div class="concept-box">
+                    <p class="concept-title">Libertà e indipendenza nazionale</p>
+                    <p>
+                        Per Foscolo, la libertà è un valore fondamentale, sia a livello individuale che nazionale. La sua concezione di libertà è influenzata dal pensiero illuministico e rivoluzionario, ma anche dalla tradizione classica. La libertà politica è inseparabile dall'indipendenza nazionale: l'Italia, divisa e dominata da potenze straniere, deve ritrovare la sua unità e la sua indipendenza.
+                    </p>
+                </div>
+                
+                <div class="concept-box">
+                    <p class="concept-title">Critica al dispotismo e alla tirannide</p>
+                    <p>
+                        Foscolo è un fermo oppositore di ogni forma di dispotismo e tirannide. Questa posizione emerge chiaramente nelle sue opere, dalla tragedia "Tieste" alle "Ultime lettere di Jacopo Ortis". La sua critica si rivolge sia ai regimi assolutistici tradizionali, sia al dispotismo napoleonico, che tradì gli ideali rivoluzionari.
+                    </p>
+                </div>
+                
+                <div class="concept-box">
+                    <p class="concept-title">Funzione civile della letteratura</p>
+                    <p>
+                        Per Foscolo, la letteratura ha una funzione civile e politica: deve educare i cittadini, preservare la memoria storica, promuovere i valori patriottici. Questa concezione emerge chiaramente nei "Sepolcri", dove le tombe dei grandi uomini sono celebrate come strumenti di educazione civile: "A egregie cose il forte animo accendono / l'urne de' forti".
+                    </p>
+                </div>
+                
+                <div class="concept-box">
+                    <p class="concept-title">Disillusione e realismo politico</p>
+                    <p>
+                        L'esperienza del tradimento di Campoformio e delle successive delusioni politiche portò Foscolo a sviluppare un atteggiamento di realismo politico e di disillusione. Pur mantenendo fermi i suoi ideali di libertà e indipendenza, Foscolo divenne consapevole della distanza tra ideali e realtà politica, e della facilità con cui i principi vengono traditi in nome degli interessi di potere.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Gli ideali politici nelle opere di Foscolo</h3>
+                
+                <h4>Ultime lettere di Jacopo Ortis</h4>
+                
+                <p class="animated-text">
+                    Le "Ultime lettere di Jacopo Ortis" rappresentano l'opera in cui la dimensione politica del pensiero foscoliano emerge con maggiore evidenza. Il romanzo nasce come reazione al Trattato di Campoformio (1797), con cui Napoleone cedette Venezia all'Austria, tradendo gli ideali rivoluzionari e le speranze di libertà degli italiani.
+                </p>
+                
+                <p class="animated-text">
+                    Il protagonista, Jacopo Ortis, è un patriota veneziano che, di fronte al tradimento di Napoleone, si rifugia sui colli Euganei. La sua disillusione politica si intreccia con la passione amorosa infelice per Teresa, creando un'opera in cui la dimensione politica e quella sentimentale sono inscindibili.
+                </p>
+                
+                <p class="animated-text">
+                    Nel romanzo, Foscolo esprime la sua visione dell'Italia come nazione divisa e oppressa, ma destinata a risorgere. Attraverso le riflessioni di Jacopo, Foscolo critica sia il dispotismo austriaco, sia il tradimento di Napoleone, sia la passività degli italiani.
+                </p>
+                
+                <h4>Dei Sepolcri</h4>
+                
+                <p class="animated-text">
+                    Nei "Sepolcri", la dimensione politica si esprime attraverso la celebrazione della funzione civile delle tombe. Le tombe dei grandi uomini sono presentate come strumenti di educazione patriottica, che mantengono viva la memoria delle virtù civili e ispirano le nuove generazioni.
+                </p>
+                
+                <p class="animated-text">
+                    Il carme si conclude con l'esaltazione di Ettore, simbolo del sacrificio per la patria, e con l'affermazione che il suo esempio continuerà a ispirare "ove fia santo e lagrimato il sangue / per la patria versato". Questo riferimento al sacrificio per la patria ha una chiara valenza politica, in un periodo in cui l'Italia era sotto il dominio straniero.
+                </p>
+                
+                <h4>Orazione a Bonaparte</h4>
+                
+                <p class="animated-text">
+                    L'"Orazione a Bonaparte per il Congresso di Lione" (1801) rappresenta un importante documento del pensiero politico foscoliano. In questo discorso, Foscolo si rivolge a Napoleone, esortandolo a rispettare l'indipendenza della Repubblica Cisalpina e a non tradire gli ideali di libertà.
+                </p>
+                
+                <p class="animated-text">
+                    Il tono dell'orazione è rispettoso ma fermo, e Foscolo non esita a ricordare a Napoleone le sue responsabilità verso l'Italia. L'orazione riflette la speranza, ancora viva in quel periodo, che Napoleone potesse essere un liberatore dell'Italia, speranza che sarebbe stata presto delusa.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>L'esilio: estrema affermazione di coerenza politica</h3>
+                
+                <p class="animated-text">
+                    La scelta dell'esilio, dopo la caduta di Napoleone e il ritorno degli austriaci in Lombardia nel 1815, rappresenta l'estrema affermazione della coerenza politica di Foscolo. Piuttosto che prestare giuramento di fedeltà al regime austriaco, Foscolo preferì abbandonare l'Italia e vivere in esilio, prima in Svizzera e poi in Inghilterra.
+                </p>
+                
+                <p class="animated-text">
+                    Questa decisione, che lo condannò a una vita di difficoltà economiche e di nostalgia per la patria perduta, testimonia la fermezza dei suoi principi politici e la sua integrità morale. Come scrisse in una lettera: "Ho servito con lealtà Napoleone, ma non ho tradito mai né la patria né l'onore".
+                </p>
+                
+                <p class="animated-text">
+                    Durante l'esilio, Foscolo continuò a riflettere sulla situazione politica italiana e a mantenere contatti con patrioti e intellettuali. La sua figura divenne un simbolo per i patrioti del Risorgimento, che videro in lui un esempio di coerenza e di fedeltà agli ideali di libertà e indipendenza nazionale.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>L'eredità politica di Foscolo</h3>
+                
+                <p class="animated-text">
+                    L'eredità politica di Foscolo fu significativa per il Risorgimento italiano. La sua visione dell'Italia come nazione culturale e politica, la sua critica al dominio straniero, il suo appello alla dignità e all'orgoglio nazionale influenzarono profondamente i patrioti risorgimentali.
+                </p>
+                
+                <p class="animated-text">
+                    Mazzini, in particolare, vide in Foscolo un precursore del Risorgimento e un esempio di intellettuale impegnato. La figura di Foscolo come esule per motivi politici divenne emblematica per molti patrioti italiani costretti all'esilio durante il Risorgimento.
+                </p>
+                
+                <p class="animated-text">
+                    Anche la concezione foscoliana della letteratura come strumento di educazione civile e patriottica influenzò la cultura risorgimentale. I "Sepolcri", con la loro celebrazione della memoria storica e del sacrificio per la patria, divennero un testo fondamentale per la formazione del sentimento nazionale italiano.
+                </p>
+            </div>
+            
+            <a href="index.html" class="back-to-home">Torna alla pagina principale</a>
+        </div>
+        
+        <div class="sidebar">
+            <img src="images/foscolo-military.jpg" alt="Foscolo in uniforme militare" class="political-image">
+            <h3>Ideali politici in breve</h3>
+            <p><strong>Influenze:</strong> Illuminismo, Rivoluzione Francese, classicismo repubblicano</p>
+            <p><strong>Valori fondamentali:</strong></p>
+            <ul>
+                <li>Libertà e indipendenza nazionale</li>
+                <li>Opposizione alla tirannide</li>
+                <li>Funzione civile della letteratura</li>
+                <li>Dignità e orgoglio nazionale</li>
+            </ul>
+            
+            <div class="quote">
+                "O Italiani, io vi esorto alle storie..."<br>
+                <small>— Ugo Foscolo</small>
+            </div>
+            
+            <h3>Momenti chiave</h3>
+            <ul>
+                <li>1797: Caduta di Venezia e Trattato di Campoformio</li>
+                <li>1799: Partecipazione alla difesa di Genova</li>
+                <li>1802: Pubblicazione delle "Ultime lettere di Jacopo Ortis"</li>
+                <li>1815: Esilio volontario per non giurare fedeltà agli austriaci</li>
+            </ul>
+            
+            <h3>Collegamenti</h3>
+            <ul>
+                <li><a href="ultime-lettere.html">Ultime lettere di Jacopo Ortis</a></li>
+                <li><a href="sepolcri.html">Dei Sepolcri</a></li>
+                <li><a href="esilio.html">L'esilio di Foscolo</a></li>
+            </ul>
+            
+            <h3>Eredità</h3>
+            <p>Gli ideali politici di Foscolo influenzarono profondamente il Risorgimento italiano. Mazzini lo considerava un precursore del movimento nazionale, e la sua figura di esule per motivi politici divenne emblematica per molti patrioti risorgimentali.</p>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Ugo Foscolo, tra esilio e disillusione | Sito creato a scopo educativo</p>
+    </footer>
+    
+    <script>
+        // Animazione per gli elementi quando entrano nel viewport
+        document.addEventListener('DOMContentLoaded', function() {
+            // Funzione per controllare se un elemento è nel viewport
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            }
+            
+            // Funzione per animare gli elementi quando entrano nel viewport
+            function animateOnScroll() {
+                const elements = document.querySelectorAll('.timeline-item, .concept-box');
+                elements.forEach(element => {
+                    if (isInViewport(element) && !element.classList.contains('animated')) {
+                        if (element.classList.contains('timeline-item')) {
+                            element.style.animation = 'slideInFromLeft 1s ease forwards';
+                        } else {
+                            element.style.animation = 'fadeIn 1.5s ease forwards';
+                        }
+                        element.classList.add('animated');
+                    }
+                });
+            }
+            
+            // Esegui l'animazione al caricamento e allo scroll
+            animateOnScroll();
+            window.addEventListener('scroll', animateOnScroll);
+        });
+    </script>
+    <script src="js/image-fallback.js"></script>
+    <script src="js/add-games-menu.js"></script>
+    <script src="js/header-overlay.js"></script>
+</body>
+</html>

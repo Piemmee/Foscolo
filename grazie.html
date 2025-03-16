@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Grazie di Ugo Foscolo</title>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/modern-style.css">
+    <!-- Stili specifici della pagina, se necessari -->
+    <style>
+        :root {
+            --primary-color: #5D4037; /* Marrone scuro */
+            --secondary-color: #8D6E63; /* Marrone medio */
+            --accent-color: #D7CCC8; /* Beige chiaro */
+            --text-color: #3E2723; /* Marrone molto scuro */
+            --light-color: #EFEBE9; /* Beige molto chiaro */
+            --highlight-color: #A1887F; /* Marrone chiaro */
+            --white-color: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            color: var(--text-color);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            background-image: url('images/grazie-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            position: relative;
+            animation: slideInFromTop 1.5s ease-out;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            margin-top: 0.5rem;
+            position: relative;
+            animation: slideInFromBottom 1.5s ease-out;
+        }
+        
+        nav {
+            background-color: var(--secondary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 0 1rem;
+        }
+        
+        .dropbtn {
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--accent-color);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: var(--highlight-color);
+            color: var(--white-color);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .dropdown:hover .dropbtn {
+            background-color: var(--primary-color);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+        
+        .content {
+            background-color: var(--white-color);
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar {
+            background-color: var(--white-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .grazie-image {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+            border: 3px solid var(--accent-color);
+        }
+        
+        .grazie-image:hover {
+            transform: scale(1.03);
+            border-color: var(--highlight-color);
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            background-color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideInFromTop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromBottom {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .animated-text {
+            animation: fadeIn 2s ease;
+        }
+        
+        h2, h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            margin-top: 1rem;
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .back-to-home:hover {
+            background-color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--accent-color);
+        }
+        
+        .poem-verse {
+            font-style: italic;
+            margin: 1rem 0;
+            padding: 1rem;
+            background-color: var(--accent-color);
+            border-radius: 5px;
+            position: relative;
+            animation: fadeIn 1.5s ease;
+            line-height: 1.8;
+        }
+        
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .gallery-image {
+            width: 100%;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+            border: 2px solid var(--accent-color);
+        }
+        
+        .gallery-image:hover {
+            transform: scale(1.05);
+            border-color: var(--highlight-color);
+        }
+        
+        .grace-box {
+            background-color: var(--accent-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin: 1.5rem 0;
+            position: relative;
+            animation: fadeIn 1.5s ease;
+        }
+        
+        .grace-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <h1>Le Grazie</h1>
+        <p class="subtitle">Il capolavoro neoclassico di Ugo Foscolo</p>
+    </header>
+    
+    <nav>
+        <div class="menu-container">
+            <div class="dropdown">
+                <button class="dropbtn">Biografia</button>
+                <div class="dropdown-content">
+                    <a href="giovinezza.html">Giovinezza</a>
+                    <a href="periodo-napoleonico.html">Periodo napoleonico</a>
+                    <a href="esilio.html">L'esilio</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Opere</button>
+                <div class="dropdown-content">
+                    <a href="ultime-lettere.html">Ultime lettere di Jacopo Ortis</a>
+                    <a href="sonetti.html">Sonetti</a>
+                    <a href="sepolcri.html">Dei Sepolcri</a>
+                    <a href="grazie.html">Le Grazie</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Pensiero</button>
+                <div class="dropdown-content">
+                    <a href="neoclassicismo.html">Neoclassicismo</a>
+                    <a href="preromanticismo.html">Preromanticismo</a>
+                    <a href="ideali-politici.html">Ideali politici</a>
+                    <a href="stile-foscoliano.html">Lo stile di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Galleria</button>
+                <div class="dropdown-content">
+                    <a href="foto.html">Fotografie</a>
+                    <a href="luoghi.html">Luoghi foscoliani</a>
+                    <a href="manoscritti.html">Manoscritti</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Giochi</button>
+                <div class="dropdown-content">
+                    <a href="gioco.html">Il Labirinto di Foscolo</a>
+                    <a href="gioco-oca-foscolo.html">Il Viaggio di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Home</button>
+                <div class="dropdown-content">
+                    <a href="index.html">Pagina principale</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="content">
+            <h2 class="animated-text">Le Grazie: il poema della bellezza e della civiltà</h2>
+            
+            <p class="animated-text">
+                "Le Grazie" rappresenta il vertice del Neoclassicismo foscoliano e una delle opere più significative della letteratura italiana tra Settecento e Ottocento. Iniziato nel 1812 e rimasto incompiuto, il poema è un inno alla bellezza e alla civiltà, rappresentate dalle tre Grazie della mitologia greca: Aglaia (lo Splendore), Eufrosine (la Letizia) e Talia (la Prosperità).
+            </p>
+            
+            <div class="quote">
+                "Le Grazie a noi mortali<br>
+                scendean da' cieli a render sacro e caro<br>
+                e di soavi affetti ospite il core."<br>
+                <small>— Ugo Foscolo, Le Grazie</small>
+            </div>
+            
+            <div class="section">
+                <h3>Genesi e struttura dell'opera</h3>
+                
+                <p class="animated-text">
+                    Foscolo iniziò a lavorare a "Le Grazie" nel 1812, in un periodo di relativa tranquillità della sua vita, durante il soggiorno a Firenze. Il poema è dedicato allo scultore Antonio Canova, che aveva realizzato una celebre scultura delle tre Grazie, oggi conservata all'Ermitage di San Pietroburgo.
+                </p>
+                
+                <p class="animated-text">
+                    L'opera è strutturata in tre inni, ciascuno dedicato a una delle Grazie e a una divinità dell'Olimpo: il primo a Venere (dea della bellezza), il secondo a Vesta (dea del focolare) e il terzo a Pallade (dea della sapienza). Questa struttura tripartita riflette la concezione foscoliana della civiltà, fondata sulla bellezza, sulla vita domestica e sulla sapienza.
+                </p>
+                
+                <p class="animated-text">
+                    Il poema rimase incompiuto a causa delle vicissitudini della vita di Foscolo, in particolare l'esilio che seguì la caduta di Napoleone. Ciò che ci è pervenuto è un insieme di frammenti, che tuttavia permettono di cogliere la grandezza del progetto foscoliano e la bellezza della sua poesia.
+                </p>
+                
+                <div class="image-gallery">
+                    <img src="images/grazie-manuscript-detail.jpg" alt="Scultura delle Grazie di Canova" class="gallery-image">
+                    <img src="images/grazie-manuscript.jpg" alt="Manoscritto de Le Grazie" class="gallery-image">
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Le tre Grazie e il loro significato</h3>
+                
+                <div class="grace-box">
+                    <p class="grace-title">Aglaia (lo Splendore)</p>
+                    <p>
+                        Aglaia rappresenta lo splendore, la luminosità, la bellezza esteriore. Nel poema, è associata a Venere, dea della bellezza, e simboleggia l'arte come espressione della bellezza sensibile. Aglaia è la Grazia che ingentilisce i sensi dell'uomo attraverso la contemplazione del bello.
+                    </p>
+                </div>
+                
+                <div class="grace-box">
+                    <p class="grace-title">Eufrosine (la Letizia)</p>
+                    <p>
+                        Eufrosine rappresenta la letizia, la gioia, la serenità. Nel poema, è associata a Vesta, dea del focolare, e simboleggia la vita domestica, gli affetti familiari, la pace del cuore. Eufrosine è la Grazia che ingentilisce i sentimenti dell'uomo attraverso l'amore e l'amicizia.
+                    </p>
+                </div>
+                
+                <div class="grace-box">
+                    <p class="grace-title">Talia (la Prosperità)</p>
+                    <p>
+                        Talia rappresenta la prosperità, la fecondità, la ricchezza spirituale. Nel poema, è associata a Pallade, dea della sapienza, e simboleggia la conoscenza, la filosofia, la poesia. Talia è la Grazia che ingentilisce l'intelletto dell'uomo attraverso la cultura e la saggezza.
+                    </p>
+                </div>
+                
+                <p class="animated-text">
+                    Le tre Grazie, nel loro insieme, rappresentano il processo di civilizzazione dell'umanità: dalla bellezza sensibile (Aglaia) si passa alla bellezza morale (Eufrosine) e infine alla bellezza intellettuale (Talia). Questo percorso riflette la concezione foscoliana della civiltà come progressivo ingentilimento dell'uomo attraverso l'arte, gli affetti e la conoscenza.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>I tre inni</h3>
+                
+                <h4>Inno primo: a Venere</h4>
+                
+                <p class="animated-text">
+                    Il primo inno è dedicato a Venere, dea della bellezza, e alla Grazia Aglaia. In esso, Foscolo celebra la nascita delle Grazie dall'oceano e il loro arrivo in Grecia, dove ingentiliscono i costumi degli uomini primitivi. Il poeta descrive poi il loro arrivo in Italia, a Firenze, dove ispirano l'arte di Canova.
+                </p>
+                
+                <div class="poem-verse">
+                    "Cantando, o Grazie, degli eterei pregi<br>
+                    di che il cielo v'adorna, e della gioia<br>
+                    che vereconde voi date alla terra,<br>
+                    belle vergini! a voi chieggio l'arcana<br>
+                    armoniosa melodia pittrice<br>
+                    della vostra beltà [...]"
+                </div>
+                
+                <h4>Inno secondo: a Vesta</h4>
+                
+                <p class="animated-text">
+                    Il secondo inno è dedicato a Vesta, dea del focolare, e alla Grazia Eufrosine. In esso, Foscolo celebra la vita domestica, gli affetti familiari, la pace del cuore. Il poeta descrive un rito sacro a Vesta, in cui le donne offrono doni alla dea e pregano per la prosperità della famiglia.
+                </p>
+                
+                <div class="poem-verse">
+                    "Sacerdotessa a Vesta, e più alle Grazie<br>
+                    l'amabil donna del felsineo colle<br>
+                    reca un'onda di latte; e a lei compagna<br>
+                    vien la bella Romana, e dal ricolmo<br>
+                    canestretto su l'ara offre i narcisi [...]"
+                </div>
+                
+                <h4>Inno terzo: a Pallade</h4>
+                
+                <p class="animated-text">
+                    Il terzo inno è dedicato a Pallade, dea della sapienza, e alla Grazia Talia. In esso, Foscolo celebra la conoscenza, la filosofia, la poesia. Il poeta descrive un rito sacro a Pallade, in cui i sapienti offrono doni alla dea e pregano per l'illuminazione dell'intelletto.
+                </p>
+                
+                <div class="poem-verse">
+                    "Talia, che alla ingegnosa arpa di Fidia<br>
+                    e all'altre Grazie tue l'inno accompagni,<br>
+                    deh! spirami pittrice; e l'armonia<br>
+                    di tua lira diffusa entro il mio verso<br>
+                    adornerà l'immagine gentile [...]"
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Temi e significato</h3>
+                
+                <p class="animated-text">
+                    "Le Grazie" è un'opera ricca di temi e significati, che riflette la complessità del pensiero foscoliano e la sua visione della civiltà e dell'arte.
+                </p>
+                
+                <h4>La funzione civilizzatrice della bellezza</h4>
+                
+                <p class="animated-text">
+                    Il tema centrale del poema è la funzione civilizzatrice della bellezza. Le Grazie, figlie di Venere, rappresentano la bellezza nelle sue diverse forme (sensibile, morale, intellettuale) e il loro potere di ingentilire l'animo umano. Per Foscolo, la bellezza non è fine a se stessa, ma ha una funzione educativa e morale: eleva l'uomo dalla sua condizione primitiva e lo guida verso la civiltà.
+                </p>
+                
+                <h4>Il legame tra Grecia e Italia</h4>
+                
+                <p class="animated-text">
+                    Un altro tema importante è il legame tra la Grecia antica e l'Italia. Le Grazie, nate in Grecia, si trasferiscono in Italia, simboleggiando la continuità della civiltà classica nel mondo moderno. Foscolo, nato in Grecia da padre italiano, sentiva profondamente questo legame e lo celebrò in molte sue opere.
+                </p>
+                
+                <h4>La funzione consolatoria dell'arte</h4>
+                
+                <p class="animated-text">
+                    Per Foscolo, l'arte ha una funzione consolatoria: offre conforto e bellezza in un mondo segnato dalla sofferenza e dalla morte. Le Grazie, con la loro bellezza e armonia, rappresentano un'oasi di pace e di gioia in un'epoca di guerre e di disillusioni.
+                </p>
+                
+                <h4>La sintesi tra classicismo e sensibilità moderna</h4>
+                
+                <p class="animated-text">
+                    "Le Grazie" rappresenta una sintesi perfetta tra il classicismo e la sensibilità moderna. La forma è classica, con riferimenti alla mitologia greca e alla poesia antica, ma il contenuto riflette le preoccupazioni e le speranze dell'uomo moderno, in un'epoca di grandi trasformazioni storiche e culturali.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>Stile e linguaggio</h3>
+                
+                <p class="animated-text">
+                    Lo stile de "Le Grazie" è caratterizzato da una grande raffinatezza formale e da una ricchezza di immagini e di suoni. Foscolo utilizza un linguaggio elevato e musicale, ricco di riferimenti classici e di figure retoriche.
+                </p>
+                
+                <p class="animated-text">
+                    Il verso utilizzato è l'endecasillabo sciolto, che Foscolo padroneggia con maestria, creando un ritmo fluido e armonioso. La sintassi è complessa, con frequenti enjambement che conferiscono al testo un andamento musicale e una grande densità espressiva.
+                </p>
+                
+                <p class="animated-text">
+                    Le immagini sono di grande bellezza visiva, paragonabili alle sculture neoclassiche di Canova. Foscolo crea un mondo ideale di armonia e bellezza, in cui le figure mitologiche si muovono con grazia e leggiadria.
+                </p>
+                
+                <p class="animated-text">
+                    Il linguaggio è ricco di termini rari e preziosi, di arcaismi e di latinismi, che contribuiscono a creare un'atmosfera di solennità e di bellezza. Allo stesso tempo, Foscolo sa essere anche delicato e intimo, soprattutto nelle descrizioni della natura e degli affetti.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>L'eredità de "Le Grazie"</h3>
+                
+                <p class="animated-text">
+                    Nonostante sia rimasto incompiuto, "Le Grazie" ha esercitato una profonda influenza sulla letteratura italiana successiva. La sua visione della bellezza come forza civilizzatrice, la sua sintesi tra classicismo e sensibilità moderna, la sua raffinatezza formale hanno ispirato molti poeti, da Leopardi a Carducci, da Pascoli a D'Annunzio.
+                </p>
+                
+                <p class="animated-text">
+                    L'opera rappresenta anche un importante documento del Neoclassicismo italiano, in dialogo con le altre arti, in particolare la scultura di Canova. La sua concezione della civiltà come progressivo ingentilimento dell'uomo attraverso l'arte, gli affetti e la conoscenza rimane attuale anche oggi.
+                </p>
+                
+                <p class="animated-text">
+                    "Le Grazie" rappresenta infine il testamento spirituale di Foscolo, la sua visione della bellezza e della civiltà, il suo sogno di un'umanità ingentilita dall'arte e dalla cultura. Un sogno che, nonostante le disillusioni e le sofferenze della sua vita, il poeta non smise mai di coltivare.
+                </p>
+            </div>
+            
+            <a href="index.html" class="back-to-home">Torna alla pagina principale</a>
+        </div>
+        
+        <div class="sidebar">
+            <img src="images/canova-grazie-sculpture.jpg" alt="Le tre Grazie" class="grazie-image">
+            <h3>Le Grazie in breve</h3>
+            <p><strong>Periodo di composizione:</strong> 1812-1814</p>
+            <p><strong>Struttura:</strong> Tre inni in endecasillabi sciolti</p>
+            <p><strong>Stato dell'opera:</strong> Incompiuta</p>
+            <p><strong>Dedicatario:</strong> Antonio Canova</p>
+            
+            <div class="quote">
+                "Le Grazie a noi mortali<br>
+                scendean da' cieli a render sacro e caro<br>
+                e di soavi affetti ospite il core."<br>
+                <small>— Le Grazie</small>
+            </div>
+            
+            <h3>Le tre Grazie</h3>
+            <ul>
+                <li><strong>Aglaia (lo Splendore):</strong> associata a Venere e all'arte</li>
+                <li><strong>Eufrosine (la Letizia):</strong> associata a Vesta e agli affetti</li>
+                <li><strong>Talia (la Prosperità):</strong> associata a Pallade e alla sapienza</li>
+            </ul>
+            
+            <h3>Collegamenti</h3>
+            <ul>
+                <li><a href="neoclassicismo.html">Il neoclassicismo di Foscolo</a></li>
+                <li><a href="sepolcri.html">Dei Sepolcri</a></li>
+                <li><a href="periodo-napoleonico.html">Il periodo napoleonico</a></li>
+            </ul>
+            
+            <h3>Curiosità</h3>
+            <p>Il poema è ispirato alla scultura "Le tre Grazie" di Antonio Canova, realizzata tra il 1812 e il 1817. Foscolo e Canova erano amici e condividevano la stessa visione neoclassica dell'arte.</p>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 Ugo Foscolo, tra esilio e disillusione | Sito creato a scopo educativo</p>
+    </footer>
+    
+    <script src="js/animations.js"></script>
+    <script src="js/image-fallback.js"></script>
+    <script src="js/add-games-menu.js"></script>
+    <script src="js/header-overlay.js"></script>
+</body>
+</html>

@@ -1,0 +1,605 @@
+--- stile-foscoliano.html
+ stile-foscoliano.html
+@@ -0,0 1,590 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lo stile di Ugo Foscolo</title>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/modern-style.css">
+    <!-- Stili specifici della pagina, se necessari -->
+    <style>
+        :root {
+            --primary-color: #5D4037; /* Marrone scuro */
+            --secondary-color: #8D6E63; /* Marrone medio */
+            --accent-color: #D7CCC8; /* Beige chiaro */
+            --text-color: #3E2723; /* Marrone molto scuro */
+            --light-color: #EFEBE9; /* Beige molto chiaro */
+            --highlight-color: #A1887F; /* Marrone chiaro */
+            --white-color: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            color: var(--text-color);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            background-image: url('images/style-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            position: relative;
+            animation: slideInFromTop 1.5s ease-out;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            margin-top: 0.5rem;
+            position: relative;
+            animation: slideInFromBottom 1.5s ease-out;
+        }
+        
+        nav {
+            background-color: var(--secondary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 0 1rem;
+        }
+        
+        .dropbtn {
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--accent-color);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: var(--highlight-color);
+            color: var(--white-color);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .dropdown:hover .dropbtn {
+            background-color: var(--primary-color);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+        
+        .content {
+            background-color: var(--white-color);
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar {
+            background-color: var(--white-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .style-image {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+            border: 3px solid var(--accent-color);
+        }
+        
+        .style-image:hover {
+            transform: scale(1.03);
+            border-color: var(--highlight-color);
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            background-color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideInFromTop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromBottom {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .animated-text {
+            animation: fadeIn 2s ease;
+        }
+        
+        h2, h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            margin-top: 1rem;
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .back-to-home:hover {
+            background-color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--accent-color);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .original-text {
+            font-style: italic;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: var(--accent-color);
+            border-radius: 5px;
+            position: relative;
+            line-height: 1.8;
+            border-left: 5px solid var(--primary-color);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .original-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .original-text-title {
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .style-feature {
+            background-color: var(--accent-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin: 1.5rem 0;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .style-feature.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .style-feature-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+        
+        .example {
+            font-style: italic;
+            color: var(--secondary-color);
+            margin-top: 0.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <h1>Lo stile di Ugo Foscolo</h1>
+        <p class="subtitle">Tra classicismo e passione romantica</p>
+    </header>
+    
+    <nav>
+        <div class="menu-container">
+            <div class="dropdown">
+                <button class="dropbtn">Biografia</button>
+                <div class="dropdown-content">
+                    <a href="giovinezza.html">Giovinezza</a>
+                    <a href="periodo-napoleonico.html">Periodo napoleonico</a>
+                    <a href="esilio.html">L'esilio</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Opere</button>
+                <div class="dropdown-content">
+                    <a href="ultime-lettere.html">Ultime lettere di Jacopo Ortis</a>
+                    <a href="sonetti.html">Sonetti</a>
+                    <a href="sepolcri.html">Dei Sepolcri</a>
+                    <a href="grazie.html">Le Grazie</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Pensiero</button>
+                <div class="dropdown-content">
+                    <a href="neoclassicismo.html">Neoclassicismo</a>
+                    <a href="preromanticismo.html">Preromanticismo</a>
+                    <a href="ideali-politici.html">Ideali politici</a>
+                    <a href="stile-foscoliano.html">Lo stile di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Galleria</button>
+                <div class="dropdown-content">
+                    <a href="foto.html">Fotografie</a>
+                    <a href="luoghi.html">Luoghi foscoliani</a>
+                    <a href="manoscritti.html">Manoscritti</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Giochi</button>
+                <div class="dropdown-content">
+                    <a href="gioco.html">Il Labirinto di Foscolo</a>
+                    <a href="gioco-oca-foscolo.html">Il Viaggio di Foscolo</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Home</button>
+                <div class="dropdown-content">
+                    <a href="index.html">Pagina principale</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="content">
+            <h2 class="animated-text">Lo stile di Ugo Foscolo: un'analisi</h2>
+            
+            <p class="animated-text">
+                Lo stile di Ugo Foscolo rappresenta una sintesi originale tra la tradizione classica e la sensibilità moderna, tra il rigore formale del Neoclassicismo e l'intensità emotiva del Preromanticismo. Questa pagina offre un'analisi delle caratteristiche principali dello stile foscoliano, accompagnata da un testo originale che ne imita le peculiarità.
+            </p>
+            
+            <div class="quote">
+                "Scriveva, e cancellava; e spesso spesso<br>
+                Pentito d'aver scritto, iva strappando<br>
+                Le scritte carte."<br>
+                <small>— Ippolito Pindemonte, riferendosi a Foscolo</small>
+            </div>
+            
+            <div class="section">
+                <h3>Un testo originale nello stile di Foscolo</h3>
+                
+                <p class="animated-text">
+                    Il seguente testo è un'imitazione dello stile di Foscolo, ispirata in particolare alla prosa delle "Ultime lettere di Jacopo Ortis" e alla poesia dei "Sepolcri". Il testo immagina una lettera scritta da Foscolo durante l'esilio londinese, in cui riflette sul tema della memoria e dell'immortalità conferita dalla poesia.
+                </p>
+                
+                <div class="original-text">
+                    <p class="original-text-title">LETTERA DALL'ESILIO</p>
+                    
+                    <p>Londra, 15 maggio 1823</p>
+                    
+                    <p>Mio caro amico,</p>
+                    
+                    <p>Mentre il sole tramonta su questa città straniera, e le ombre della sera avvolgono le mie stanche membra, il pensiero vola alla patria lontana, a quei colli, a quei mari, a quel cielo che non vedrò mai più. Oh! come è amaro l'esilio a chi porta nel cuore l'immagine della patria perduta, e non ha altro conforto che la memoria delle cose amate!</p>
+                    
+                    <p>Ma la memoria, questa dolce e crudele compagna dell'esule, è pur essa destinata a perire con noi? O forse vive oltre la tomba, tramandata dai versi del poeta ai posteri lontani? Ecco il dubbio che mi tormenta in queste lunghe notti d'insonnia, mentre il vento del nord sibila tra le vie deserte, e il mio cuore palpita di nostalgia e di speranza.</p>
+                    
+                    <p>Io credo, amico mio, che la poesia sia l'unica immortalità concessa all'uomo in questo universo di morte. Quando tutto perirà, quando le città saranno sepolte sotto la polvere dei secoli, quando i nostri nomi saranno dimenticati, e le nostre ossa disperse, i versi del poeta risuoneranno ancora sulle labbra dei vivi, e la memoria delle cose belle e grandi vivrà eterna nel canto.</p>
+                    
+                    <p>Per questo io scrivo, benché esule e povero, benché oppresso dalla malattia e dalla malinconia. Scrivo per lasciare un'orma del mio passaggio su questa terra, per dire ai posteri che anch'io ho vissuto, ho amato, ho sofferto. Scrivo per consolare gli altri esuli che verranno dopo di me, per dire loro che la patria vive nel cuore di chi l'ama, e che la poesia è il tempio sacro dove si conserva la memoria delle cose perdute.</p>
+                    
+                    <p>E tu, amico mio, che vivi ancora sotto il cielo d'Italia, tu che puoi ancora contemplare quei colli e quei mari che io vedo solo nei miei sogni, conserva nel tuo cuore la memoria dell'amico lontano. E quando passeggerai per le vie di Firenze, o lungo le rive dell'Arno, pensa che là, un giorno, riposeranno le mie ossa, e che il mio spirito, liberato dall'esilio terreno, aleggerà finalmente sulla terra che tanto ho amato.</p>
+                    
+                    <p>Addio, amico mio. La notte è ormai profonda, e la mia lampada si spegne. Ma il pensiero dell'Italia e dell'immortalità che la poesia conferisce alle cose amate, illumina ancora le tenebre del mio esilio.</p>
+                    
+                    <p>Il tuo Ugo</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Caratteristiche dello stile foscoliano</h3>
+                
+                <p class="animated-text">
+                    Lo stile di Foscolo si caratterizza per una serie di elementi distintivi, che lo rendono immediatamente riconoscibile e che hanno influenzato profondamente la letteratura italiana successiva. Ecco le principali caratteristiche, con esempi tratti dal testo originale proposto:
+                </p>
+                
+                <div class="style-feature">
+                    <p class="style-feature-title">1. Sintassi complessa e musicale</p>
+                    <p>
+                        La sintassi foscoliana è caratterizzata da periodi ampi e articolati, con frequenti inversioni e iperbati che conferiscono al testo un andamento musicale e solenne. Questa complessità sintattica riflette l'influenza della tradizione classica, in particolare latina, ma è animata da un'intensità emotiva tipicamente romantica.
+                    </p>
+                    <p class="example">
+                        "Mentre il sole tramonta su questa città straniera, e le ombre della sera avvolgono le mie stanche membra, il pensiero vola alla patria lontana, a quei colli, a quei mari, a quel cielo che non vedrò mai più."
+                    </p>
+                </div>
+                
+                <div class="style-feature">
+                    <p class="style-feature-title">2. Lessico elevato e ricercato</p>
+                    <p>
+                        Il vocabolario di Foscolo è ricco e variegato, con una predilezione per termini letterari, arcaismi e latinismi. Questa ricercatezza lessicale contribuisce a creare un'atmosfera di solennità e di bellezza, ma non esclude momenti di grande semplicità e immediatezza espressiva.
+                    </p>
+                    <p class="example">
+                        "Oh! come è amaro l'esilio a chi porta nel cuore l'immagine della patria perduta, e non ha altro conforto che la memoria delle cose amate!"
+                    </p>
+                </div>
+                
+                <div class="style-feature">
+                    <p class="style-feature-title">3. Tensione tra classicismo e romanticismo</p>
+                    <p>
+                        Lo stile foscoliano è caratterizzato da una costante tensione tra elementi classici (equilibrio formale, riferimenti mitologici, sintassi latineggiante) ed elementi romantici (intensità emotiva, temi come l'esilio, la morte, la nostalgia). Questa tensione riflette la posizione di Foscolo come figura di transizione tra due epoche e due sensibilità.
+                    </p>
+                    <p class="example">
+                        "Io credo, amico mio, che la poesia sia l'unica immortalità concessa all'uomo in questo universo di morte. Quando tutto perirà, quando le città saranno sepolte sotto la polvere dei secoli, quando i nostri nomi saranno dimenticati, e le nostre ossa disperse, i versi del poeta risuoneranno ancora sulle labbra dei vivi, e la memoria delle cose belle e grandi vivrà eterna nel canto."
+                    </p>
+                </div>
+                
+                <div class="style-feature">
+                    <p class="style-feature-title">4. Uso di immagini forti e contrastanti</p>
+                    <p>
+                        Foscolo ama i contrasti e le immagini forti, che colpiscono l'immaginazione del lettore. La vita e la morte, la luce e l'ombra, la patria e l'esilio, la memoria e l'oblio sono coppie di opposti che ricorrono frequentemente nella sua opera, creando una tensione drammatica che riflette la sua visione conflittuale dell'esistenza.
+                    </p>
+                    <p class="example">
+                        "Ma la memoria, questa dolce e crudele compagna dell'esule, è pur essa destinata a perire con noi? O forse vive oltre la tomba, tramandata dai versi del poeta ai posteri lontani?"
+                    </p>
+                </div>
+                
+                <div class="style-feature">
+                    <p class="style-feature-title">5. Tono appassionato e personale</p>
+                    <p>
+                        Il tono di Foscolo è sempre appassionato e personale, anche quando tratta temi universali. La sua scrittura è animata da un forte coinvolgimento emotivo, che si esprime attraverso esclamazioni, interrogazioni retoriche, apostrofi. Questo tono riflette la concezione foscoliana della letteratura come espressione sincera dei sentimenti e delle idee dell'autore.
+                    </p>
+                    <p class="example">
+                        "E tu, amico mio, che vivi ancora sotto il cielo d'Italia, tu che puoi ancora contemplare quei colli e quei mari che io vedo solo nei miei sogni, conserva nel tuo cuore la memoria dell'amico lontano."
+                    </p>
+                </div>
+                
+                <div class="style-feature">
+                    <p class="style-feature-title">6. Riferimenti autobiografici</p>
+                    <p>
+                        L'opera di Foscolo è ricca di riferimenti autobiografici, che si intrecciano con riflessioni filosofiche e politiche. La sua esperienza personale - l'esilio, la nostalgia per la patria, le delusioni politiche, gli amori infelici - diventa materia di poesia e si trasforma in riflessione universale sulla condizione umana.
+                    </p>
+                    <p class="example">
+                        "Per questo io scrivo, benché esule e povero, benché oppresso dalla malattia e dalla malinconia. Scrivo per lasciare un'orma del mio passaggio su questa terra, per dire ai posteri che anch'io ho vissuto, ho amato, ho sofferto."
+                    </p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>L'eredità stilistica di Foscolo</h3>
+                
+                <p class="animated-text">
+                    Lo stile di Foscolo ha esercitato una profonda influenza sulla letteratura italiana successiva. La sua sintesi tra classicismo e romanticismo, la sua ricerca di una lingua poetica elevata ma capace di esprimere sentimenti intensi, la sua concezione della letteratura come espressione sincera dell'io e come strumento di educazione civile hanno lasciato un'impronta duratura.
+                </p>
+                
+                <p class="animated-text">
+                    Leopardi, pur con le sue peculiarità, deve molto alla lezione stilistica di Foscolo, in particolare per la tensione tra classicismo formale e sensibilità moderna. Manzoni, pur seguendo una strada diversa, riconobbe in Foscolo un maestro di stile e di impegno civile. Nel Novecento, poeti come Ungaretti e Montale hanno ripreso, in forme nuove, la lezione foscoliana della densità espressiva e della tensione tra tradizione e innovazione.
+                </p>
+                
+                <p class="animated-text">
+                    Lo stile di Foscolo rappresenta così un momento fondamentale nella storia della lingua poetica italiana, un punto di svolta tra la tradizione classica e la modernità, un modello di equilibrio tra forma e contenuto, tra ragione e passione, tra individuo e società.
+                </p>
+            </div>
+            
+            <a href="index.html" class="back-to-home">Torna alla pagina principale</a>
+        </div>
+        
+        <div class="sidebar">
+            <img src="images/foscolo-writing.jpg" alt="Foscolo mentre scrive" class="style-image">
+            <h3>Lo stile in breve</h3>
+            <p><strong>Caratteristiche principali:</strong></p>
+            <ul>
+                <li>Sintassi complessa e musicale</li>
+                <li>Lessico elevato e ricercato</li>
+                <li>Tensione tra classicismo e romanticismo</li>
+                <li>Immagini forti e contrastanti</li>
+                <li>Tono appassionato e personale</li>
+                <li>Riferimenti autobiografici</li>
+            </ul>
+            
+            <div class="quote">
+                "A egregie cose il forte animo accendono<br>
+                l'urne de' forti..."<br>
+                <small>— Dei Sepolcri</small>
+            </div>
+            
+            <h3>Influenze sullo stile</h3>
+            <ul>
+                <li>Poesia classica greca e latina</li>
+                <li>Dante e Petrarca</li>
+                <li>Alfieri e Parini</li>
+                <li>Letteratura europea contemporanea (Goethe, Young, Rousseau)</li>
+            </ul>
+            
+            <h3>Collegamenti</h3>
+            <ul>
+                <li><a href="sonetti.html">I sonetti di Foscolo</a></li>
+                <li><a href="sepolcri.html">Dei Sepolcri</a></li>
+                <li><a href="grazie.html">Le Grazie</a></li>
+                <li><a href="ultime-lettere.html">Ultime lettere di Jacopo Ortis</a></li>
+            </ul>
+            
+            <h3>Eredità</h3>
+            <p>Lo stile di Foscolo ha influenzato profondamente la letteratura italiana successiva, da Leopardi a Manzoni, fino ai poeti del Novecento come Ungaretti e Montale.</p>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Ugo Foscolo, tra esilio e disillusione | Sito creato a scopo educativo</p>
+    </footer>
+    
+    <script>
+        // Animazione per gli elementi quando entrano nel viewport
+        document.addEventListener('DOMContentLoaded', function() {
+            // Funzione per controllare se un elemento è nel viewport
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8 &&
+                    rect.bottom >= 0
+                );
+            }
+            
+            // Funzione per animare gli elementi quando entrano nel viewport
+            function animateOnScroll() {
+                const sections = document.querySelectorAll('.section');
+                sections.forEach(section => {
+                    if (isInViewport(section)) {
+                        section.classList.add('visible');
+                    }
+                });
+                
+                const originalText = document.querySelector('.original-text');
+                if (isInViewport(originalText)) {
+                    originalText.classList.add('visible');
+                }
+                
+                const styleFeatures = document.querySelectorAll('.style-feature');
+                styleFeatures.forEach((feature, index) => {
+                    if (isInViewport(feature)) {
+                        // Aggiungiamo un ritardo crescente per creare un effetto a cascata
+                        setTimeout(() => {
+                            feature.classList.add('visible');
+                        }, index * 150);
+                    }
+                });
+            }
+            
+            // Esegui l'animazione al caricamento e allo scroll
+            animateOnScroll();
+            window.addEventListener('scroll', animateOnScroll);
+        });
+    </script>
+    <script src="js/header-overlay.js"></script>
+</body>
+</html>

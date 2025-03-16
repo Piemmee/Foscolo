@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Sonetti di Ugo Foscolo</title>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/modern-style.css">
+    <!-- Stili specifici della pagina, se necessari -->
+    <style>
+        :root {
+            --primary-color: #5D4037; /* Marrone scuro */
+            --secondary-color: #8D6E63; /* Marrone medio */
+            --accent-color: #D7CCC8; /* Beige chiaro */
+            --text-color: #3E2723; /* Marrone molto scuro */
+            --light-color: #EFEBE9; /* Beige molto chiaro */
+            --highlight-color: #A1887F; /* Marrone chiaro */
+            --white-color: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            color: var(--text-color);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            background-image: url('images/sonetti-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            position: relative;
+            animation: slideInFromTop 1.5s ease-out;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            margin-top: 0.5rem;
+            position: relative;
+            animation: slideInFromBottom 1.5s ease-out;
+        }
+        
+        nav {
+            background-color: var(--secondary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 0 1rem;
+        }
+        
+        .dropbtn {
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--accent-color);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: var(--highlight-color);
+            color: var(--white-color);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .dropdown:hover .dropbtn {
+            background-color: var(--primary-color);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+        
+        .content {
+            background-color: var(--white-color);
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar {
+            background-color: var(--white-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .sonetto-image {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+            border: 3px solid var(--accent-color);
+        }
+        
+        .sonetto-image:hover {
+            transform: scale(1.03);
+            border-color: var(--highlight-color);
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            background-color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideInFromTop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromBottom {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .animated-text {
+            animation: fadeIn 2s ease;
+        }
+        
+        h2, h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .sonetto {
+            background-color: var(--accent-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin: 1.5rem 0;
+            font-style: italic;
+            position: relative;
+            line-height: 1.8;
+        }
+        
+        .sonetto-title {
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            margin-top: 1rem;
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .back-to-home:hover {
+            background-color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <h1>I Sonetti di Ugo Foscolo</h1>
+        <p class="subtitle">Liriche di un'anima inquieta</p>
+    </header>
+    
+    <nav>
+        <div class="menu-container">
+            <div class="dropdown">
+                <button class="dropbtn">Biografia</button>
+                <div class="dropdown-content">
+                    <a href="giovinezza.html">Giovinezza</a>
+                    <a href="periodo-napoleonico.html">Periodo napoleonico</a>
+                    <a href="esilio.html">L'esilio</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Opere</button>
+                <div class="dropdown-content">
+                    <a href="ultime-lettere.html">Ultime lettere di Jacopo Ortis</a>
+                    <a href="sonetti.html">Sonetti</a>
+                    <a href="sepolcri.html">Dei Sepolcri</a>
+                    <a href="grazie.html">Le Grazie</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Pensiero</button>
+                <div class="dropdown-content">
+                    <a href="neoclassicismo.html">Neoclassicismo</a>
+                    <a href="preromanticismo.html">Preromanticismo</a>
+                    <a href="ideali-politici.html">Ideali politici</a>
+                    <a href="stile-foscoliano.html">Lo stile di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Galleria</button>
+                <div class="dropdown-content">
+                    <a href="foto.html">Fotografie</a>
+                    <a href="luoghi.html">Luoghi foscoliani</a>
+                    <a href="manoscritti.html">Manoscritti</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Giochi</button>
+                <div class="dropdown-content">
+                    <a href="gioco.html">Il Labirinto di Foscolo</a>
+                    <a href="gioco-oca-foscolo.html">Il Viaggio di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Home</button>
+                <div class="dropdown-content">
+                    <a href="index.html">Pagina principale</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="content">
+            <h2 class="animated-text">I Sonetti: l'essenza della poetica foscoliana</h2>
+            
+            <p class="animated-text">
+                I sonetti di Ugo Foscolo rappresentano uno dei vertici della sua produzione poetica. Composti principalmente tra il 1802 e il 1803, questi componimenti racchiudono in forma breve e intensa i temi fondamentali della poetica foscoliana: l'amore, l'esilio, la morte, la bellezza, la patria.
+            </p>
+            
+            <div class="quote">
+                "In me stesso ritorno, e guardo e piango<br>
+                del mio vano sperar, del mio desire..."<br>
+                <small>— Ugo Foscolo, Alla sera</small>
+            </div>
+            
+            <div class="section">
+                <h3>Caratteristiche dei sonetti</h3>
+                
+                <p class="animated-text">
+                    I sonetti di Foscolo si caratterizzano per la perfezione formale, la densità concettuale e la profondità emotiva. Rispettano la struttura tradizionale del sonetto italiano (due quartine e due terzine), ma la rinnovano con un linguaggio intenso e una sintassi complessa, che riflette l'inquietudine dell'animo del poeta.
+                </p>
+                
+                <p class="animated-text">
+                    La tensione tra forma classica e contenuto romantico è uno degli aspetti più interessanti di questi componimenti, che rappresentano perfettamente la posizione di Foscolo come figura di transizione tra Neoclassicismo e Romanticismo.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>I sonetti più celebri</h3>
+                
+                <div class="sonetto">
+                    <p class="sonetto-title">Alla sera</p>
+                    <p>
+                        Forse perché della fatal quïete<br>
+                        tu sei l'immago a me sì cara vieni<br>
+                        o sera! E quando ti corteggian liete<br>
+                        le nubi estive e i zeffiri sereni,<br><br>
+                        
+                        e quando dal nevoso aere inquïete<br>
+                        tenebre e lunghe all'universo meni<br>
+                        sempre scendi invocata, e le secrete<br>
+                        vie del mio cor soavemente tieni.<br><br>
+                        
+                        Vagar mi fai co' miei pensier su l'orme<br>
+                        che vanno al nulla eterno; e intanto fugge<br>
+                        questo reo tempo, e van con lui le torme<br><br>
+                        
+                        delle cure onde meco egli si strugge;<br>
+                        e mentre io guardo la tua pace, dorme<br>
+                        quello spirto guerrier ch'entro mi rugge.
+                    </p>
+                </div>
+                
+                <p class="animated-text">
+                    "Alla sera" è uno dei sonetti più celebri di Foscolo. Composto nel 1803, esprime il fascino che la sera esercita sul poeta, come momento di pace e di riflessione. La sera diventa simbolo della morte, vista non come evento tragico ma come "fatal quïete", riposo dalle inquietudini della vita. Il sonetto rivela la visione materialistica di Foscolo, per cui la morte è "nulla eterno", ma anche la sua capacità di trovare consolazione nella contemplazione della natura.
+                </p>
+                
+                <div class="sonetto">
+                    <p class="sonetto-title">A Zacinto</p>
+                    <p>
+                        Né più mai toccherò le sacre sponde<br>
+                        ove il mio corpo fanciulletto giacque,<br>
+                        Zacinto mia, che te specchi nell'onde<br>
+                        del greco mar da cui vergine nacque<br><br>
+                        
+                        Venere, e fea quelle isole feconde<br>
+                        col suo primo sorriso, onde non tacque<br>
+                        le tue limpide nubi e le tue fronde<br>
+                        l'inclito verso di colui che l'acque<br><br>
+                        
+                        cantò fatali, ed il diverso esiglio<br>
+                        per cui bello di fama e di sventura<br>
+                        baciò la sua petrosa Itaca Ulisse.<br><br>
+                        
+                        Tu non altro che il canto avrai del figlio,<br>
+                        o materna mia terra; a noi prescrisse<br>
+                        il fato illacrimata sepoltura.
+                    </p>
+                </div>
+                
+                <p class="animated-text">
+                    "A Zacinto" è un sonetto del 1803 in cui Foscolo esprime la nostalgia per la sua isola natale, Zante (l'antica Zacinto), che sa di non poter più rivedere. Il poeta si paragona a Ulisse, anch'egli esule che poté però tornare in patria, mentre a lui il destino ha negato questa possibilità. Il sonetto intreccia elementi autobiografici, riferimenti mitologici (la nascita di Venere) e letterari (Omero), creando un componimento di grande intensità emotiva e ricchezza culturale.
+                </p>
+                
+                <div class="sonetto">
+                    <p class="sonetto-title">In morte del fratello Giovanni</p>
+                    <p>
+                        Un dì, s'io non andrò sempre fuggendo<br>
+                        di gente in gente, me vedrai seduto<br>
+                        su la tua pietra, o fratel mio, gemendo<br>
+                        il fior de' tuoi gentili anni caduto.<br><br>
+                        
+                        La Madre or sol suo dì tardo traendo<br>
+                        parla di me col tuo cenere muto,<br>
+                        ma io deluse a voi le palme tendo<br>
+                        e sol da lunge i miei tetti saluto.<br><br>
+                        
+                        Sento gli avversi numi, e le secrete<br>
+                        cure che al viver tuo furon tempesta,<br>
+                        e prego anch'io nel tuo porto quïete.<br><br>
+                        
+                        Questo di tanta speme oggi mi resta!<br>
+                        Straniere genti, almen le ossa rendete<br>
+                        allora al petto della madre mesta.
+                    </p>
+                </div>
+                
+                <p class="animated-text">
+                    "In morte del fratello Giovanni" è un sonetto composto nel 1803, dopo il suicidio del fratello minore di Foscolo. Il componimento esprime il dolore del poeta per la perdita del fratello e la sua condizione di esule che gli impedisce di visitarne la tomba. Emerge il tema della sepoltura in terra straniera, che sarà poi centrale nei "Sepolcri". Il sonetto si conclude con l'invocazione alle "straniere genti" affinché, alla sua morte, restituiscano le sue spoglie alla madre, in un'immagine di grande intensità emotiva.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>Temi e motivi</h3>
+                
+                <p class="animated-text">
+                    Nei sonetti di Foscolo emergono alcuni temi ricorrenti:
+                </p>
+                
+                <ul>
+                    <li><strong>L'esilio e la nostalgia:</strong> Il tema dell'esilio, centrale nella vita di Foscolo, si riflette in molti sonetti, in particolare in "A Zacinto", dove esprime la nostalgia per la sua isola natale.</li>
+                    <li><strong>La morte:</strong> La visione materialistica della morte come "nulla eterno" emerge in "Alla sera", mentre in "In morte del fratello Giovanni" il poeta affronta il tema del lutto e della sepoltura lontano dalla patria.</li>
+                    <li><strong>La funzione consolatoria della bellezza e della poesia:</strong> Nonostante la visione pessimistica della vita, Foscolo trova consolazione nella bellezza della natura e nell'immortalità conferita dalla poesia.</li>
+                    <li><strong>Il mito:</strong> I riferimenti mitologici sono frequenti nei sonetti, come in "A Zacinto", dove il poeta intreccia la sua vicenda personale con il mito di Venere e la storia di Ulisse.</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h3>Stile e linguaggio</h3>
+                
+                <p class="animated-text">
+                    Lo stile dei sonetti foscoliani è caratterizzato da:
+                </p>
+                
+                <ul>
+                    <li><strong>Densità concettuale:</strong> Ogni verso è carico di significati e riferimenti culturali.</li>
+                    <li><strong>Sintassi complessa:</strong> Frequenti enjambement e inversioni sintattiche creano un ritmo musicale e intenso.</li>
+                    <li><strong>Lessico ricercato:</strong> Foscolo utilizza un linguaggio elevato, con arcaismi e termini letterari.</li>
+                    <li><strong>Equilibrio tra classicismo e romanticismo:</strong> La forma classica del sonetto si fonde con contenuti emotivi tipicamente romantici.</li>
+                </ul>
+                
+                <p class="animated-text">
+                    Questi elementi stilistici contribuiscono a fare dei sonetti di Foscolo dei capolavori di perfezione formale e intensità emotiva, che hanno influenzato profondamente la poesia italiana successiva.
+                </p>
+            </div>
+            
+            <a href="index.html" class="back-to-home">Torna alla pagina principale</a>
+        </div>
+        
+        <div class="sidebar">
+            <img src="images/sonetti-image.jpg" alt="Manoscritto dei sonetti di Foscolo" class="sonetto-image">
+            <h3>I Sonetti in breve</h3>
+            <p><strong>Periodo di composizione:</strong> 1802-1803</p>
+            <p><strong>Pubblicazione:</strong> Prima edizione nel 1803</p>
+            <p><strong>Struttura:</strong> Sonetti in forma italiana (due quartine e due terzine)</p>
+            
+            <div class="quote">
+                "Né più mai toccherò le sacre sponde<br>
+                ove il mio corpo fanciulletto giacque..."<br>
+                <small>— A Zacinto</small>
+            </div>
+            
+            <h3>I sonetti più celebri</h3>
+            <ul>
+                <li>Alla sera</li>
+                <li>A Zacinto</li>
+                <li>In morte del fratello Giovanni</li>
+                <li>Alla Musa</li>
+                <li>A Luigia Pallavicini caduta da cavallo</li>
+                <li>All'amica risanata</li>
+            </ul>
+            
+            <h3>Collegamenti</h3>
+            <ul>
+                <li><a href="neoclassicismo.html">Il neoclassicismo di Foscolo</a></li>
+                <li><a href="preromanticismo.html">Il preromanticismo di Foscolo</a></li>
+                <li><a href="sepolcri.html">Dei Sepolcri</a></li>
+            </ul>
+            
+            <h3>Curiosità</h3>
+            <p>I sonetti di Foscolo sono considerati tra i più perfetti della letteratura italiana, paragonabili a quelli di Petrarca e Leopardi per la loro perfezione formale e intensità emotiva.</p>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 Ugo Foscolo, tra esilio e disillusione | Sito creato a scopo educativo</p>
+    </footer>
+    
+    <script src="js/animations.js"></script>
+    <script src="js/image-fallback.js"></script>
+    <script src="js/add-games-menu.js"></script>
+    <script src="js/header-overlay.js"></script>
+</body>
+</html>

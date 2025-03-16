@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Labirinto di Foscolo - Gioco Educativo</title>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/modern-style.css">
+    <style>
+        /* Stili specifici per il gioco */
+        .game-container {
+            background-color: var(--accent-color);
+            border-radius: var(--border-radius-md);
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            min-height: 400px;
+        }
+        
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .game-card {
+            background-color: #5D4037; /* Colore fisso marrone scuro */
+            color: white;
+            border-radius: var(--border-radius-sm);
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            background-color: #8D6E63; /* Colore fisso marrone medio */
+        }
+
+        .game-card.revealed {
+            background-color: #EFEBE9; /* Colore fisso beige chiaro */
+            color: #3E2723; /* Colore fisso marrone scuro */
+            cursor: default;
+            border: 2px solid #5D4037; /* Bordo fisso */
+        }
+
+        .game-card.correct {
+            background-color: #4CAF50; /* Verde */
+            color: white;
+            border: 2px solid #2E7D32; /* Bordo verde scuro */
+        }
+
+        .game-card.incorrect {
+            background-color: #F44336; /* Rosso */
+            color: white;
+            border: 2px solid #C62828; /* Bordo rosso scuro */
+        }
+        
+        .game-controls {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+        }
+        
+        .game-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .game-button:hover {
+            background-color: #8D6E63; /* Colore fisso più scuro */
+            color: white;
+        }
+        
+        .game-button:disabled {
+            background-color: var(--accent-color);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        .game-info {
+            background-color: #FFFFFF; /* Colore bianco solido */
+            padding: 1.5rem;
+            border-radius: var(--border-radius-sm);
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            border: 2px solid #5D4037; /* Bordo fisso */
+            color: #3E2723; /* Colore del testo scuro fisso */
+        }
+        
+        .game-score {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-align: center;
+            margin: 1rem 0;
+        }
+        
+        .game-level {
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        .game-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #FFFFFF; /* Colore bianco solido */
+            padding: 2rem;
+            border-radius: var(--border-radius-md);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            color: #3E2723; /* Colore del testo scuro fisso */
+            border: 3px solid #5D4037; /* Bordo più spesso e con colore fisso */
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        
+        .modal-title {
+            color: #5D4037; /* Colore fisso */
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .modal-text {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            color: #3E2723; /* Colore del testo scuro fisso */
+        }
+        
+        .modal-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .modal-button:hover {
+            background-color: #8D6E63; /* Colore fisso più scuro */
+            color: white;
+        }
+        
+        .question-container {
+            display: none;
+            background-color: #FFFFFF; /* Colore bianco solido */
+            padding: 1.5rem;
+            border-radius: var(--border-radius-sm);
+            margin: 1.5rem 0;
+            box-shadow: var(--box-shadow);
+            border: 2px solid #5D4037; /* Bordo fisso */
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            color: #3E2723; /* Colore del testo scuro fisso */
+            font-weight: bold;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .option-button {
+            background-color: #D7CCC8; /* Colore fisso */
+            border: 1px solid #8D6E63; /* Bordo fisso */
+            padding: 1rem;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            text-align: left;
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
+            color: #3E2723; /* Colore del testo scuro fisso */
+        }
+        
+        .option-button:hover {
+            background-color: #8D6E63; /* Colore fisso più scuro */
+            color: white;
+        }
+        
+        .option-button.correct {
+            background-color: #4CAF50; /* Verde */
+            color: white;
+        }
+        
+        .option-button.incorrect {
+            background-color: #F44336; /* Rosso */
+            color: white;
+        }
+        
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--border-radius-sm);
+            display: none;
+            font-weight: bold;
+        }
+
+        .feedback.correct {
+            background-color: rgba(76, 175, 80, 0.8);
+            color: white;
+            border: 1px solid #2E7D32;
+        }
+
+        .feedback.incorrect {
+            background-color: rgba(244, 67, 54, 0.8);
+            color: white;
+            border: 1px solid #C62828;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background-color: var(--accent-color);
+            border-radius: 5px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .timer {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .game-character {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-image: url('images/foscolo-icon.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            transition: all 0.5s ease;
+            z-index: 10;
+        }
+        
+        .game-hint {
+            background-color: rgba(93, 64, 55, 0.8);
+            padding: 1rem;
+            border-radius: var(--border-radius-sm);
+            margin-top: 1rem;
+            font-style: italic;
+            display: none;
+            color: white;
+            border: 1px solid var(--primary-color);
+        }
+        
+        .hint-button {
+            background-color: var(--accent-dark);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        .hint-button:hover {
+            background-color: #5D4037; /* Colore fisso più scuro */
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .game-board {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .game-controls {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header style="background-color: rgba(93, 64, 55, 0.8);">
+        <div class="header-bg" style="background-image: url('images/game-bg.jpg'); opacity: 0.5;"></div>
+        <h1>Il Labirinto di Foscolo</h1>
+        <p class="subtitle">Un viaggio interattivo attraverso la vita e le opere del poeta</p>
+    </header>
+    
+    <nav>
+        <div class="menu-container">
+            <div class="dropdown">
+                <button class="dropbtn">Biografia</button>
+                <div class="dropdown-content">
+                    <a href="giovinezza.html">Giovinezza</a>
+                    <a href="periodo-napoleonico.html">Periodo napoleonico</a>
+                    <a href="esilio.html">L'esilio</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Opere</button>
+                <div class="dropdown-content">
+                    <a href="ultime-lettere.html">Ultime lettere di Jacopo Ortis</a>
+                    <a href="sonetti.html">Sonetti</a>
+                    <a href="sepolcri.html">Dei Sepolcri</a>
+                    <a href="grazie.html">Le Grazie</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Pensiero</button>
+                <div class="dropdown-content">
+                    <a href="neoclassicismo.html">Neoclassicismo</a>
+                    <a href="preromanticismo.html">Preromanticismo</a>
+                    <a href="ideali-politici.html">Ideali politici</a>
+                    <a href="stile-foscoliano.html">Lo stile di Foscolo</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Galleria</button>
+                <div class="dropdown-content">
+                    <a href="foto.html">Fotografie</a>
+                    <a href="luoghi.html">Luoghi foscoliani</a>
+                    <a href="manoscritti.html">Manoscritti</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Giochi</button>
+                <div class="dropdown-content">
+                    <a href="gioco.html">Il Labirinto di Foscolo</a>
+                    <a href="gioco-oca-foscolo.html">Il Viaggio di Foscolo</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Home</button>
+                <div class="dropdown-content">
+                    <a href="index.html">Pagina principale</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="content">
+            <h2 class="animated-text">Il Labirinto di Foscolo: un gioco educativo</h2>
+            
+            <p class="animated-text">
+                Benvenuti al "Labirinto di Foscolo", un gioco interattivo che vi permetterà di esplorare la vita, le opere e il pensiero di Ugo Foscolo in modo divertente e stimolante. Mettete alla prova le vostre conoscenze, scoprite curiosità e approfondite la figura di uno dei più grandi poeti italiani.
+            </p>
+            
+            <div class="quote">
+                "A egregie cose il forte animo accendono<br>
+                l'urne de' forti..."<br>
+                <small>— Ugo Foscolo, Dei Sepolcri</small>
+            </div>
+            
+            <div class="game-info">
+                <h3>Come si gioca</h3>
+                <p>Il gioco è strutturato come un percorso a tappe attraverso la vita e le opere di Foscolo. Ogni carta nasconde una domanda o una sfida. Rispondendo correttamente, avanzerete nel percorso e accumulerete punti. L'obiettivo è completare il labirinto rispondendo a quante più domande possibili.</p>
+                
+                <ul>
+                    <li>Cliccate su una carta per rivelare una domanda</li>
+                    <li>Scegliete la risposta che ritenete corretta</li>
+                    <li>Guadagnate punti per ogni risposta esatta</li>
+                    <li>Completate tutti i livelli per diventare esperti di Foscolo</li>
+                </ul>
+                
+                <p>Buona fortuna e buon divertimento!</p>
+            </div>
+            
+            <div class="game-controls">
+                <button id="start-game" class="game-button">Inizia il gioco</button>
+                <button id="reset-game" class="game-button" disabled>Ricomincia</button>
+                <button id="show-leaderboard" class="game-button">Classifica</button>
+            </div>
+            
+            <div class="game-level">Livello: <span id="current-level">1</span> - Difficoltà: <span id="difficulty">Facile</span></div>
+            <div class="game-score">Punteggio: <span id="score">0</span></div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            
+            <div class="timer" id="timer">Tempo: 00:00</div>
+            
+            <div class="game-container" id="game-container">
+                <div id="game-character" class="game-character"></div>
+                <div class="game-board" id="game-board">
+                    <!-- Le carte del gioco verranno generate dinamicamente -->
+                </div>
+                
+                <div class="question-container" id="question-container">
+                    <div class="question-text" id="question-text"></div>
+                    <div class="options-container" id="options-container">
+                        <!-- Le opzioni verranno generate dinamicamente -->
+                    </div>
+                    <div class="feedback" id="feedback"></div>
+                    <button class="hint-button" id="hint-button">Suggerimento</button>
+                    <div class="game-hint" id="game-hint"></div>
+                </div>
+            </div>
+            
+            <a href="index.html" class="back-to-home">Torna alla pagina principale</a>
+        </div>
+        
+        <div class="sidebar">
+            <img src="images/foscolo-portrait.jpg" alt="Ritratto di Ugo Foscolo" class="portrait">
+            <h3>Il Labirinto di Foscolo</h3>
+            <p>Un gioco educativo per approfondire la conoscenza di Ugo Foscolo in modo interattivo e divertente.</p>
+            
+            <h4>Livelli di gioco</h4>
+            <ul>
+                <li>Livello 1: Biografia</li>
+                <li>Livello 2: Opere principali</li>
+                <li>Livello 3: Stile e pensiero</li>
+                <li>Livello 4: Contesto storico</li>
+                <li>Livello 5: Sfida finale</li>
+            </ul>
+            
+            <div class="quote">
+                "Il tempo, gran ministro della natura,<br>
+                cangia, e i regni disfà, le terre, e il tutto."<br>
+                <small>— Ugo Foscolo</small>
+            </div>
+            
+            <h4>Benefici didattici</h4>
+            <ul>
+                <li>Apprendimento interattivo</li>
+                <li>Memorizzazione facilitata</li>
+                <li>Stimolo alla curiosità</li>
+                <li>Approccio ludico alla letteratura</li>
+                <li>Sviluppo del pensiero critico</li>
+            </ul>
+            
+            <h4>Suggerimenti</h4>
+            <p>Leggete attentamente le domande e riflettete prima di rispondere. Alcuni indizi potrebbero essere nascosti nel testo stesso delle domande!</p>
+        </div>
+    </main>
+    
+    <!-- Modal per le istruzioni e i messaggi di fine gioco -->
+    <div class="game-modal" id="game-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modal-close">&times;</span>
+            <h3 class="modal-title" id="modal-title">Benvenuto al Labirinto di Foscolo!</h3>
+            <p class="modal-text" id="modal-text">
+                Stai per iniziare un viaggio attraverso la vita e le opere di Ugo Foscolo.
+                Metti alla prova le tue conoscenze e scopri curiosità su uno dei più grandi poeti italiani.
+            </p>
+            <div id="player-registration" style="margin: 20px 0; text-align: left;">
+                <label for="player-name" style="display: block; margin-bottom: 5px; font-weight: bold;">Il tuo nome:</label>
+                <input type="text" id="player-name" style="width: 100%; padding: 8px; border-radius: var(--border-radius-sm); border: 1px solid var(--accent-dark); margin-bottom: 10px;">
+                <label for="player-class" style="display: block; margin-bottom: 5px; font-weight: bold;">La tua classe:</label>
+                <select id="player-class" style="width: 100%; padding: 8px; border-radius: var(--border-radius-sm); border: 1px solid var(--accent-dark);">
+                    <option value="">Seleziona la tua classe</option>
+                    <option value="1A">1A</option>
+                    <option value="1B">1B</option>
+                    <option value="2A">2A</option>
+                    <option value="2B">2B</option>
+                    <option value="3A">3A</option>
+                    <option value="3B">3B</option>
+                    <option value="4A">4A</option>
+                    <option value="4B">4B</option>
+                    <option value="5A">5A</option>
+                    <option value="5B">5B</option>
+                </select>
+            </div>
+            <button class="modal-button" id="modal-button">Inizia l'avventura</button>
+        </div>
+    </div>
+
+    <!-- Modal per la classifica -->
+    <div class="game-modal" id="leaderboard-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="leaderboard-close">&times;</span>
+            <h3 class="modal-title">Classifica dei giocatori</h3>
+            <div id="leaderboard-content" style="max-height: 300px; overflow-y: auto; margin: 20px 0;">
+                <!-- La classifica verrà generata dinamicamente -->
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button class="modal-button" id="leaderboard-button">Chiudi</button>
+                <button class="modal-button" id="clear-leaderboard-button" style="background-color: #F44336;">Cancella classifica</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Ugo Foscolo, tra esilio e disillusione | Sito creato a scopo educativo</p>
+    </footer>
+    
+    <script>
+        // Struttura per memorizzare i dati dei giocatori
+        let players = JSON.parse(localStorage.getItem('foscoloGamePlayers')) || [];
+        let currentPlayer = {
+            name: '',
+            class: '',
+            score: 0,
+            time: 0,
+            hintsUsed: 0,
+            date: new Date().toISOString()
+        };
+
+        // Database delle domande
+        const questions = [
+            // Livello 1: Biografia
+            [
+                {
+                    question: "In quale anno nacque Ugo Foscolo?",
+                    options: ["1778", "1785", "1770", "1790"],
+                    correct: 0,
+                    hint: "Nacque nell'anno in cui Voltaire morì a Parigi.",
+                    explanation: "Ugo Foscolo nacque il 6 febbraio 1778 a Zante (oggi Zacinto), un'isola greca sotto il dominio della Repubblica di Venezia."
+                },
+                {
+                    question: "Qual è il vero nome di Ugo Foscolo?",
+                    options: ["Niccolò Ugo Foscolo", "Ugo Antonio Foscolo", "Niccolò Foscolo", "Ugo Andrea Foscolo"],
+                    correct: 0,
+                    hint: "Il suo primo nome era lo stesso di Machiavelli.",
+                    explanation: "Il suo nome completo era Niccolò Ugo Foscolo. Più tardi scelse di usare solo il secondo nome."
+                },
+                {
+                    question: "Dove morì Ugo Foscolo?",
+                    options: ["Londra", "Parigi", "Milano", "Firenze"],
+                    correct: 0,
+                    hint: "Morì nella stessa città dove visse gli ultimi anni in esilio.",
+                    explanation: "Foscolo morì a Londra il 10 settembre 1827, dopo aver trascorso gli ultimi anni della sua vita in esilio in Inghilterra."
+                },
+                {
+                    question: "Quale professione esercitò Foscolo oltre a quella di scrittore?",
+                    options: ["Militare", "Avvocato", "Medico", "Insegnante"],
+                    correct: 0,
+                    hint: "Partecipò alle campagne napoleoniche.",
+                    explanation: "Foscolo fu anche un militare e partecipò a diverse campagne nell'esercito napoleonico, raggiungendo il grado di capitano."
+                },
+                {
+                    question: "Quale di queste città NON fu importante nella vita di Foscolo?",
+                    options: ["Roma", "Venezia", "Milano", "Londra"],
+                    correct: 0,
+                    hint: "Non visse mai nella città eterna.",
+                    explanation: "Foscolo non visse mai a Roma. Le città più importanti nella sua vita furono Zante (dove nacque), Venezia (dove trascorse la giovinezza), Milano (durante il periodo napoleonico) e Londra (dove visse in esilio)."
+                }
+            ],
+            // Livello 2: Opere principali
+            [
+                {
+                    question: "Quale di queste opere è considerata il capolavoro poetico di Foscolo?",
+                    options: ["Dei Sepolcri", "Le Grazie", "A Zacinto", "Alla sera"],
+                    correct: 0,
+                    hint: "È un carme in endecasillabi sciolti dedicato alla funzione civile delle tombe.",
+                    explanation: "\"Dei Sepolcri\" (1807) è considerato il capolavoro poetico di Foscolo, un carme in endecasillabi sciolti che riflette sul significato delle tombe e della memoria."
+                },
+                {
+                    question: "Quale opera di Foscolo è considerata uno dei primi romanzi epistolari italiani?",
+                    options: ["Ultime lettere di Jacopo Ortis", "Le Grazie", "Didimo Chierico", "Notizia intorno a Didimo Chierico"],
+                    correct: 0,
+                    hint: "È un romanzo composto da lettere scritte dal protagonista all'amico Lorenzo Alderani.",
+                    explanation: "Le \"Ultime lettere di Jacopo Ortis\" (1802) è considerato uno dei primi romanzi epistolari italiani, ispirato al \"Werther\" di Goethe."
+                },
+                {
+                    question: "Quale sonetto di Foscolo inizia con il verso \"Né più mai toccherò le sacre sponde\"?",
+                    options: ["A Zacinto", "Alla sera", "In morte del fratello Giovanni", "A Luigia Pallavicini caduta da cavallo"],
+                    correct: 0,
+                    hint: "Il sonetto è dedicato alla sua isola natale.",
+                    explanation: "Il sonetto \"A Zacinto\" inizia con questo verso e rappresenta la nostalgia di Foscolo per la sua isola natale."
+                },
+                {
+                    question: "Quale opera di Foscolo rimase incompiuta?",
+                    options: ["Le Grazie", "Dei Sepolcri", "Ultime lettere di Jacopo Ortis", "Sonetti"],
+                    correct: 0,
+                    hint: "È un poema in tre inni dedicato alle tre divinità della mitologia greca.",
+                    explanation: "\"Le Grazie\" è un poema incompiuto, composto da tre inni dedicati alle tre divinità della bellezza, a cui Foscolo lavorò negli ultimi anni della sua vita."
+                },
+                {
+                    question: "Quale di questi sonetti NON è stato scritto da Foscolo?",
+                    options: ["Il cinque maggio", "Alla sera", "A Zacinto", "In morte del fratello Giovanni"],
+                    correct: 0,
+                    hint: "È un'ode scritta da un altro grande poeta italiano.",
+                    explanation: "\"Il cinque maggio\" è un'ode scritta da Alessandro Manzoni in occasione della morte di Napoleone Bonaparte."
+                }
+            ],
+            // Livello 3: Stile e pensiero
+            [
+                {
+                    question: "Quale corrente letteraria influenzò maggiormente lo stile di Foscolo?",
+                    options: ["Neoclassicismo", "Romanticismo puro", "Illuminismo", "Barocco"],
+                    correct: 0,
+                    hint: "È una corrente che si ispira all'equilibrio e alla bellezza dell'arte classica.",
+                    explanation: "Il Neoclassicismo influenzò profondamente lo stile di Foscolo, anche se la sua opera presenta anche elementi preromantici."
+                },
+                {
+                    question: "Quale tema è ricorrente nella poesia di Foscolo?",
+                    options: ["L'esilio e la nostalgia della patria", "La vita rurale", "La religione cattolica", "La celebrazione della monarchia"],
+                    correct: 0,
+                    hint: "È un tema legato alla sua esperienza personale di lontananza dalla terra natale.",
+                    explanation: "L'esilio e la nostalgia della patria sono temi centrali nella poesia di Foscolo, riflettendo la sua esperienza personale di esule."
+                },
+                {
+                    question: "Quale funzione Foscolo attribuisce alla poesia?",
+                    options: ["Eternare la memoria degli uomini illustri", "Intrattenere il pubblico", "Celebrare la religione", "Arricchire il poeta"],
+                    correct: 0,
+                    hint: "Per Foscolo, la poesia ha il potere di vincere il tempo e l'oblio.",
+                    explanation: "Foscolo attribuisce alla poesia la funzione di eternare la memoria degli uomini illustri, preservandoli dall'oblio."
+                },
+                {
+                    question: "Quale concezione della morte emerge nei \"Sepolcri\"?",
+                    options: ["La morte come annullamento fisico ma non spirituale", "La morte come passaggio a una vita ultraterrena", "La morte come fine totale dell'esistenza", "La morte come punizione divina"],
+                    correct: 0,
+                    hint: "Per Foscolo, la morte non cancella completamente l'esistenza dell'uomo.",
+                    explanation: "Nei \"Sepolcri\" emerge una concezione della morte come annullamento fisico ma non spirituale, poiché la memoria e l'esempio dei grandi uomini continuano a vivere."
+                },
+                {
+                    question: "Quale ideale politico sostenne Foscolo per tutta la vita?",
+                    options: ["L'ideale di libertà e indipendenza nazionale", "Il sostegno alla monarchia assoluta", "L'adesione all'impero napoleonico", "Il ritorno all'Ancien Régime"],
+                    correct: 0,
+                    hint: "Foscolo fu deluso da Napoleone quando cedette Venezia all'Austria.",
+                    explanation: "Foscolo sostenne per tutta la vita l'ideale di libertà e indipendenza nazionale, anche a costo dell'esilio."
+                }
+            ],
+            // Livello 4: Contesto storico
+            [
+                {
+                    question: "Quale evento storico influenzò profondamente il pensiero politico di Foscolo?",
+                    options: ["Il Trattato di Campoformio (1797)", "La Rivoluzione Francese (1789)", "La caduta di Napoleone (1815)", "L'unificazione italiana (1861)"],
+                    correct: 0,
+                    hint: "Con questo trattato Napoleone cedette Venezia all'Austria.",
+                    explanation: "Il Trattato di Campoformio del 1797, con cui Napoleone cedette Venezia all'Austria, fu una profonda delusione per Foscolo e influenzò il suo pensiero politico."
+                },
+                {
+                    question: "In quale periodo storico visse principalmente Foscolo?",
+                    options: ["Tra la Rivoluzione Francese e la Restaurazione", "Durante il Risorgimento italiano", "Durante l'Illuminismo", "Durante l'unificazione italiana"],
+                    correct: 0,
+                    hint: "Visse in un periodo di grandi cambiamenti politici in Europa.",
+                    explanation: "Foscolo visse principalmente nel periodo tra la Rivoluzione Francese (1789) e la Restaurazione (1815), un'epoca di grandi cambiamenti politici e culturali."
+                },
+                {
+                    question: "Perché Foscolo fu costretto all'esilio?",
+                    options: ["Per il suo rifiuto di giurare fedeltà al governo austriaco", "Per debiti", "Per un duello", "Per le sue idee religiose"],
+                    correct: 0,
+                    hint: "Rifiutò di sottomettersi al potere che considerava oppressivo.",
+                    explanation: "Foscolo fu costretto all'esilio nel 1815 per il suo rifiuto di giurare fedeltà al governo austriaco che aveva preso il controllo della Lombardia."
+                },
+                {
+                    question: "Quale movimento culturale europeo si sviluppò durante la vita di Foscolo?",
+                    options: ["Il Romanticismo", "L'Illuminismo", "Il Futurismo", "Il Simbolismo"],
+                    correct: 0,
+                    hint: "È un movimento che esalta il sentimento, la natura e l'individualità.",
+                    explanation: "Durante la vita di Foscolo si sviluppò il Romanticismo, un movimento culturale che influenzò parzialmente la sua opera, pur mantenendo egli forti legami con il Neoclassicismo."
+                },
+                {
+                    question: "Quale figura storica Foscolo inizialmente ammirò e poi criticò?",
+                    options: ["Napoleone Bonaparte", "Giuseppe Garibaldi", "Vittorio Alfieri", "Papa Pio VII"],
+                    correct: 0,
+                    hint: "Inizialmente lo vide come un liberatore, poi come un traditore degli ideali rivoluzionari.",
+                    explanation: "Foscolo inizialmente ammirò Napoleone Bonaparte come portatore degli ideali rivoluzionari, ma poi lo criticò duramente dopo il Trattato di Campoformio."
+                }
+            ],
+            // Livello 5: Sfida finale
+            [
+                {
+                    question: "Quale poeta inglese Foscolo tradusse durante il suo esilio a Londra?",
+                    options: ["Lawrence Sterne", "William Shakespeare", "John Milton", "Lord Byron"],
+                    correct: 0,
+                    hint: "È l'autore di 'Viaggio sentimentale'.",
+                    explanation: "Durante il suo esilio a Londra, Foscolo tradusse opere di Lawrence Sterne, in particolare 'A Sentimental Journey' (Viaggio sentimentale)."
+                },
+                {
+                    question: "Quale opera di Foscolo contiene la famosa lettera sulla Certosa di Bologna?",
+                    options: ["Ultime lettere di Jacopo Ortis", "Dei Sepolcri", "Le Grazie", "Notizia intorno a Didimo Chierico"],
+                    correct: 0,
+                    hint: "È un'opera in forma epistolare.",
+                    explanation: "La famosa lettera sulla Certosa di Bologna è contenuta nelle 'Ultime lettere di Jacopo Ortis', dove il protagonista riflette sulla bellezza e sulla funzione civile delle tombe."
+                },
+                {
+                    question: "Quale personaggio storico è citato nei 'Sepolcri' come esempio di grande italiano la cui tomba è onorata?",
+                    options: ["Vittorio Alfieri", "Dante Alighieri", "Leonardo da Vinci", "Galileo Galilei"],
+                    correct: 0,
+                    hint: "Era un drammaturgo e poeta piemontese molto ammirato da Foscolo.",
+                    explanation: "Nei 'Sepolcri', Foscolo cita Vittorio Alfieri come esempio di grande italiano la cui tomba in Santa Croce è onorata e fonte di ispirazione."
+                },
+                {
+                    question: "Quale pseudonimo usò Foscolo per alcune sue opere critiche?",
+                    options: ["Didimo Chierico", "Lorenzo Alderani", "Jacopo Ortis", "Ippolito Pindemonte"],
+                    correct: 0,
+                    hint: "È un personaggio inventato da Foscolo come suo alter ego critico e ironico.",
+                    explanation: "Foscolo usò lo pseudonimo di Didimo Chierico per alcune sue opere critiche, creando un alter ego con caratteristiche diverse dalle sue."
+                },
+                {
+                    question: "Quale opera di Foscolo fu scritta in risposta a un editto napoleonico?",
+                    options: ["Dei Sepolcri", "Le Grazie", "Ultime lettere di Jacopo Ortis", "A Zacinto"],
+                    correct: 0,
+                    hint: "Fu scritta in risposta all'editto di Saint-Cloud che regolamentava le sepolture.",
+                    explanation: "'Dei Sepolcri' fu scritto in risposta all'editto di Saint-Cloud del 1806, che imponeva di seppellire i morti fuori dalle città e vietava le iscrizioni sulle tombe."
+                }
+            ]
+        ];
+
+        // Variabili di gioco
+        let currentLevel = 0;
+        let score = 0;
+        let gameStarted = false;
+        let currentQuestion = null;
+        let answeredQuestions = 0;
+        let totalQuestions = 5;
+        let timerInterval = null;
+        let seconds = 0;
+        let minutes = 0;
+        let hintsUsed = 0;
+
+        // Elementi DOM
+        const gameBoard = document.getElementById('game-board');
+        const questionContainer = document.getElementById('question-container');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const feedback = document.getElementById('feedback');
+        const scoreDisplay = document.getElementById('score');
+        const levelDisplay = document.getElementById('current-level');
+        const difficultyDisplay = document.getElementById('difficulty');
+        const progressBar = document.getElementById('progress-bar');
+        const timerDisplay = document.getElementById('timer');
+        const startButton = document.getElementById('start-game');
+        const resetButton = document.getElementById('reset-game');
+        const leaderboardButton = document.getElementById('show-leaderboard');
+        const modal = document.getElementById('game-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+        const modalButton = document.getElementById('modal-button');
+        const modalClose = document.getElementById('modal-close');
+        const gameCharacter = document.getElementById('game-character');
+        const hintButton = document.getElementById('hint-button');
+        const gameHint = document.getElementById('game-hint');
+
+        // Funzione per inizializzare il gioco
+        function initGame() {
+            // Prepara il modal di benvenuto con registrazione giocatore
+            modalTitle.textContent = "Benvenuto al Labirinto di Foscolo!";
+            modalText.innerHTML = `
+                Stai per iniziare un viaggio attraverso la vita e le opere di Ugo Foscolo.
+                Metti alla prova le tue conoscenze e scopri curiosità su uno dei più grandi poeti italiani.<br><br>
+                Il gioco è diviso in 5 livelli di difficoltà crescente. Ogni livello contiene 5 domande.
+                Rispondi correttamente per guadagnare punti e avanzare nel labirinto!
+            `;
+            modalButton.textContent = "Inizia l'avventura";
+
+            // Pulisci i campi di registrazione
+            document.getElementById('player-name').value = '';
+            document.getElementById('player-class').value = '';
+
+            // Rimuovi eventuali avvisi precedenti
+            const existingWarnings = document.querySelectorAll('.warning-message');
+            existingWarnings.forEach(warning => warning.remove());
+
+            // Reset delle variabili di gioco
+            currentLevel = 0;
+            score = 0;
+            gameStarted = false;
+            answeredQuestions = 0;
+            seconds = 0;
+            minutes = 0;
+            hintsUsed = 0;
+            currentCardElement = null; // Reset della carta corrente
+
+            // Reset del giocatore corrente
+            currentPlayer = {
+                name: '',
+                class: '',
+                score: 0,
+                time: 0,
+                hintsUsed: 0,
+                date: new Date().toISOString()
+            };
+
+            // Aggiorna i display
+            scoreDisplay.textContent = score;
+            levelDisplay.textContent = currentLevel + 1;
+            updateDifficultyDisplay();
+            progressBar.style.width = "0%";
+            timerDisplay.textContent = "Tempo: 00:00";
+
+            // Posiziona il personaggio all'inizio
+            gameCharacter.style.left = "10px";
+            gameCharacter.style.top = "10px";
+
+            // Nascondi il contenitore delle domande
+            questionContainer.style.display = 'none';
+        }
+
+        // Funzione per aggiornare il display della difficoltà
+        function updateDifficultyDisplay() {
+            const difficulties = ["Facile", "Medio", "Avanzato", "Difficile", "Esperto"];
+            difficultyDisplay.textContent = difficulties[currentLevel];
+        }
+
+        // Funzione per generare il tabellone di gioco
+        function generateGameBoard() {
+            gameBoard.innerHTML = '';
+            questionContainer.style.display = 'none';
+
+            // Rimuovi eventuali pulsanti continua esistenti
+            const existingButtons = document.querySelectorAll('.continue-button');
+            existingButtons.forEach(button => button.remove());
+
+            // Crea le carte per il livello corrente
+            for (let i = 0; i < 5; i++) {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.textContent = `Domanda ${i + 1}`;
+                card.dataset.index = i;
+
+                // Utilizziamo una funzione separata per evitare problemi di closure
+                card.addEventListener('click', function handleCardClick() {
+                    // Verifica che il gioco sia iniziato e che la carta non sia già stata rivelata o completata
+                    if (gameStarted && !this.classList.contains('correct') && !this.classList.contains('incorrect')) {
+                        // Rimuovi la classe revealed da tutte le carte che non sono state completate
+                        document.querySelectorAll('.game-card.revealed:not(.correct):not(.incorrect)').forEach(c => {
+                            c.classList.remove('revealed');
+                        });
+
+                        // Memorizza la carta corrente
+                        currentCardElement = this;
+
+                        // Mostra la domanda
+                        showQuestion(parseInt(this.dataset.index));
+                        this.classList.add('revealed');
+                    }
+                });
+
+                gameBoard.appendChild(card);
+            }
+        }
+
+        // Funzione per mescolare un array
+        function shuffleArray(array) {
+            // Crea una copia dell'array per non modificare l'originale
+            const shuffled = [...array];
+
+            // Algoritmo di Fisher-Yates per mescolare l'array
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+
+            return shuffled;
+        }
+
+        // Funzione per mostrare una domanda
+        function showQuestion(index) {
+            // Assicurati che l'indice sia valido
+            if (index < 0 || index >= questions[currentLevel].length) {
+                console.error("Indice domanda non valido:", index);
+                return;
+            }
+
+            // Ottieni la domanda corrente
+            currentQuestion = questions[currentLevel][index];
+
+            // Imposta il testo della domanda
+            questionText.textContent = currentQuestion.question;
+
+            // Pulisci il contenitore delle opzioni
+            optionsContainer.innerHTML = '';
+
+            // Crea un array di oggetti con le opzioni e i loro indici originali
+            const optionsWithIndices = currentQuestion.options.map((option, index) => ({
+                text: option,
+                originalIndex: index
+            }));
+
+            // Mescola le opzioni
+            const shuffledOptions = shuffleArray(optionsWithIndices);
+
+            // Crea i pulsanti per le opzioni mescolate
+            shuffledOptions.forEach((option) => {
+                const button = document.createElement('button');
+                button.className = 'option-button';
+                button.textContent = option.text;
+                button.dataset.index = option.originalIndex; // Mantiene l'indice originale
+
+                // Utilizziamo una funzione separata per evitare problemi di closure
+                button.addEventListener('click', function handleOptionClick() {
+                    // Rimuovi l'event listener per evitare clic multipli
+                    optionsContainer.querySelectorAll('.option-button').forEach(btn => {
+                        btn.removeEventListener('click', handleOptionClick);
+                        btn.style.pointerEvents = 'none'; // Disabilita ulteriormente i clic
+                    });
+
+                    // Controlla la risposta
+                    checkAnswer(parseInt(this.dataset.index));
+                });
+
+                optionsContainer.appendChild(button);
+            });
+
+            // Resetta il feedback e il suggerimento
+            feedback.className = 'feedback';
+            feedback.style.display = 'none';
+            feedback.textContent = '';
+            gameHint.style.display = 'none';
+            gameHint.textContent = '';
+
+            // Rimuovi eventuali pulsanti esistenti
+            const existingButtons = document.querySelectorAll('.continue-button, .back-to-board-button');
+            existingButtons.forEach(button => button.remove());
+
+            // Mostra il contenitore delle domande
+            questionContainer.style.display = 'block';
+
+            // Aggiungi un pulsante per chiudere la domanda senza rispondere
+            const closeButton = document.createElement('button');
+            closeButton.className = 'game-button back-to-board-button';
+            closeButton.style.marginTop = '15px';
+            closeButton.style.backgroundColor = '#8D6E63';
+            closeButton.textContent = 'Torna al tabellone';
+            closeButton.onclick = function() {
+                // Nascondi il contenitore delle domande
+                questionContainer.style.display = 'none';
+
+                // Rimuovi la classe revealed dalla carta corrente se non è stata completata
+                if (currentCardElement && !currentCardElement.classList.contains('correct') && !currentCardElement.classList.contains('incorrect')) {
+                    currentCardElement.classList.remove('revealed');
+                }
+
+                // Rimuovi tutti i pulsanti di questo tipo
+                document.querySelectorAll('.back-to-board-button').forEach(btn => btn.remove());
+            };
+
+            // Verifica se il pulsante esiste già prima di aggiungerlo
+            if (document.querySelectorAll('.back-to-board-button').length === 0) {
+                // Aggiungi il pulsante dopo il feedback
+                feedback.parentNode.insertBefore(closeButton, feedback.nextSibling);
+            }
+        }
+
+        // Variabile globale per tenere traccia della carta corrente
+        let currentCardElement = null;
+
+        // Funzione per controllare la risposta
+        function checkAnswer(index) {
+            const optionButtons = document.querySelectorAll('.option-button');
+
+            // Disabilita tutti i pulsanti
+            optionButtons.forEach(button => {
+                button.disabled = true;
+            });
+
+            // Evidenzia la risposta corretta
+            // Trova il pulsante con l'indice originale corrispondente alla risposta corretta
+            optionButtons.forEach(button => {
+                if (parseInt(button.dataset.index) === currentQuestion.correct) {
+                    button.classList.add('correct');
+                }
+            });
+
+            // Se la risposta è corretta
+            if (index === currentQuestion.correct) {
+                feedback.textContent = "Corretto! " + currentQuestion.explanation;
+                feedback.className = 'feedback correct';
+                score += (currentLevel + 1) * 10;
+                scoreDisplay.textContent = score;
+
+                // Aggiorna la carta corrente come corretta
+                if (currentCardElement) {
+                    currentCardElement.classList.add('correct');
+
+                    // Muovi il personaggio
+                    const cardPosition = currentCardElement.getBoundingClientRect();
+                    const containerPosition = document.getElementById('game-container').getBoundingClientRect();
+                    gameCharacter.style.left = (cardPosition.left - containerPosition.left + 25) + 'px';
+                    gameCharacter.style.top = (cardPosition.top - containerPosition.top + 25) + 'px';
+                }
+            }
+            // Se la risposta è sbagliata
+            else {
+                optionButtons[index].classList.add('incorrect');
+                feedback.textContent = "Sbagliato! " + currentQuestion.explanation;
+                feedback.className = 'feedback incorrect';
+
+                // Aggiorna la carta corrente come incorretta
+                if (currentCardElement) {
+                    currentCardElement.classList.add('incorrect');
+                }
+            }
+
+            feedback.style.display = 'block';
+            answeredQuestions++;
+
+            // Aggiorna la barra di progresso
+            progressBar.style.width = (answeredQuestions / totalQuestions * 100) + "%";
+
+            // Controlla se il livello è completato
+            if (answeredQuestions === totalQuestions) {
+                setTimeout(completeLevel, 2000);
+            } else {
+                // Rimuovi eventuali pulsanti esistenti
+                const existingButtons = document.querySelectorAll('.continue-button, .back-to-board-button');
+                existingButtons.forEach(button => button.remove());
+
+                // Aggiungi un pulsante per continuare
+                const continueButton = document.createElement('button');
+                continueButton.className = 'game-button continue-button';
+                continueButton.style.marginTop = '15px';
+                continueButton.textContent = 'Continua';
+                continueButton.onclick = function() {
+                    questionContainer.style.display = 'none';
+                    // Rimuovi tutti i pulsanti
+                    document.querySelectorAll('.continue-button, .back-to-board-button').forEach(btn => btn.remove());
+                };
+
+                // Verifica se il pulsante esiste già prima di aggiungerlo
+                if (document.querySelectorAll('.continue-button').length === 0) {
+                    feedback.parentNode.appendChild(continueButton);
+                }
+            }
+        }
+
+        // Funzione per completare un livello
+        function completeLevel() {
+            currentLevel++;
+
+            // Se tutti i livelli sono completati
+            if (currentLevel >= questions.length) {
+                endGame();
+                return;
+            }
+
+            // Prepara il prossimo livello
+            answeredQuestions = 0;
+            levelDisplay.textContent = currentLevel + 1;
+            updateDifficultyDisplay();
+            progressBar.style.width = "0%";
+            currentCardElement = null; // Reset della carta corrente
+
+            // Nascondi il contenitore delle domande
+            questionContainer.style.display = 'none';
+
+            // Rimuovi eventuali pulsanti continua esistenti
+            const existingButtons = document.querySelectorAll('.continue-button');
+            existingButtons.forEach(button => button.remove());
+
+            // Mostra il modal di passaggio livello
+            modalTitle.textContent = `Livello ${currentLevel} completato!`;
+            modalText.innerHTML = `
+                <div style="background-color: #4CAF50; color: white; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+                    <strong>Complimenti!</strong> Hai completato il livello ${currentLevel}.
+                </div>
+                <div style="text-align: left; margin: 15px 0;">
+                    <p><strong>Punteggio attuale:</strong> ${score} punti</p>
+                    <p><strong>Suggerimenti usati:</strong> ${hintsUsed}</p>
+                </div>
+                <p>Sei pronto per il prossimo livello?</p>
+            `;
+            document.getElementById('player-registration').style.display = 'none';
+            modalButton.textContent = "Continua";
+
+            // Assicurati che il modal sia visibile
+            modal.style.display = "flex";
+
+            // Genera il nuovo tabellone
+            generateGameBoard();
+
+            // Resetta la posizione del personaggio
+            gameCharacter.style.left = "10px";
+            gameCharacter.style.top = "10px";
+
+            // Aggiungiamo un gestore di eventi temporaneo per il pulsante continua
+            const originalClickHandler = modalButton.onclick;
+            modalButton.onclick = function() {
+                // Nascondi il modal
+                modal.style.display = "none";
+
+                // Ripristina il gestore di eventi originale
+                setTimeout(() => {
+                    modalButton.onclick = originalClickHandler;
+                }, 100);
+            };
+        }
+
+        // Funzione per terminare il gioco
+        function endGame() {
+            clearInterval(timerInterval);
+
+            // Calcola il punteggio finale
+            const finalScore = score - (hintsUsed * 5);
+
+            // Aggiorna i dati del giocatore corrente
+            currentPlayer.score = finalScore;
+            currentPlayer.time = minutes * 60 + seconds;
+            currentPlayer.hintsUsed = hintsUsed;
+
+            // Salva il giocatore nella classifica
+            if (currentPlayer.name && currentPlayer.class) {
+                players.push(currentPlayer);
+                // Ordina i giocatori per punteggio (dal più alto al più basso)
+                players.sort((a, b) => b.score - a.score);
+                // Limita la classifica a 50 giocatori
+                if (players.length > 50) {
+                    players = players.slice(0, 50);
+                }
+                // Salva la classifica nel localStorage
+                localStorage.setItem('foscoloGamePlayers', JSON.stringify(players));
+            }
+
+            // Nascondi il contenitore delle domande
+            questionContainer.style.display = 'none';
+
+            // Rimuovi eventuali pulsanti continua esistenti
+            const existingButtons = document.querySelectorAll('.continue-button');
+            existingButtons.forEach(button => button.remove());
+
+            // Mostra il modal di fine gioco
+            modalTitle.textContent = "Congratulazioni!";
+            modalText.innerHTML = `
+                <div style="background-color: #4CAF50; color: white; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                    <strong>Hai completato il Labirinto di Foscolo!</strong>
+                </div>
+
+                <div style="text-align: left; background-color: #F5F5F5; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                    <p><strong>Giocatore:</strong> ${currentPlayer.name || 'Anonimo'}</p>
+                    <p><strong>Classe:</strong> ${currentPlayer.class || 'Non specificata'}</p>
+                    <p><strong>Punteggio finale:</strong> ${finalScore} punti</p>
+                    <p><strong>Tempo impiegato:</strong> ${minutes}:${seconds < 10 ? '0' + seconds : seconds}</p>
+                    <p><strong>Suggerimenti usati:</strong> ${hintsUsed}</p>
+                </div>
+
+                <p style="font-size: 1.2rem; color: #5D4037;"><strong>Sei diventato un vero esperto di Ugo Foscolo!</strong></p>
+            `;
+            document.getElementById('player-registration').style.display = 'none';
+            modalButton.textContent = "Gioca ancora";
+            modal.style.display = "flex";
+
+            // Abilita il pulsante di reset
+            resetButton.disabled = false;
+            startButton.disabled = false;
+            gameStarted = false;
+        }
+
+        // Funzione per aggiornare il timer
+        function updateTimer() {
+            seconds++;
+            if (seconds >= 60) {
+                seconds = 0;
+                minutes++;
+            }
+            
+            timerDisplay.textContent = `Tempo: ${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+        }
+
+        // Funzione per generare la classifica
+        function generateLeaderboard() {
+            const leaderboardContent = document.getElementById('leaderboard-content');
+            leaderboardContent.innerHTML = '';
+
+            if (players.length === 0) {
+                leaderboardContent.innerHTML = '<p>Nessun giocatore registrato finora.</p>';
+                return;
+            }
+
+            // Crea la tabella della classifica
+            const table = document.createElement('table');
+            table.style.width = '100%';
+            table.style.borderCollapse = 'collapse';
+            table.style.marginBottom = '20px';
+
+            // Intestazione della tabella
+            const thead = document.createElement('thead');
+            thead.innerHTML = `
+                <tr style="background-color: var(--primary-color); color: white;">
+                    <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">Pos.</th>
+                    <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">Nome</th>
+                    <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">Classe</th>
+                    <th style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">Punteggio</th>
+                    <th style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">Tempo</th>
+                    <th style="padding: 10px; text-align: center; border-bottom: 1px solid #ddd;">Azioni</th>
+                </tr>
+            `;
+            table.appendChild(thead);
+
+            // Corpo della tabella
+            const tbody = document.createElement('tbody');
+            players.forEach((player, index) => {
+                const minutes = Math.floor(player.time / 60);
+                const seconds = player.time % 60;
+                const timeString = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+
+                const row = document.createElement('tr');
+                row.style.backgroundColor = index % 2 === 0 ? '#f2f2f2' : 'white';
+                row.innerHTML = `
+                    <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">${index + 1}</td>
+                    <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">${player.name}</td>
+                    <td style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">${player.class}</td>
+                    <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">${player.score}</td>
+                    <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">${timeString}</td>
+                    <td style="padding: 10px; text-align: center; border-bottom: 1px solid #ddd;">
+                        <button class="remove-player-btn" data-index="${index}" style="background-color: #F44336; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Rimuovi</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            table.appendChild(tbody);
+
+            leaderboardContent.appendChild(table);
+
+            // Aggiungi event listener ai pulsanti di rimozione
+            document.querySelectorAll('.remove-player-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const playerIndex = parseInt(this.getAttribute('data-index'));
+                    removePlayerFromLeaderboard(playerIndex);
+                });
+            });
+        }
+
+        // Funzione per rimuovere un giocatore dalla classifica
+        function removePlayerFromLeaderboard(index) {
+            if (index >= 0 && index < players.length) {
+                const playerName = players[index].name;
+
+                // Chiedi conferma prima di rimuovere
+                if (confirm(`Sei sicuro di voler rimuovere ${playerName} dalla classifica?`)) {
+                    // Rimuovi il giocatore dall'array
+                    players.splice(index, 1);
+
+                    // Aggiorna il localStorage
+                    localStorage.setItem('foscoloGamePlayers', JSON.stringify(players));
+
+                    // Rigenera la classifica
+                    generateLeaderboard();
+
+                    // Mostra un messaggio di conferma
+                    alert(`${playerName} è stato rimosso dalla classifica.`);
+                }
+            }
+        }
+
+        // Event listeners
+        startButton.addEventListener('click', function() {
+            if (!gameStarted) {
+                initGame();
+                // Mostra il modal di registrazione
+                document.getElementById('player-registration').style.display = 'block';
+                modal.style.display = "flex";
+            }
+        });
+
+        resetButton.addEventListener('click', function() {
+            initGame();
+            // Mostra il modal di registrazione
+            document.getElementById('player-registration').style.display = 'block';
+            modal.style.display = "flex";
+        });
+
+        modalButton.addEventListener('click', function() {
+            // Verifica se il giocatore ha inserito il nome e la classe
+            const playerName = document.getElementById('player-name').value.trim();
+            const playerClass = document.getElementById('player-class').value;
+
+            if (playerName && playerClass) {
+                currentPlayer.name = playerName;
+                currentPlayer.class = playerClass;
+
+                modal.style.display = "none";
+
+                if (!gameStarted) {
+                    gameStarted = true;
+                    startButton.disabled = true;
+                    generateGameBoard();
+
+                    // Avvia il timer
+                    clearInterval(timerInterval);
+                    timerInterval = setInterval(updateTimer, 1000);
+                }
+            } else {
+                // Usa un div di avviso invece di alert
+                const warningDiv = document.createElement('div');
+                warningDiv.style.backgroundColor = '#f44336';
+                warningDiv.style.color = 'white';
+                warningDiv.style.padding = '10px';
+                warningDiv.style.marginTop = '10px';
+                warningDiv.style.borderRadius = 'var(--border-radius-sm)';
+                warningDiv.style.fontWeight = 'bold';
+                warningDiv.textContent = "Per favore, inserisci il tuo nome e seleziona la tua classe prima di iniziare.";
+
+                // Rimuovi eventuali avvisi precedenti
+                const existingWarnings = document.querySelectorAll('.warning-message');
+                existingWarnings.forEach(warning => warning.remove());
+
+                warningDiv.className = 'warning-message';
+                document.getElementById('player-registration').appendChild(warningDiv);
+
+                // Fai lampeggiare i campi mancanti
+                if (!playerName) {
+                    const nameInput = document.getElementById('player-name');
+                    nameInput.style.border = '2px solid #f44336';
+                    setTimeout(() => {
+                        nameInput.style.border = '1px solid var(--accent-dark)';
+                    }, 2000);
+                }
+
+                if (!playerClass) {
+                    const classSelect = document.getElementById('player-class');
+                    classSelect.style.border = '2px solid #f44336';
+                    setTimeout(() => {
+                        classSelect.style.border = '1px solid var(--accent-dark)';
+                    }, 2000);
+                }
+            }
+        });
+
+        modalClose.addEventListener('click', function() {
+            modal.style.display = "none";
+        });
+
+        hintButton.addEventListener('click', function() {
+            if (currentQuestion && gameHint.style.display === 'none') {
+                gameHint.textContent = currentQuestion.hint;
+                gameHint.style.display = 'block';
+                hintsUsed++;
+            }
+        });
+
+        // Gestione della classifica
+        const leaderboardModal = document.getElementById('leaderboard-modal');
+        const leaderboardClose = document.getElementById('leaderboard-close');
+        const leaderboardButtonClose = document.getElementById('leaderboard-button');
+        const clearLeaderboardButton = document.getElementById('clear-leaderboard-button');
+
+        leaderboardButton.addEventListener('click', function() {
+            generateLeaderboard();
+            leaderboardModal.style.display = "flex";
+        });
+
+        leaderboardClose.addEventListener('click', function() {
+            leaderboardModal.style.display = "none";
+        });
+
+        leaderboardButtonClose.addEventListener('click', function() {
+            leaderboardModal.style.display = "none";
+        });
+
+        // Gestione del pulsante per cancellare tutta la classifica
+        clearLeaderboardButton.addEventListener('click', function() {
+            if (confirm('Sei sicuro di voler cancellare tutta la classifica? Questa azione non può essere annullata.')) {
+                // Svuota l'array dei giocatori
+                players = [];
+
+                // Aggiorna il localStorage
+                localStorage.setItem('foscoloGamePlayers', JSON.stringify(players));
+
+                // Rigenera la classifica (che ora sarà vuota)
+                generateLeaderboard();
+
+                // Mostra un messaggio di conferma
+                alert('La classifica è stata cancellata.');
+            }
+        });
+
+        // Non inizializzare automaticamente il gioco al caricamento della pagina
+        // Il gioco verrà avviato solo quando l'utente clicca sul pulsante "Inizia il gioco"
+    </script>
+    <script src="js/header-overlay.js"></script>
+</body>
+</html>

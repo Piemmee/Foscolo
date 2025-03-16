@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il periodo napoleonico di Ugo Foscolo</title>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/modern-style.css">
+    <!-- Stili specifici della pagina, se necessari -->
+    <style>
+        :root {
+            --primary-color: #5D4037; /* Marrone scuro */
+            --secondary-color: #8D6E63; /* Marrone medio */
+            --accent-color: #D7CCC8; /* Beige chiaro */
+            --text-color: #3E2723; /* Marrone molto scuro */
+            --light-color: #EFEBE9; /* Beige molto chiaro */
+            --highlight-color: #A1887F; /* Marrone chiaro */
+            --white-color: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            color: var(--text-color);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            background-image: url('images/napoleonic-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            position: relative;
+            animation: slideInFromTop 1.5s ease-out;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            margin-top: 0.5rem;
+            position: relative;
+            animation: slideInFromBottom 1.5s ease-out;
+        }
+        
+        nav {
+            background-color: var(--secondary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 0 1rem;
+        }
+        
+        .dropbtn {
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--accent-color);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: var(--highlight-color);
+            color: var(--white-color);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .dropdown:hover .dropbtn {
+            background-color: var(--primary-color);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+        
+        .content {
+            background-color: var(--white-color);
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar {
+            background-color: var(--white-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .napoleon-image {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+            border: 3px solid var(--accent-color);
+        }
+        
+        .napoleon-image:hover {
+            transform: scale(1.03);
+            border-color: var(--highlight-color);
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            background-color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideInFromTop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromBottom {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .animated-text {
+            animation: fadeIn 2s ease;
+        }
+        
+        h2, h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            margin-top: 1rem;
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .back-to-home:hover {
+            background-color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--accent-color);
+        }
+        
+        .timeline-item {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--primary-color);
+            position: relative;
+            animation: fadeIn 2s ease;
+            background-color: var(--white-color);
+            padding: 1rem;
+            border-radius: 0 5px 5px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .gallery-image {
+            width: 100%;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+            border: 2px solid var(--accent-color);
+        }
+        
+        .gallery-image:hover {
+            transform: scale(1.05);
+            border-color: var(--highlight-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <h1>Il periodo napoleonico di Ugo Foscolo</h1>
+        <p class="subtitle">Tra entusiasmo e disillusione</p>
+    </header>
+    
+    <nav>
+        <div class="menu-container">
+            <div class="dropdown">
+                <button class="dropbtn">Biografia</button>
+                <div class="dropdown-content">
+                    <a href="giovinezza.html">Giovinezza</a>
+                    <a href="periodo-napoleonico.html">Periodo napoleonico</a>
+                    <a href="esilio.html">L'esilio</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Opere</button>
+                <div class="dropdown-content">
+                    <a href="ultime-lettere.html">Ultime lettere di Jacopo Ortis</a>
+                    <a href="sonetti.html">Sonetti</a>
+                    <a href="sepolcri.html">Dei Sepolcri</a>
+                    <a href="grazie.html">Le Grazie</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Pensiero</button>
+                <div class="dropdown-content">
+                    <a href="neoclassicismo.html">Neoclassicismo</a>
+                    <a href="preromanticismo.html">Preromanticismo</a>
+                    <a href="ideali-politici.html">Ideali politici</a>
+                    <a href="stile-foscoliano.html">Lo stile di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Galleria</button>
+                <div class="dropdown-content">
+                    <a href="foto.html">Fotografie</a>
+                    <a href="luoghi.html">Luoghi foscoliani</a>
+                    <a href="manoscritti.html">Manoscritti</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Giochi</button>
+                <div class="dropdown-content">
+                    <a href="gioco.html">Il Labirinto di Foscolo</a>
+                    <a href="gioco-oca-foscolo.html">Il Viaggio di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Home</button>
+                <div class="dropdown-content">
+                    <a href="index.html">Pagina principale</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="content">
+            <h2 class="animated-text">Foscolo nell'età napoleonica: dall'entusiasmo alla disillusione</h2>
+            
+            <p class="animated-text">
+                Il periodo napoleonico rappresenta una fase cruciale nella vita e nell'opera di Ugo Foscolo. Tra il 1797 e il 1815, il poeta visse in prima persona i grandi sconvolgimenti politici dell'epoca: l'ascesa e la caduta di Napoleone, le speranze di libertà e indipendenza per l'Italia, le delusioni e i tradimenti. Questo periodo fu caratterizzato da un'intensa attività letteraria e da un costante impegno politico e militare.
+            </p>
+            
+            <div class="quote">
+                "O Italiani, io vi esorto alle storie, perché niun popolo più di voi può mostrare né più calamità da compiangere, né più errori da evitare, né più virtù che vi facciano rispettare, né più grandi anime degne di essere liberate dalla obblivione."<br>
+                <small>— Ugo Foscolo, Orazione inaugurale</small>
+            </div>
+            
+            <div class="section">
+                <h3>Da Campoformio a Milano: l'inizio della disillusione</h3>
+                
+                <p class="animated-text">
+                    Il periodo napoleonico nella vita di Foscolo iniziò con una profonda delusione. Il 17 ottobre 1797, con il Trattato di Campoformio, Napoleone cedette Venezia all'Austria, tradendo le speranze dei patrioti veneziani che avevano accolto con entusiasmo l'arrivo delle truppe francesi.
+                </p>
+                
+                <p class="animated-text">
+                    Foscolo, che aveva celebrato Napoleone come liberatore nell'"Oda a Bonaparte liberatore", visse questo tradimento come un trauma personale e politico. Deciso a non vivere sotto il dominio austriaco, lasciò Venezia per Milano, capitale della Repubblica Cisalpina, dove iniziò una nuova fase della sua vita.
+                </p>
+                
+                <p class="animated-text">
+                    A Milano, Foscolo entrò in contatto con gli ambienti intellettuali e politici della città, frequentando il circolo di Vincenzo Monti e partecipando attivamente alla vita culturale. In questo periodo iniziò a lavorare alle "Ultime lettere di Jacopo Ortis", romanzo epistolare in cui espresse la sua disillusione politica dopo il tradimento di Campoformio.
+                </p>
+                
+                <div class="image-gallery">
+                    <img src="images/milan-cisalpine.jpg" alt="Milano durante la Repubblica Cisalpina" class="gallery-image">
+                    <img src="images/foscolo-military.jpg" alt="Foscolo in uniforme militare" class="gallery-image">
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>L'esperienza militare e la difesa di Genova</h3>
+                
+                <p class="animated-text">
+                    Nel 1798, Foscolo si arruolò nella Guardia Nazionale della Repubblica Cisalpina, iniziando una carriera militare che lo avrebbe visto partecipare a diverse campagne. Questa scelta rifletteva il suo impegno patriottico e la sua adesione agli ideali rivoluzionari, nonostante la delusione per il tradimento di Campoformio.
+                </p>
+                
+                <p class="animated-text">
+                    Nel 1799, con l'invasione austro-russa dell'Italia settentrionale, Foscolo partecipò alla difesa della Repubblica Cisalpina. Dopo la caduta di Milano, si rifugiò a Genova, dove prese parte alla difesa della città durante l'assedio del 1800. Questa esperienza, dura e drammatica, rafforzò il suo patriottismo e il suo senso di appartenenza all'Italia.
+                </p>
+                
+                <p class="animated-text">
+                    Durante l'assedio di Genova, Foscolo fu ferito e rischiò la vita. Questa esperienza lo segnò profondamente e influenzò la sua visione della guerra e del sacrificio per la patria, temi che sarebbero emersi in opere successive come i "Sepolcri".
+                </p>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">Ottobre 1797</p>
+                    <p>Trattato di Campoformio: Napoleone cede Venezia all'Austria. Foscolo, deluso, lascia Venezia per Milano.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1798</p>
+                    <p>Foscolo si arruola nella Guardia Nazionale della Repubblica Cisalpina.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1799-1800</p>
+                    <p>Partecipa alla difesa di Genova durante l'assedio austro-russo. Viene ferito e rischia la vita.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1801</p>
+                    <p>Pronuncia l'"Orazione a Bonaparte per il Congresso di Lione", in cui esorta Napoleone a rispettare l'indipendenza della Repubblica Cisalpina.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1802-1803</p>
+                    <p>Pubblica la versione definitiva delle "Ultime lettere di Jacopo Ortis" e i suoi sonetti più celebri.</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>L'attività letteraria e l'impegno civile</h3>
+                
+                <p class="animated-text">
+                    Nonostante l'intensa attività militare, il periodo napoleonico fu per Foscolo anche un momento di grande produzione letteraria. Nel 1802 pubblicò la versione definitiva delle "Ultime lettere di Jacopo Ortis", romanzo che esprimeva la sua disillusione politica e la sua visione pessimistica della vita.
+                </p>
+                
+                <p class="animated-text">
+                    Nello stesso periodo compose i suoi sonetti più celebri, come "Alla sera", "A Zacinto" e "In morte del fratello Giovanni", in cui emergono i temi fondamentali della sua poetica: l'esilio, la morte, la nostalgia, la funzione consolatoria della bellezza e della poesia.
+                </p>
+                
+                <p class="animated-text">
+                    Nel 1801, Foscolo pronunciò l'"Orazione a Bonaparte per il Congresso di Lione", in cui esortava Napoleone a rispettare l'indipendenza della Repubblica Cisalpina. Questo discorso rifletteva la sua speranza, ancora viva in quel periodo, che Napoleone potesse essere un liberatore dell'Italia.
+                </p>
+                
+                <p class="animated-text">
+                    Nel 1808, Foscolo ottenne la cattedra di eloquenza all'Università di Pavia. La sua "Orazione inaugurale", pronunciata il 22 gennaio 1809, è un importante documento del suo pensiero politico e letterario. In essa, Foscolo affermava la funzione civile della letteratura e l'importanza della memoria storica per la formazione di una coscienza nazionale.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>I Sepolcri e la critica all'editto di Saint-Cloud</h3>
+                
+                <p class="animated-text">
+                    Nel 1806, Napoleone estese all'Italia l'editto di Saint-Cloud, che imponeva di seppellire i morti fuori dalle città, in cimiteri uguali per tutti, senza distinzioni di classe o merito. Foscolo, pur condividendo l'aspetto igienico-sanitario del provvedimento, si oppose all'idea di cancellare la memoria dei defunti illustri attraverso sepolture anonime.
+                </p>
+                
+                <p class="animated-text">
+                    In risposta a questo editto, nel 1807 Foscolo pubblicò "Dei Sepolcri", carme in endecasillabi sciolti in cui celebrava la funzione civile delle tombe come strumenti di memoria collettiva e di educazione patriottica. L'opera, dedicata all'amico Ippolito Pindemonte, è considerata il capolavoro poetico di Foscolo.
+                </p>
+                
+                <p class="animated-text">
+                    Nei "Sepolcri", Foscolo esprimeva una critica implicita al regime napoleonico, accusato di voler cancellare la memoria storica e le tradizioni nazionali. Allo stesso tempo, affermava la funzione civile della poesia come custode della memoria e ispiratrice di virtù patriottiche.
+                </p>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1806</p>
+                    <p>Napoleone estende all'Italia l'editto di Saint-Cloud sulla regolamentazione delle sepolture.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1807</p>
+                    <p>Pubblicazione di "Dei Sepolcri", carme in cui Foscolo celebra la funzione civile delle tombe.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1808-1809</p>
+                    <p>Foscolo ottiene la cattedra di eloquenza all'Università di Pavia. Pronuncia l'"Orazione inaugurale".</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1812-1814</p>
+                    <p>Lavora a "Le Grazie", poema incompiuto in cui celebra la bellezza e la civiltà.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1814</p>
+                    <p>Caduta di Napoleone. Foscolo pubblica "Hypercalypsis", satira contro i letterati italiani.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <p class="timeline-date">1815</p>
+                    <p>Ritorno degli austriaci in Lombardia. Foscolo rifiuta di prestare giuramento di fedeltà e sceglie l'esilio.</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Gli ultimi anni del periodo napoleonico e la scelta dell'esilio</h3>
+                
+                <p class="animated-text">
+                    Negli ultimi anni del periodo napoleonico, Foscolo continuò la sua attività letteraria e il suo impegno civile. Tra il 1812 e il 1814, lavorò a "Le Grazie", poema in tre inni dedicato allo scultore Antonio Canova, in cui celebrava la bellezza e la civiltà come forze civilizzatrici. L'opera, rimasta incompiuta, rappresenta il vertice del neoclassicismo foscoliano.
+                </p>
+                
+                <p class="animated-text">
+                    Nel 1814, con la caduta di Napoleone, Foscolo pubblicò "Hypercalypsis", satira in latino contro i letterati italiani accusati di servilismo verso il potere. Nello stesso anno, partecipò attivamente ai moti milanesi contro gli austriaci, sperando in un'Italia indipendente.
+                </p>
+                
+                <p class="animated-text">
+                    Ma le sue speranze furono nuovamente deluse. Con il Congresso di Vienna (1814-1815), l'Italia fu divisa in stati sotto l'influenza austriaca. Nel 1815, con il ritorno degli austriaci in Lombardia, Foscolo si trovò di fronte a una scelta difficile: giurare fedeltà al nuovo regime o abbandonare la patria.
+                </p>
+                
+                <p class="animated-text">
+                    Fedele ai suoi ideali di libertà e indipendenza, Foscolo scelse l'esilio. Nel marzo del 1815, lasciò Milano per la Svizzera, iniziando un esilio che lo avrebbe portato, nel 1816, in Inghilterra, dove avrebbe trascorso gli ultimi anni della sua vita.
+                </p>
+                
+                <p class="animated-text">
+                    La scelta dell'esilio rappresenta l'estrema coerenza di Foscolo con i suoi ideali politici. Nonostante le delusioni e i tradimenti, egli mantenne ferma la sua fede nella libertà e nell'indipendenza dell'Italia, preferendo l'esilio al compromesso con il potere straniero.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>L'eredità del periodo napoleonico nell'opera di Foscolo</h3>
+                
+                <p class="animated-text">
+                    Il periodo napoleonico lasciò un'impronta profonda nell'opera di Foscolo. Le esperienze di questi anni - l'entusiasmo rivoluzionario, la disillusione politica, l'impegno militare, l'attività letteraria - alimentarono la sua produzione e definirono i temi fondamentali della sua poetica.
+                </p>
+                
+                <p class="animated-text">
+                    Le "Ultime lettere di Jacopo Ortis" nascono direttamente dall'esperienza del tradimento di Campoformio e esprimono la disillusione di un'intera generazione di fronte al fallimento degli ideali rivoluzionari. I "Sepolcri" riflettono la critica al regime napoleonico e l'affermazione della funzione civile della poesia e della memoria storica.
+                </p>
+                
+                <p class="animated-text">
+                    Anche la scelta finale dell'esilio, che conclude il periodo napoleonico nella vita di Foscolo, diventa un tema centrale della sua opera, simbolo di fedeltà agli ideali e di rifiuto del compromesso con il potere. L'esperienza dell'esilio, iniziata nel 1815, influenzerà profondamente gli ultimi scritti di Foscolo, accentuando i temi della nostalgia, dello sradicamento e della ricerca di un'identità nazionale.
+                </p>
+                
+                <p class="animated-text">
+                    Il periodo napoleonico rappresenta così non solo una fase biografica, ma un laboratorio di esperienze e di idee che alimenteranno tutta la produzione di Foscolo, facendone uno dei più grandi interpreti della transizione tra Settecento e Ottocento, tra Neoclassicismo e Romanticismo, tra Illuminismo e Risorgimento.
+                </p>
+            </div>
+            
+            <a href="index.html" class="back-to-home">Torna alla pagina principale</a>
+        </div>
+        
+        <div class="sidebar">
+            <img src="images/napoleon-italy.jpg" alt="Napoleone in Italia" class="napoleon-image">
+            <h3>Il periodo napoleonico in breve</h3>
+            <p><strong>Periodo:</strong> 1797-1815</p>
+            <p><strong>Eventi chiave:</strong></p>
+            <ul>
+                <li>1797: Trattato di Campoformio</li>
+                <li>1799-1800: Difesa di Genova</li>
+                <li>1807: Pubblicazione dei "Sepolcri"</li>
+                <li>1815: Esilio volontario</li>
+            </ul>
+            
+            <div class="quote">
+                "A egregie cose il forte animo accendono<br>
+                l'urne de' forti..."<br>
+                <small>— Dei Sepolcri</small>
+            </div>
+            
+            <h3>Opere del periodo</h3>
+            <ul>
+                <li>Ultime lettere di Jacopo Ortis (1802)</li>
+                <li>Sonetti (1802-1803)</li>
+                <li>Dei Sepolcri (1807)</li>
+                <li>Orazione inaugurale (1809)</li>
+                <li>Le Grazie (1812-1814, incompiuto)</li>
+            </ul>
+            
+            <h3>Collegamenti</h3>
+            <ul>
+                <li><a href="sepolcri.html">Dei Sepolcri</a></li>
+                <li><a href="ideali-politici.html">Gli ideali politici di Foscolo</a></li>
+                <li><a href="esilio.html">L'esilio di Foscolo</a></li>
+            </ul>
+            
+            <h3>Luoghi del periodo napoleonico</h3>
+            <p>Milano: capitale della Repubblica Cisalpina, dove Foscolo visse gran parte del periodo napoleonico.</p>
+            <p>Genova: città che Foscolo difese durante l'assedio del 1800.</p>
+            <p>Pavia: sede dell'università dove Foscolo insegnò eloquenza nel 1808-1809.</p>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 Ugo Foscolo, tra esilio e disillusione | Sito creato a scopo educativo</p>
+    </footer>
+    <script src="js/animations.js"></script>
+    <script>
+
+        // Animazione per gli elementi quando entrano nel viewport
+        document.addEventListener('DOMContentLoaded', function() {
+            // Funzione per controllare se un elemento è nel viewport
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            }
+            
+            // Funzione per animare gli elementi quando entrano nel viewport
+            function animateOnScroll() {
+                const elements = document.querySelectorAll('.timeline-item, .gallery-image');
+                elements.forEach(element => {
+                    if (isInViewport(element) && !element.classList.contains('animated')) {
+                        if (element.classList.contains('timeline-item')) {
+                            element.style.animation = 'slideInFromLeft 1s ease forwards';
+                        } else {
+                            element.style.animation = 'fadeIn 1.5s ease forwards';
+                        }
+                        element.classList.add('animated');
+                    }
+                });
+            }
+            
+            // Esegui l'animazione al caricamento e allo scroll
+            animateOnScroll();
+            window.addEventListener('scroll', animateOnScroll);
+        });
+    </script>
+    <script src="js/header-overlay.js"></script>
+</body>
+</html>

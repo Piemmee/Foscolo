@@ -1,0 +1,209 @@
+/* Animazioni per il sito di Ugo Foscolo */
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0.98); }
+    33% { opacity: 0.4; transform: scale(0.99); }
+    66% { opacity: 0.8; transform: scale(0.995); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes smoothFadeIn {
+    0% { opacity: 0; transform: translateY(8px); }
+    25% { opacity: 0.3; transform: translateY(6px); }
+    50% { opacity: 0.6; transform: translateY(4px); }
+    75% { opacity: 0.9; transform: translateY(2px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Animazioni speciali per i manoscritti */
+@keyframes manuscriptAppear {
+    0% { opacity: 0; transform: translateY(20px) scale(0.95); filter: blur(2px); }
+    30% { opacity: 0.5; transform: translateY(10px) scale(0.97); filter: blur(1px); }
+    60% { opacity: 0.8; transform: translateY(5px) scale(0.99); filter: blur(0.5px); }
+    100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@keyframes zoomContainerAppear {
+    0% { opacity: 0; transform: translateX(-20px); }
+    40% { opacity: 0.4; transform: translateX(-12px); }
+    70% { opacity: 0.7; transform: translateX(-6px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInOverlay {
+    0% { background-color: rgba(93, 64, 55, 0); }
+    20% { background-color: rgba(93, 64, 55, 0.16); }
+    40% { background-color: rgba(93, 64, 55, 0.32); }
+    60% { background-color: rgba(93, 64, 55, 0.48); }
+    80% { background-color: rgba(93, 64, 55, 0.64); }
+    100% { background-color: rgba(93, 64, 55, 0.8); }
+}
+
+@keyframes removeBackground {
+    0% { background-color: #5D4037; }
+    99% { background-color: #5D4037; }
+    100% { background-color: transparent; }
+}
+
+@keyframes slideInFromTop {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInFromBottom {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInFromLeft {
+    from { transform: translateX(-50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInFromRight {
+    from { transform: translateX(50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.animated-text {
+    animation: fadeIn 1s ease;
+    animation-fill-mode: forwards; /* Mantiene lo stato finale dell'animazione */
+    /* Rimuoviamo opacity: 0 per evitare che i testi siano invisibili */
+}
+
+/* Stili per le sezioni animate */
+.section {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--accent-color);
+    /* Rimuoviamo opacity: 0 e visibility: hidden per evitare testi invisibili */
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+/* Nascondiamo inizialmente le immagini della galleria */
+.gallery-item, .gallery-image {
+    opacity: 0; /* Inizialmente nascoste */
+}
+
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stili per gli elementi della timeline */
+.timeline-item {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--primary-color);
+    position: relative;
+    background-color: var(--white-color);
+    padding: 1rem;
+    border-radius: 0 5px 5px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    /* Rimuoviamo opacity: 0 e visibility: hidden per evitare testi invisibili */
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.timeline-item.animated {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.timeline-item:before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+}
+
+/* Stili per le caratteristiche dello stile */
+.style-feature {
+    background-color: var(--accent-color);
+    padding: 1.5rem;
+    border-radius: 5px;
+    margin: 1.5rem 0;
+    position: relative;
+    /* Rimuoviamo opacity: 0 e visibility: hidden per evitare testi invisibili */
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.style-feature.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Stili per il testo originale */
+.original-text {
+    font-style: italic;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background-color: var(--accent-color);
+    border-radius: 5px;
+    position: relative;
+    line-height: 1.8;
+    border-left: 5px solid var(--primary-color);
+    /* Rimuoviamo opacity: 0 e visibility: hidden per evitare testi invisibili */
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.original-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stili per gli elementi della galleria */
+.gallery-item {
+    background-color: var(--white-color);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Stili per i versi poetici */
+.poem-verse {
+    font-style: italic;
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: var(--accent-color);
+    border-radius: 5px;
+    position: relative;
+    line-height: 1.8;
+}
+
+/* Stili per le grazie boxes */
+.grace-box {
+    background-color: var(--accent-color);
+    padding: 1.5rem;
+    border-radius: 5px;
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+/* Stili per i manoscritti */
+.manuscript-card {
+    background-color: var(--white-color);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.zoom-container {
+    position: relative;
+    overflow: hidden;
+    margin: 2rem 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}

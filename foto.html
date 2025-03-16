@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotografie - Ugo Foscolo</title>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/modern-style.css">
+    <!-- Stili specifici della pagina, se necessari -->
+    <style>
+        :root {
+            --primary-color: #5D4037; /* Marrone scuro */
+            --secondary-color: #8D6E63; /* Marrone medio */
+            --accent-color: #D7CCC8; /* Beige chiaro */
+            --text-color: #3E2723; /* Marrone molto scuro */
+            --light-color: #EFEBE9; /* Beige molto chiaro */
+            --highlight-color: #A1887F; /* Marrone chiaro */
+            --white-color: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            color: var(--text-color);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            background-image: url('images/gallery-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            position: relative;
+            animation: slideInFromTop 1.5s ease-out;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            margin-top: 0.5rem;
+            position: relative;
+            animation: slideInFromBottom 1.5s ease-out;
+        }
+        
+        nav {
+            background-color: var(--secondary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 0 1rem;
+        }
+        
+        .dropbtn {
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--accent-color);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: var(--highlight-color);
+            color: var(--white-color);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .dropdown:hover .dropbtn {
+            background-color: var(--primary-color);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .content {
+            background-color: var(--white-color);
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            background-color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideInFromTop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromBottom {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .animated-text {
+            animation: fadeIn 2s ease;
+        }
+        
+        h2, h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            margin-top: 1rem;
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .back-to-home:hover {
+            background-color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--accent-color);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .gallery-item {
+            background-color: var(--white-color);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            animation: fadeIn 1.5s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+        
+        .gallery-caption {
+            padding: 1rem;
+        }
+        
+        .gallery-title {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .gallery-description {
+            margin-bottom: 0;
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+        
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .lightbox-content {
+            max-width: 80%;
+            max-height: 80%;
+        }
+        
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 80vh;
+            border: 5px solid var(--white-color);
+        }
+        
+        .lightbox-caption {
+            color: var(--white-color);
+            text-align: center;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--white-color);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Nascondiamo inizialmente le immagini della galleria */
+        .gallery-item {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <h1>Fotografie</h1>
+        <p class="subtitle">Immagini di Ugo Foscolo e del suo mondo</p>
+    </header>
+    
+    <nav>
+        <div class="menu-container">
+            <div class="dropdown">
+                <button class="dropbtn">Biografia</button>
+                <div class="dropdown-content">
+                    <a href="giovinezza.html">Giovinezza</a>
+                    <a href="periodo-napoleonico.html">Periodo napoleonico</a>
+                    <a href="esilio.html">L'esilio</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Opere</button>
+                <div class="dropdown-content">
+                    <a href="ultime-lettere.html">Ultime lettere di Jacopo Ortis</a>
+                    <a href="sonetti.html">Sonetti</a>
+                    <a href="sepolcri.html">Dei Sepolcri</a>
+                    <a href="grazie.html">Le Grazie</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Pensiero</button>
+                <div class="dropdown-content">
+                    <a href="neoclassicismo.html">Neoclassicismo</a>
+                    <a href="preromanticismo.html">Preromanticismo</a>
+                    <a href="ideali-politici.html">Ideali politici</a>
+                    <a href="stile-foscoliano.html">Lo stile di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Galleria</button>
+                <div class="dropdown-content">
+                    <a href="foto.html">Fotografie</a>
+                    <a href="luoghi.html">Luoghi foscoliani</a>
+                    <a href="manoscritti.html">Manoscritti</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Giochi</button>
+                <div class="dropdown-content">
+                    <a href="gioco.html">Il Labirinto di Foscolo</a>
+                    <a href="gioco-oca-foscolo.html">Il Viaggio di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Home</button>
+                <div class="dropdown-content">
+                    <a href="index.html">Pagina principale</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="content">
+            <h2 class="animated-text">Galleria fotografica</h2>
+            
+            <p class="animated-text">
+                Questa galleria raccoglie immagini di Ugo Foscolo, dei luoghi in cui visse e operò, e di opere d'arte ispirate alla sua figura e alla sua produzione letteraria. Attraverso queste immagini, è possibile ripercorrere visivamente la vita e l'opera del grande poeta, scrittore e patriota italiano.
+            </p>
+            
+            <div class="quote">
+                "A egregie cose il forte animo accendono<br>
+                l'urne de' forti..."<br>
+                <small>— Ugo Foscolo, Dei Sepolcri</small>
+            </div>
+            
+            <div class="section">
+                <h3>Ritratti di Ugo Foscolo</h3>
+                
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="images/foscolo-portrait.jpg" alt="Ritratto di Ugo Foscolo" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Ritratto di Ugo Foscolo</h4>
+                            <p class="gallery-description">Ritratto ufficiale del poeta, realizzato durante il periodo milanese.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/young-foscolo.jpg" alt="Il giovane Foscolo" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Il giovane Foscolo</h4>
+                            <p class="gallery-description">Ritratto giovanile di Ugo Foscolo, risalente al periodo veneziano.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/foscolo-military.jpg" alt="Foscolo in uniforme militare" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Foscolo in uniforme militare</h4>
+                            <p class="gallery-description">Ritratto di Foscolo in uniforme della Guardia Nazionale della Repubblica Cisalpina.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/foscolo-exile.jpg" alt="Foscolo in esilio" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Foscolo in esilio</h4>
+                            <p class="gallery-description">Ritratto di Foscolo durante il periodo dell'esilio londinese.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Luoghi foscoliani</h3>
+                
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="images/zante-view.jpg" alt="Veduta di Zante" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Zante (Zacinto)</h4>
+                            <p class="gallery-description">L'isola natale di Foscolo, celebrata nel sonetto "A Zacinto".</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/venice-view.jpg" alt="Veduta di Venezia" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Venezia</h4>
+                            <p class="gallery-description">La città dove Foscolo trascorse gli anni della formazione.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/milan-view.jpg" alt="Veduta di Milano" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Milano</h4>
+                            <p class="gallery-description">La città dove Foscolo visse durante il periodo napoleonico.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/euganean-hills.jpg" alt="Colli Euganei" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Colli Euganei</h4>
+                            <p class="gallery-description">I colli dove è ambientata gran parte delle "Ultime lettere di Jacopo Ortis".</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/florence-view.jpg" alt="Veduta di Firenze" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Firenze</h4>
+                            <p class="gallery-description">La città dove Foscolo compose "Le Grazie" e dove oggi riposa nella basilica di Santa Croce.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/london-view.jpg" alt="Veduta di Londra" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Londra</h4>
+                            <p class="gallery-description">La città dell'esilio, dove Foscolo trascorse gli ultimi anni della sua vita.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Opere e manoscritti</h3>
+                
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="images/ortis-cover.jpg" alt="Copertina delle Ultime lettere di Jacopo Ortis" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Ultime lettere di Jacopo Ortis</h4>
+                            <p class="gallery-description">Copertina della prima edizione del romanzo, pubblicato nel 1802.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/sonetti-manuscript.jpg" alt="Manoscritto dei sonetti" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Manoscritto dei sonetti</h4>
+                            <p class="gallery-description">Pagina manoscritta dei sonetti di Foscolo, con correzioni autografe.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/sepolcri-manuscript.jpg" alt="Manoscritto dei Sepolcri" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Manoscritto dei Sepolcri</h4>
+                            <p class="gallery-description">Pagina manoscritta del carme "Dei Sepolcri", con correzioni autografe.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/grazie-manuscript.jpg" alt="Manoscritto de Le Grazie" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Manoscritto de Le Grazie</h4>
+                            <p class="gallery-description">Pagina manoscritta del poema "Le Grazie", con correzioni autografe.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Arte ispirata a Foscolo</h3>
+                
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="images/canova-grazie-sculpture.jpg" alt="Le tre Grazie di Canova" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Le tre Grazie di Canova</h4>
+                            <p class="gallery-description">La celebre scultura di Antonio Canova che ispirò il poema "Le Grazie" di Foscolo.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/foscolo-tomb.jpg" alt="Tomba di Foscolo a Santa Croce" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Tomba di Foscolo a Santa Croce</h4>
+                            <p class="gallery-description">Il monumento funebre di Foscolo nella basilica di Santa Croce a Firenze.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/foscolo-statue.jpg" alt="Statua di Foscolo" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Statua di Foscolo</h4>
+                            <p class="gallery-description">Monumento a Ugo Foscolo eretto a Milano nel XIX secolo.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/ortis-illustration.jpg" alt="Illustrazione dell'Ortis" class="gallery-image">
+                        <div class="gallery-caption">
+                            <h4 class="gallery-title">Illustrazione dell'Ortis</h4>
+                            <p class="gallery-description">Illustrazione ottocentesca per le "Ultime lettere di Jacopo Ortis".</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="index.html" class="back-to-home">Torna alla pagina principale</a>
+        </div>
+
+        <div class="sidebar">
+            <img src="images/foscolo-portrait.jpg" alt="Ritratto di Ugo Foscolo" class="portrait">
+            <h3>Archivio fotografico</h3>
+            <p>Questa galleria contiene immagini storiche e artistiche relative a Ugo Foscolo, alla sua vita e alla sua opera.</p>
+
+            <h4>Categorie</h4>
+            <ul>
+                <li>Ritratti di Ugo Foscolo</li>
+                <li>Luoghi foscoliani</li>
+                <li>Manoscritti e documenti</li>
+                <li>Arte ispirata a Foscolo</li>
+            </ul>
+
+            <div class="quote">
+                "Né più mai toccherò le sacre sponde<br>
+                ove il mio corpo fanciulletto giacque..."<br>
+                <small>— A Zacinto</small>
+            </div>
+
+            <h4>Collegamenti</h4>
+            <ul>
+                <li><a href="luoghi.html">Luoghi foscoliani</a></li>
+                <li><a href="manoscritti.html">Manoscritti</a></li>
+                <li><a href="grazie.html">Le Grazie</a></li>
+                <li><a href="sepolcri.html">Dei Sepolcri</a></li>
+            </ul>
+
+            <h4>Curiosità</h4>
+            <p>Molti dei ritratti di Foscolo lo mostrano con un'espressione malinconica, riflettendo il suo temperamento romantico e la sua vita segnata dall'esilio e dalle delusioni.</p>
+        </div>
+    </main>
+    
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <div class="lightbox-content">
+            <img src="" alt="" class="lightbox-image" id="lightbox-image">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Ugo Foscolo, tra esilio e disillusione | Sito creato a scopo educativo</p>
+    </footer>
+    
+    <script src="js/animations.js"></script>
+    <script src="js/add-games-menu.js"></script>
+    <script src="js/header-overlay.js"></script>
+</body>
+</html>

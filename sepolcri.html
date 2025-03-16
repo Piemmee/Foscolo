@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dei Sepolcri - Ugo Foscolo</title>
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/modern-style.css">
+    <!-- Stili specifici della pagina, se necessari -->
+    <style>
+        :root {
+            --primary-color: #5D4037; /* Marrone scuro */
+            --secondary-color: #8D6E63; /* Marrone medio */
+            --accent-color: #D7CCC8; /* Beige chiaro */
+            --text-color: #3E2723; /* Marrone molto scuro */
+            --light-color: #EFEBE9; /* Beige molto chiaro */
+            --highlight-color: #A1887F; /* Marrone chiaro */
+            --white-color: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            color: var(--text-color);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            background-image: url('images/sepolcri-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            position: relative;
+            animation: slideInFromTop 1.5s ease-out;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            margin-top: 0.5rem;
+            position: relative;
+            animation: slideInFromBottom 1.5s ease-out;
+        }
+        
+        nav {
+            background-color: var(--secondary-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin: 0 1rem;
+        }
+        
+        .dropbtn {
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--accent-color);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: var(--highlight-color);
+            color: var(--white-color);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .dropdown:hover .dropbtn {
+            background-color: var(--primary-color);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+        
+        .content {
+            background-color: var(--white-color);
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar {
+            background-color: var(--white-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .poem-image {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+            border: 3px solid var(--accent-color);
+        }
+        
+        .poem-image:hover {
+            transform: scale(1.03);
+            border-color: var(--highlight-color);
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            background-color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideInFromTop {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromBottom {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideInFromLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .animated-text {
+            animation: fadeIn 2s ease;
+        }
+        
+        h2, h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .poem-verse {
+            font-style: italic;
+            margin: 1rem 0;
+            padding: 1rem;
+            background-color: var(--accent-color);
+            border-radius: 5px;
+            position: relative;
+            animation: fadeIn 1.5s ease;
+            line-height: 1.8;
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            margin-top: 1rem;
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .back-to-home:hover {
+            background-color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <h1>Dei Sepolcri</h1>
+        <p class="subtitle">Il capolavoro poetico di Ugo Foscolo</p>
+    </header>
+    
+    <nav>
+        <div class="menu-container">
+            <div class="dropdown">
+                <button class="dropbtn">Biografia</button>
+                <div class="dropdown-content">
+                    <a href="giovinezza.html">Giovinezza</a>
+                    <a href="periodo-napoleonico.html">Periodo napoleonico</a>
+                    <a href="esilio.html">L'esilio</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Opere</button>
+                <div class="dropdown-content">
+                    <a href="ultime-lettere.html">Ultime lettere di Jacopo Ortis</a>
+                    <a href="sonetti.html">Sonetti</a>
+                    <a href="sepolcri.html">Dei Sepolcri</a>
+                    <a href="grazie.html">Le Grazie</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Pensiero</button>
+                <div class="dropdown-content">
+                    <a href="neoclassicismo.html">Neoclassicismo</a>
+                    <a href="preromanticismo.html">Preromanticismo</a>
+                    <a href="ideali-politici.html">Ideali politici</a>
+                    <a href="stile-foscoliano.html">Lo stile di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Galleria</button>
+                <div class="dropdown-content">
+                    <a href="foto.html">Fotografie</a>
+                    <a href="luoghi.html">Luoghi foscoliani</a>
+                    <a href="manoscritti.html">Manoscritti</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Giochi</button>
+                <div class="dropdown-content">
+                    <a href="gioco.html">Il Labirinto di Foscolo</a>
+                    <a href="gioco-oca-foscolo.html">Il Viaggio di Foscolo</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button class="dropbtn">Home</button>
+                <div class="dropdown-content">
+                    <a href="index.html">Pagina principale</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="content">
+            <h2 class="animated-text">Dei Sepolcri: il carme immortale</h2>
+            
+            <p class="animated-text">
+                <em>Dei Sepolcri</em> è un carme in endecasillabi sciolti composto da Ugo Foscolo nel 1806 e pubblicato nel 1807. È considerato il capolavoro poetico di Foscolo e una delle opere più significative della letteratura italiana tra Neoclassicismo e Romanticismo.
+            </p>
+            
+            <div class="quote">
+                "A egregie cose il forte animo accendono<br>
+                l'urne de' forti, o Pindemonte; e bella<br>
+                e santa fanno al peregrin la terra<br>
+                che le ricetta."<br>
+                <small>— Ugo Foscolo, Dei Sepolcri (vv. 151-154)</small>
+            </div>
+            
+            <div class="section">
+                <h3>Genesi dell'opera</h3>
+                
+                <p class="animated-text">
+                    Il carme fu composto in risposta all'editto di Saint-Cloud (1804), esteso all'Italia nel 1806, che imponeva di seppellire i morti fuori dalle città, in cimiteri uguali per tutti, senza distinzioni di classe o merito. Foscolo, pur condividendo l'aspetto igienico-sanitario del provvedimento, si oppose all'idea di cancellare la memoria dei defunti illustri attraverso sepolture anonime.
+                </p>
+                
+                <p class="animated-text">
+                    L'opera è dedicata a Ippolito Pindemonte, amico di Foscolo, che stava componendo un poema sui cimiteri. Il carme si presenta come una lettera in versi indirizzata a Pindemonte, in cui Foscolo espone la sua visione sulla funzione civile e morale delle tombe.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>Struttura e contenuto</h3>
+                
+                <p class="animated-text">
+                    Il carme si compone di 295 versi endecasillabi sciolti e può essere suddiviso in quattro sezioni tematiche:
+                </p>
+                
+                <ol>
+                    <li><strong>Introduzione (vv. 1-90):</strong> Riflessione sulla morte e sull'illusione dell'aldilà. Foscolo afferma che, sebbene la morte sia la fine di tutto, le tombe hanno una funzione consolatoria per i vivi.</li>
+                    <li><strong>Funzione civile delle tombe (vv. 91-150):</strong> Le tombe dei grandi uomini ispirano le nuove generazioni e mantengono vivo il legame tra i vivi e i morti.</li>
+                    <li><strong>Esempi storici (vv. 151-212):</strong> Foscolo cita esempi di come le tombe abbiano preservato la memoria di grandi personaggi, come Parini.</li>
+                    <li><strong>Il mito di Troia (vv. 213-295):</strong> Il poeta conclude con il mito di Troia e di Ettore, il cui sepolcro ispirò Omero e mantenne viva la memoria della città distrutta.</li>
+                </ol>
+            </div>
+            
+            <div class="section">
+                <h3>Versi celebri</h3>
+                
+                <div class="poem-verse">
+                    "All'ombra de' cipressi e dentro l'urne<br>
+                    confortate di pianto è forse il sonno<br>
+                    della morte men duro? [...]"<br>
+                    <small>(vv. 1-3)</small>
+                </div>
+                
+                <div class="poem-verse">
+                    "Ma perché pria del tempo a sé il mortale<br>
+                    invidierà l'illusion che spento<br>
+                    pur lo sofferma al limitar di Dite?"<br>
+                    <small>(vv. 23-25)</small>
+                </div>
+                
+                <div class="poem-verse">
+                    "A egregie cose il forte animo accendono<br>
+                    l'urne de' forti, o Pindemonte; e bella<br>
+                    e santa fanno al peregrin la terra<br>
+                    che le ricetta."<br>
+                    <small>(vv. 151-154)</small>
+                </div>
+                
+                <div class="poem-verse">
+                    "E tu onore di pianti, Ettore, avrai<br>
+                    ove fia santo e lagrimato il sangue<br>
+                    per la patria versato, e finché il Sole<br>
+                    risplenderà su le sciagure umane."<br>
+                    <small>(vv. 292-295)</small>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h3>Temi e significato</h3>
+                
+                <p class="animated-text">
+                    <em>Dei Sepolcri</em> affronta diversi temi fondamentali:
+                </p>
+                
+                <ul>
+                    <li><strong>La morte e l'immortalità:</strong> Foscolo, pur negando l'esistenza di un aldilà, afferma che esiste una forma di immortalità nella memoria dei vivi.</li>
+                    <li><strong>La funzione civile della poesia:</strong> La poesia, come le tombe, preserva la memoria dei grandi uomini e ispira le nuove generazioni.</li>
+                    <li><strong>L'importanza della memoria storica:</strong> Le tombe sono un legame tra passato e presente, e mantengono viva la memoria collettiva di un popolo.</li>
+                    <li><strong>Il valore della patria:</strong> Il carme si conclude con l'esaltazione del sacrificio per la patria, rappresentato dalla figura di Ettore.</li>
+                </ul>
+                
+                <p class="animated-text">
+                    L'opera rappresenta una sintesi perfetta tra la visione materialistica di Foscolo (la morte come fine di tutto) e la sua fede nei valori civili e morali che trascendono la morte individuale. Le tombe diventano così simbolo di continuità tra le generazioni e strumento di educazione civile.
+                </p>
+            </div>
+            
+            <div class="section">
+                <h3>Stile e linguaggio</h3>
+                
+                <p class="animated-text">
+                    Il carme è caratterizzato da un linguaggio elevato e solenne, ricco di riferimenti classici e mitologici. La sintassi è complessa, con frequenti enjambement che conferiscono al testo un ritmo fluido e musicale. Lo stile fonde elementi neoclassici (equilibrio formale, riferimenti alla mitologia) ed elementi preromantici (tono appassionato, temi sepolcrali).
+                </p>
+            </div>
+            
+            <a href="index.html" class="back-to-home">Torna alla pagina principale</a>
+        </div>
+        
+        <div class="sidebar">
+            <img src="images/sepolcri-image.jpg" alt="Illustrazione dei Sepolcri" class="poem-image">
+            <h3>Dettagli dell'opera</h3>
+            <p><strong>Composizione:</strong> 1806</p>
+            <p><strong>Pubblicazione:</strong> 1807</p>
+            <p><strong>Genere:</strong> Carme in endecasillabi sciolti</p>
+            <p><strong>Versi:</strong> 295</p>
+            <p><strong>Dedicatario:</strong> Ippolito Pindemonte</p>
+            
+            <div class="quote">
+                "Celeste è questa<br>
+                corrispondenza d'amorosi sensi,<br>
+                celeste dote è negli umani..."<br>
+                <small>— Dei Sepolcri (vv. 29-31)</small>
+            </div>
+            
+            <h3>Collegamenti</h3>
+            <ul>
+                <li><a href="neoclassicismo.html">Il neoclassicismo di Foscolo</a></li>
+                <li><a href="ideali-politici.html">Gli ideali politici di Foscolo</a></li>
+                <li><a href="sonetti.html">I sonetti di Foscolo</a></li>
+            </ul>
+            
+            <h3>Contesto storico</h3>
+            <p>Il carme fu composto in risposta all'editto di Saint-Cloud (1804), esteso all'Italia nel 1806, che regolamentava le sepolture imponendo cimiteri fuori dai centri abitati e tombe uguali per tutti.</p>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 Ugo Foscolo, tra esilio e disillusione | Sito creato a scopo educativo</p>
+    </footer>
+    
+    <script src="js/animations.js"></script>
+    <script src="js/image-fallback.js"></script>
+    <script src="js/add-games-menu.js"></script>
+    <script src="js/header-overlay.js"></script>
+</body>
+</html>
